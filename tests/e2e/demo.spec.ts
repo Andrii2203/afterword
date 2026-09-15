@@ -12,8 +12,8 @@ const ready =
 
 test.skip(!ready, "Set RUN_E2E=1, both API keys and generate fixture audio first.");
 
-/** Wall-clock time from the click to the rendered result, per fixture. */
-const latencies: { id: string; ms: number; server_ms: number }[] = [];
+/** Wall-clock time from the click to the first useful output and to the result. */
+const latencies: { id: string; transcript_ms: number; ms: number; server_ms: number }[] = [];
 
 test.afterAll(() => {
   if (latencies.length === 0) return;
@@ -29,11 +29,17 @@ async function analyse(page: import("@playwright/test").Page, id: string) {
   await page.getByTestId("upload-input").setInputFiles(AUDIO(id));
   const started = Date.now();
   await page.getByTestId("process-button").click();
+
+  // The transcript is the first useful output and must arrive well before the list.
+  await expect(page.getByTestId("transcript")).toBeVisible({ timeout: 60_000 });
+  const transcriptMs = Date.now() - started;
+
   await expect(page.getByTestId("metrics")).toBeVisible({ timeout: 150_000 });
   const serverMs = Number(
     (await page.getByTestId("metrics").getAttribute("data-total-ms")) ?? Number.NaN,
   );
-  latencies.push({ id, ms: Date.now() - started, server_ms: serverMs });
+  latencies.push({ id, transcript_ms: transcriptMs, ms: Date.now() - started, server_ms: serverMs });
+  expect(transcriptMs).toBeLessThan(Date.now() - started);
 }
 
 test("reports the final state of every task in the base recording", async ({ page }) => {

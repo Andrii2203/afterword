@@ -1,5 +1,7 @@
-import { afterEach, describe, expect, it } from "vitest";
+import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { POST } from "@/app/api/process/route";
+import { readEventStream, type PipelineEvent } from "@/lib/events";
+import { DEFAULT_LIMITS, limiter } from "@/lib/limits";
 import { setProviders } from "@/lib/providers";
 import type { CommitmentsDocument } from "@/lib/types";
 import {
@@ -8,6 +10,22 @@ import {
   stubAsr,
   stubExtractor,
 } from "../support/fixtures";
+
+/** Collect every event of a streaming response. */
+async function collect(response: Response): Promise<PipelineEvent[]> {
+  const events: PipelineEvent[] = [];
+  await readEventStream(response, (event) => events.push(event));
+  return events;
+}
+
+async function documentOf(response: Response): Promise<CommitmentsDocument> {
+  const events = await collect(response);
+  const last = events.find((e) => e.type === "document");
+  if (!last || last.type !== "document") {
+    throw new Error(`no document in stream: ${JSON.stringify(events.map((e) => e.type))}`);
+  }
+  return last.document;
+}
 
 function useFixture(id: "meeting-a" | "meeting-b" | "meeting-c") {
   setProviders({
@@ -27,6 +45,7 @@ function audioForm(type = "audio/wav", extra: Record<string, string> = {}) {
   return form;
 }
 
+beforeEach(() => limiter.reset());
 afterEach(() => setProviders(null));
 
 describe("POST /api/process", () => {
@@ -34,7 +53,8 @@ describe("POST /api/process", () => {
     useFixture("meeting-a");
     const response = await POST(upload(audioForm()));
     expect(response.status).toBe(200);
-    const document = (await response.json()) as CommitmentsDocument;
+    expect(response.headers.get("content-type")).toBe("application/x-ndjson");
+    const document = await documentOf(response);
     expect(document.commitments.length).toBe(3);
     expect(document.excluded.length).toBe(2);
     expect(document.open_questions.length).toBe(1);
@@ -45,7 +65,7 @@ describe("POST /api/process", () => {
   it("uses a user supplied recording date only as an anchor and labels it", async () => {
     useFixture("meeting-a");
     const response = await POST(upload(audioForm("audio/wav", { anchor_date: "2026-03-02" })));
-    const document = (await response.json()) as CommitmentsDocument;
+    const document = await documentOf(response);
     expect(document.meta.anchor_date_source).toBe("user");
     expect(document.meta.anchor_date).toBe("2026-03-02");
     const checklist = document.commitments.find((c) => /checklist/i.test(c.title));
@@ -60,7 +80,7 @@ describe("POST /api/process", () => {
     useFixture("meeting-a");
     const response = await POST(upload(audioForm("audio/wav", { anchor_date: "yesterday" })));
     expect(response.status).toBe(200);
-    const document = (await response.json()) as CommitmentsDocument;
+    const document = await documentOf(response);
     expect(document.meta.anchor_date_source).toBe("none");
   });
 
@@ -77,14 +97,32 @@ describe("POST /api/process", () => {
     expect((await response.json()).error).toMatch(/Unsupported audio type/);
   });
 
-  it("rejects a recording over the duration limit", async () => {
+  it("reports a recording over the duration limit as a 413 event", async () => {
     const transcript = loadTranscript("meeting-a");
     setProviders({
       asr: stubAsr({ ...transcript, audio_ms: 240_000 }),
       extractor: stubExtractor(loadLlmOutput("meeting-a")),
     });
-    const response = await POST(upload(audioForm()));
-    expect(response.status).toBe(413);
+    const events = await collect(await POST(upload(audioForm())));
+    expect(events.at(-1)).toEqual({
+      type: "error",
+      error: "The recording is longer than the 180 second limit.",
+      status: 413,
+    });
+    expect(events.some((e) => e.type === "document")).toBe(false);
+  });
+
+  it("streams the transcript before the document", async () => {
+    useFixture("meeting-a");
+    const types = (await collect(await POST(upload(audioForm())))).map((e) => e.type);
+    expect(types).toEqual([
+      "stage",
+      "transcript",
+      "stage",
+      "stage",
+      "document",
+    ]);
+    expect(types.indexOf("transcript")).toBeLessThan(types.indexOf("document"));
   });
 
   it("reports a provider failure as a server error with its message", async () => {
@@ -97,16 +135,32 @@ describe("POST /api/process", () => {
       },
       extractor: stubExtractor(loadLlmOutput("meeting-a")),
     });
-    const response = await POST(upload(audioForm()));
-    expect(response.status).toBe(500);
-    expect((await response.json()).error).toMatch(/401/);
+    const events = await collect(await POST(upload(audioForm())));
+    const failure = events.at(-1);
+    expect(failure?.type).toBe("error");
+    expect(failure).toMatchObject({ status: 500 });
+    expect(failure && "error" in failure ? failure.error : "").toMatch(/401/);
+  });
+
+  it("refuses a client that exceeds the hourly demo budget", async () => {
+    useFixture("meeting-a");
+    const headers = { "x-forwarded-for": "203.0.113.7" };
+    for (let i = 0; i < DEFAULT_LIMITS.perClientPerHour; i += 1) {
+      const allowed = await POST(upload(audioForm(), { headers }));
+      expect(allowed.status).toBe(200);
+      await allowed.body?.cancel();
+    }
+    const refused = await POST(upload(audioForm(), { headers }));
+    expect(refused.status).toBe(429);
+    expect(Number(refused.headers.get("retry-after"))).toBeGreaterThan(0);
+    expect((await refused.json()).error).toMatch(/recordings in the last hour/);
   });
 
   it("processes each upload instead of replaying a stored answer", async () => {
     useFixture("meeting-a");
-    const first = (await (await POST(upload(audioForm()))).json()) as CommitmentsDocument;
+    const first = await documentOf(await POST(upload(audioForm())));
     useFixture("meeting-c");
-    const second = (await (await POST(upload(audioForm()))).json()) as CommitmentsDocument;
+    const second = await documentOf(await POST(upload(audioForm())));
     expect(second.commitments.map((c) => c.title)).not.toEqual(
       first.commitments.map((c) => c.title),
     );

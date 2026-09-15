@@ -1,5 +1,6 @@
 import type { AsrProvider } from "./asr";
 import type { Extractor } from "./extract";
+import type { PipelineEvent } from "./events";
 import { computeMetrics } from "./metrics";
 import { DocumentSchema, type CommitmentsDocument } from "./types";
 import { verify } from "./verify";
@@ -42,18 +43,21 @@ export interface PipelineInput {
   userAnchorDate?: string | null;
 }
 
-/** SPEC P1-P7. */
+/** SPEC P1-P7; `onEvent` receives each stage as it completes (ADR-0021). */
 export async function runPipeline(
   input: PipelineInput,
   deps: PipelineDeps,
+  onEvent: (event: PipelineEvent) => void = () => {},
 ): Promise<CommitmentsDocument> {
   const started = Date.now();
+  const since = () => Date.now() - started;
 
   if (input.audio.byteLength === 0) throw new PipelineError("The uploaded file is empty.", 400);
   if (input.audio.byteLength > MAX_UPLOAD_BYTES) {
     throw new PipelineError("The uploaded file is larger than 25 MB.", 413);
   }
 
+  onEvent({ type: "stage", stage: "transcribing", at_ms: since() });
   const asr = await deps.asr.transcribe(input.audio, input.contentType);
   if (asr.transcript.utterances.length === 0) {
     throw new PipelineError("No speech was recognised in this file.", 422);
@@ -61,8 +65,12 @@ export async function runPipeline(
   if (asr.transcript.audio_ms > MAX_AUDIO_MS) {
     throw new PipelineError("The recording is longer than the 180 second limit.", 413);
   }
+  onEvent({ type: "transcript", transcript: asr.transcript, asr_ms: asr.ms });
 
+  onEvent({ type: "stage", stage: "extracting", at_ms: since() });
   const extraction = await deps.extractor.extract({ transcript: asr.transcript });
+
+  onEvent({ type: "stage", stage: "verifying", at_ms: since() });
   const verified = verify({
     llm: extraction.output,
     transcript: asr.transcript,
@@ -94,5 +102,7 @@ export async function runPipeline(
     warnings: extraction.tokens.retries > 0 ? [...verified.warnings, "llm_retry"] : verified.warnings,
   };
 
-  return DocumentSchema.parse(document);
+  const parsed = DocumentSchema.parse(document);
+  onEvent({ type: "document", document: parsed });
+  return parsed;
 }

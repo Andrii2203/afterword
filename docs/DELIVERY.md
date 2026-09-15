@@ -64,20 +64,22 @@ Known limits, not fixed:
 - Diarization is trusted as given; two speakers on one channel who talk over each other are out of
   scope and untested.
 - The fixture audio is synthetic speech, so real-room noise, accents and crosstalk are unmeasured.
-- The three WAV fixtures add about 12 MB to the repository, because no audio encoder is available
-  without a system binary.
+- The three WAV recordings add about 12 MB to the repository, because no audio encoder is available
+  without a system binary; they live in `public/samples` and are served by the demo, so there is one
+  copy rather than two.
 
 ## 4. Speed
 
-Time to a useful result, measured in the browser from the click to the rendered list
+Results stream, so there are two numbers that matter: when the user first sees something real, and
+when the commitments list is complete. Both are measured in the browser from the click
 (`reports/e2e-latency.json`):
 
-| Fixture | Audio | Browser to result | Server total |
-| --- | --- | --- | --- |
-| `meeting-a` | 109.2 s | 14.7 s | 14.3 s |
-| `meeting-a` (repeat) | 109.2 s | 14.6 s | 14.2 s |
-| `meeting-b` | 105.0 s | 19.2 s | 18.8 s |
-| `meeting-c` | 42.9 s | 13.7 s | 13.4 s |
+| Fixture | Audio | Transcript visible | Full result | Server total |
+| --- | --- | --- | --- | --- |
+| `meeting-a` | 109.2 s | 3.9 s | 13.9 s | 13.6 s |
+| `meeting-a` (repeat) | 109.2 s | 3.4 s | 12.9 s | 12.8 s |
+| `meeting-b` | 105.0 s | 4.0 s | 17.6 s | 17.4 s |
+| `meeting-c` | 42.9 s | 2.4 s | 13.5 s | 13.3 s |
 
 Stage split from the recorded runs: transcription 3.5–6.9 s, extraction 9.4–36.8 s. The model is
 the whole latency budget; transcription is noise. Nine extraction samples on `claude-opus-5` gave a
@@ -115,6 +117,22 @@ Pricing assumptions:
   assignment. That credit is not treated as zero operating cost anywhere in this document.
 - Hosting is separate and excluded: the demo targets Vercel Hobby, a fixed monthly cost with no
   per-operation component.
+
+### What this assignment actually spent
+
+Anthropic, metered from the recorded token counts: about $1.40 in total — two full fixture runs
+(about $0.27), a nine-sample benchmark on each of two models ($0.42 and $0.24), one tagged
+comparison run ($0.12), three live browser suites (about $0.53) and the key check. Deepgram: about
+$0.11 of speech synthesis for the fixtures and under $0.05 of transcription, all inside the free
+credit, and all still counted above at list price.
+
+### Spending guard
+
+A public demo URL spends someone's key, so the route refuses more than twelve runs per client
+address per hour and two hundred per process per day, with HTTP 429 and `retry-after`
+(`src/lib/limits.ts`, ADR-0022). Both limits are environment variables. The counters live in the
+process, so a serverless deployment enforces them per instance: this is a floor on abuse, not an
+exact ceiling.
 
 ## 6. Tradeoff measured, not asserted
 
@@ -167,9 +185,9 @@ undecided. After the prompt fix the item is a commitment with `owner.status = "u
 
 | Layer | Count | Needs a key | What it proves |
 | --- | --- | --- | --- |
-| Unit | 60 | no | Quote binding, date resolution, verification rules, cost maths, WAV assembly. |
-| Integration | 24 | no | The pipeline and the API route over recorded provider output, including both variants and every error path. |
-| End-to-end, offline | 6 | no | The real browser path with both providers stubbed, including segment playback. |
+| Unit | 75 | no | Quote binding, date resolution, verification rules, cost maths, event framing, spending limits, WAV assembly. |
+| Integration | 26 | no | The pipeline and the API route over recorded provider output, including both variants, the event order and every error path. |
+| End-to-end, offline | 7 | no | The real browser path with both providers stubbed, including segment playback and the bundled samples. |
 | End-to-end, live | 5 | yes | The same path against live providers on the fixture audio. |
 
 `npm test` runs the first two layers in under a second. `npm run test:e2e:offline` runs the browser
@@ -186,12 +204,11 @@ command line scripts.
 
 ## 10. What I would improve next
 
-1. Stream the stages to the browser, so the transcript appears in about four seconds instead of the
-   user waiting fifteen for everything at once.
-2. Test on real recorded speech with crosstalk and accents; synthetic fixtures make diarization
+1. Test on real recorded speech with crosstalk and accents; synthetic fixtures make diarization
    easier than it is in the field.
-3. Let the user correct an item in place, since a human who disagrees with one owner currently has
+2. Let the user correct an item in place, since a human who disagrees with one owner currently has
    no way to say so.
-4. Cache the instruction prefix, which is about 2300 fixed input tokens per call.
+3. Cache the instruction prefix, which is about 2300 fixed input tokens per call.
+4. Move the spending guard to a shared counter, because the current one is per process.
 5. Add a second reviewer pass over the produced list for recordings above two minutes, where a
    single pass has more room to miss a late cancellation.

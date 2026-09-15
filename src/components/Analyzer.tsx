@@ -2,8 +2,9 @@
 
 import { useEffect, useRef, useState } from "react";
 import { MAX_AUDIO_MS } from "@/lib/pipeline";
+import { readEventStream } from "@/lib/events";
 import { msToClock } from "@/lib/transcript";
-import type { CommitmentsDocument, Evidence } from "@/lib/types";
+import type { CommitmentsDocument, Evidence, Transcript } from "@/lib/types";
 
 type Status = "idle" | "reading" | "processing" | "done" | "error";
 
@@ -12,6 +13,12 @@ const SAMPLES = [
   { id: "meeting-b", label: "Sample B — one agreement changed" },
   { id: "meeting-c", label: "Sample C — hedged answer" },
 ];
+
+const STAGE_TEXT: Record<"transcribing" | "extracting" | "verifying", string> = {
+  transcribing: "Transcribing",
+  extracting: "Reading the discussion",
+  verifying: "Checking every quote",
+};
 
 const WARNING_TEXT: Record<string, string> = {
   missing_date_context:
@@ -30,6 +37,9 @@ export default function Analyzer() {
   const [error, setError] = useState<string | null>(null);
   const [document, setDocument] = useState<CommitmentsDocument | null>(null);
   const [elapsed, setElapsed] = useState(0);
+  const [stage, setStage] = useState<"transcribing" | "extracting" | "verifying" | null>(null);
+  const [transcript, setTranscript] = useState<Transcript | null>(null);
+  const [transcriptMs, setTranscriptMs] = useState<number | null>(null);
 
   const audioRef = useRef<HTMLAudioElement>(null);
   const stopAtRef = useRef<number | null>(null);
@@ -45,6 +55,8 @@ export default function Analyzer() {
 
   async function onPick(picked: File | null) {
     setDocument(null);
+    setTranscript(null);
+    setTranscriptMs(null);
     setError(null);
     setStatus("reading");
     if (audioUrl) URL.revokeObjectURL(audioUrl);
@@ -95,21 +107,42 @@ export default function Analyzer() {
 
   async function onProcess() {
     if (!file) return;
+    const started = Date.now();
     setStatus("processing");
+    setStage("transcribing");
     setError(null);
     setDocument(null);
+    setTranscript(null);
+    setTranscriptMs(null);
+
     const body = new FormData();
     body.set("file", file);
     if (anchorDate) body.set("anchor_date", anchorDate);
+
     try {
       const response = await fetch("/api/process", { method: "POST", body });
-      const payload = await response.json();
-      if (!response.ok) throw new Error(payload.error ?? `Request failed (${response.status}).`);
-      setDocument(payload as CommitmentsDocument);
+      if (!response.ok) {
+        const payload = await response.json().catch(() => ({}));
+        throw new Error(payload.error ?? `Request failed (${response.status}).`);
+      }
+
+      let failure: string | null = null;
+      await readEventStream(response, (event) => {
+        if (event.type === "stage") setStage(event.stage);
+        if (event.type === "transcript") {
+          setTranscript(event.transcript);
+          setTranscriptMs(Date.now() - started);
+        }
+        if (event.type === "document") setDocument(event.document);
+        if (event.type === "error") failure = event.error;
+      });
+      if (failure) throw new Error(failure);
       setStatus("done");
-    } catch (failure) {
-      setError(failure instanceof Error ? failure.message : "Processing failed.");
+    } catch (failed) {
+      setError(failed instanceof Error ? failed.message : "Processing failed.");
       setStatus("error");
+    } finally {
+      setStage(null);
     }
   }
 
@@ -174,7 +207,9 @@ export default function Analyzer() {
             onClick={() => void onProcess()}
             className="rounded bg-accent px-4 py-2 text-sm font-medium text-white disabled:opacity-40"
           >
-            {status === "processing" ? `Working ${(elapsed / 1000).toFixed(1)} s` : "Extract commitments"}
+            {status === "processing"
+              ? `${STAGE_TEXT[stage ?? "transcribing"]} ${(elapsed / 1000).toFixed(1)} s`
+              : "Extract commitments"}
           </button>
         </div>
 
@@ -210,6 +245,15 @@ export default function Analyzer() {
           </p>
         )}
       </section>
+
+      {(transcript ?? document?.transcript) && (
+        <TranscriptPanel
+          transcript={(transcript ?? document?.transcript)!}
+          speakers={document?.speakers ?? []}
+          readyMs={transcriptMs}
+          open={document === null}
+        />
+      )}
 
       {document && (
         <div className="mt-8 space-y-8">
@@ -315,27 +359,56 @@ export default function Analyzer() {
             ))}
           </Section>
 
-          <details className="rounded-lg border border-line p-4">
-            <summary className="cursor-pointer text-sm font-medium">Transcript</summary>
-            <ol className="mt-3 space-y-1 text-sm">
-              {document.transcript.utterances.map((utterance) => {
-                const speaker = document.speakers.find(
-                  (s) => s.label === utterance.speaker_label,
-                );
-                return (
-                  <li key={utterance.index} className="flex gap-3">
-                    <span className="w-24 shrink-0 text-muted">
-                      {msToClock(utterance.start_ms)} {speaker?.name ?? `speaker ${utterance.speaker_label}`}
-                    </span>
-                    <span>{utterance.text}</span>
-                  </li>
-                );
-              })}
-            </ol>
-          </details>
         </div>
       )}
     </main>
+  );
+}
+
+/**
+ * Rendered as soon as transcription finishes, so the user sees the recording in
+ * about four seconds instead of waiting for the whole run (ADR-0021).
+ */
+function TranscriptPanel({
+  transcript,
+  speakers,
+  readyMs,
+  open,
+}: {
+  transcript: Transcript;
+  speakers: CommitmentsDocument["speakers"];
+  readyMs: number | null;
+  open: boolean;
+}) {
+  return (
+    <details
+      data-testid="transcript"
+      open={open}
+      className="mt-8 rounded-lg border border-line p-4"
+    >
+      <summary className="cursor-pointer text-sm font-medium">
+        Transcript
+        {readyMs !== null && (
+          <span className="ml-2 font-normal text-muted">
+            ready in {(readyMs / 1000).toFixed(1)} s
+          </span>
+        )}
+      </summary>
+      <ol className="mt-3 space-y-1 text-sm">
+        {transcript.utterances.map((utterance) => {
+          const speaker = speakers.find((s) => s.label === utterance.speaker_label);
+          return (
+            <li key={utterance.index} className="flex gap-3">
+              <span className="w-24 shrink-0 text-muted">
+                {msToClock(utterance.start_ms)}{" "}
+                {speaker?.name ?? `speaker ${utterance.speaker_label}`}
+              </span>
+              <span>{utterance.text}</span>
+            </li>
+          );
+        })}
+      </ol>
+    </details>
   );
 }
 

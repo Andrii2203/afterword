@@ -201,3 +201,23 @@ Context: The first live run showed that `smart_format` rewrites "March second, t
 Decision: The anchor date parser accepts the US written order month/day/year for slash and dot separated dates, because the product is English-only and Deepgram normalises to that order.
 Consequence: A date spoken in an English recording resolves whether the provider returns words or digits, and a first component above twelve is rejected instead of being reinterpreted.
 Rejected: Turning `smart_format` off was rejected because it also removes the punctuation that makes quotes readable, and guessing day/month order from context was rejected because it invents a fact the recording did not state.
+
+---
+
+## ADR-0021 — Progressive results
+
+Status: accepted (2026-09-15)
+Context: A run takes fourteen to nineteen seconds and the user saw nothing but a timer until all of it finished, although the transcript exists after about four.
+Decision: `POST /api/process` returns newline-delimited JSON events — `stage`, `transcript`, `document` or `error` — and the browser renders the transcript the moment it arrives.
+Consequence: The first useful output appears in about a quarter of the total time, and a failure after the stream opens is delivered as an `error` event that carries the HTTP status it would otherwise have had.
+Rejected: Server-sent events were rejected because the payload is one-way and already framed by lines, and a second non-streaming endpoint was rejected because two code paths for one pipeline drift apart.
+
+---
+
+## ADR-0022 — Spending guard on the public demo
+
+Status: accepted (2026-09-15)
+Context: One run costs about five cents of provider credit, so a public demo URL is an open wallet against a finite key balance.
+Decision: The route refuses a run with HTTP 429 and a `retry-after` header beyond twelve runs per client address per hour or two hundred runs per process per day, both overridable by environment variable.
+Consequence: A shared demo link cannot drain the key faster than its operator intends, and the limits are visible in `src/lib/limits.ts` rather than hidden in a provider dashboard.
+Rejected: A durable counter in Redis or a database was rejected as scope, which means a serverless deployment enforces these limits per instance and the daily cap is a floor rather than an exact ceiling.
