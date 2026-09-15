@@ -99,7 +99,7 @@ worst case of 19 seconds with a wide margin.
 ## Test set
 
 `fixtures/` holds three conversations. Each one has a `*.script.json` source, the audio generated
-from it in `public/samples/<id>.wav`, the recorded transcript and model response, and an
+from it in `public/samples/<id>.mp3`, the recorded transcript and model response, and an
 `*.expected.json` ground truth that was written before the pipeline was ever run against it.
 
 | Fixture | Contains |

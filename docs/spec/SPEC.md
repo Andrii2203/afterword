@@ -129,7 +129,7 @@ T3. `fixtures/meeting-b.*` is variant A with exactly one agreement changed.
 T4. `fixtures/meeting-b.expected.json` is the expected list for variant B, written before any run.
 T5. `fixtures/meeting-c.*` is a recording that contains a spoken anchor date and a hedged acceptance on which the product must decline to conclude.
 T6. Scoring reports inclusion recall, exclusion precision and field accuracy per fixture.
-T7. Each fixture consists of a `.script.json` source, a generated `.wav` audio file, a checked-in `.asr.json` transcript and an `.expected.json` ground truth.
+T7. Each fixture consists of a `.script.json` source, a generated `public/samples/<id>.mp3` recording, a checked-in `.asr.json` transcript and an `.expected.json` ground truth.
 T8. Every `.expected.json` is written from the script before the pipeline is run against that fixture.
 
 ## 12. Metrics and cost
