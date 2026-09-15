@@ -90,12 +90,15 @@ async function runOne(id: string) {
   return report.passed;
 }
 
-const ids = process.argv.slice(2);
-if (ids.length === 0) {
-  console.error("Pass at least one fixture id, for example meeting-a.");
-  process.exit(1);
+async function main(): Promise<void> {
+  const ids = process.argv.slice(2);
+  if (ids.length === 0) {
+    console.error("Pass at least one fixture id, for example meeting-a.");
+    process.exit(1);
+  }
+  let allPassed = true;
+  for (const id of ids) allPassed = (await runOne(id)) && allPassed;
+  process.exitCode = allPassed ? 0 : 1;
 }
 
-let allPassed = true;
-for (const id of ids) allPassed = (await runOne(id)) && allPassed;
-process.exit(allPassed ? 0 : 1);
+void main();

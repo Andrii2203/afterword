@@ -1,4 +1,5 @@
 import { defineConfig, devices } from "@playwright/test";
+import "./scripts/env";
 
 /**
  * End-to-end layer (ADR-0016): a real browser against a built application and

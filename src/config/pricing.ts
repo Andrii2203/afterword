@@ -4,6 +4,8 @@
  * These are provider list prices, not negotiated rates, and they exclude taxes.
  * `checked_on` is the date a human last compared the number with the source URL.
  * Hosting is reported separately and is never folded into per-operation cost (M4).
+ * A new Deepgram account receives $200 of credit; that credit absorbs every run
+ * made for this assignment but is deliberately not treated as zero cost here.
  */
 export const PRICING = {
   asr: {

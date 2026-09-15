@@ -26,6 +26,8 @@ The transcript is a numbered list of utterances in the form: [index] speaker clo
 
 Report a task as a commitment only when someone explicitly states it will be done: the prospective owner accepting it, or the other speaker stating it on that person's behalf without contradiction.
 Report a task in "excluded" with reason "never_accepted" when it was only suggested, considered or listed as an idea.
+Acceptance and ownership are independent: a task both speakers agree will be done is a commitment even when nobody is named to do it, and it is reported with an empty owner_name rather than as excluded.
+Use "never_accepted" for work that was not agreed, never for work that was agreed while only the owner stayed undecided.
 Report a task in "excluded" with reason "cancelled" when it was agreed earlier and a later utterance says it will not be done.
 Report a task in "excluded" with reason "ambiguous" when acceptance was hedged, for example "maybe", "I might" or "ask me again", and add an open question naming the undecided point.
 Report a question in "open_questions" when it is asked in the recording and receives no explicit answer before the recording ends.

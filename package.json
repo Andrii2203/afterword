@@ -16,7 +16,9 @@
     "fixtures:audio": "tsx scripts/make-audio.ts meeting-a meeting-b meeting-c",
     "fixtures:run": "tsx scripts/run-fixture.ts meeting-a meeting-b meeting-c",
     "fixtures:stub-audio": "tsx scripts/make-stub-audio.ts meeting-a meeting-b meeting-c",
-    "test:e2e:offline": "npm run fixtures:stub-audio && cross-env STUB_PROVIDERS=1 playwright test tests/e2e/offline.spec.ts"
+    "test:e2e:offline": "npm run fixtures:stub-audio && cross-env STUB_PROVIDERS=1 playwright test tests/e2e/offline.spec.ts",
+    "check:keys": "tsx scripts/check-keys.ts",
+    "fixtures:rescore": "tsx scripts/rescore.ts meeting-a meeting-b meeting-c"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.125.0",

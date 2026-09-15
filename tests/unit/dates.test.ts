@@ -20,6 +20,15 @@ describe("findAnchorDate", () => {
     expect(findAnchorDate("The anchor is 2026-03-02 for this call.")).toBe("2026-03-02");
   });
 
+  it("reads the US written form that speech recognition produces", () => {
+    expect(findAnchorDate("I'm Maya Chen, and today is Monday, 03/02/2026.")).toBe("2026-03-02");
+    expect(findAnchorDate("today is 3/2/2026")).toBe("2026-03-02");
+  });
+
+  it("returns null when the first component cannot be a month", () => {
+    expect(findAnchorDate("reference number 13/02/2026 was filed")).toBeNull();
+  });
+
   it("returns null when only weekdays are mentioned", () => {
     expect(findAnchorDate("Let's do it by Thursday, before the release.")).toBeNull();
   });

@@ -1,21 +1,36 @@
 {
   "anchor_date": "",
   "speakers": [
-    { "speaker_label": "0", "name": "Maya Chen", "utterance_index": 0, "quote": "I'm Maya Chen" },
-    { "speaker_label": "1", "name": "Daniel Okafor", "utterance_index": 1, "quote": "I'm Daniel Okafor" }
+    {
+      "speaker_label": "speaker_0",
+      "name": "Maya Chen",
+      "utterance_index": 0,
+      "quote": "I'm Maya Chen. I lead product on the onboarding project."
+    },
+    {
+      "speaker_label": "speaker_1",
+      "name": "Daniel Okafor",
+      "utterance_index": 1,
+      "quote": "Hi, Maya. I'm Daniel Okafor."
+    }
   ],
   "commitments": [
     {
-      "title": "Fix the duplicate welcome email",
+      "title": "Fix the duplicate welcome email and merge the fix",
       "owner_name": "Daniel Okafor",
       "deadline_raw": "by the end of the week",
       "deadline_kind": "relative",
       "deadline_absolute": "",
       "evidence": [
         {
-          "utterance_index": 3,
-          "quote": "I'll fix the duplicate welcome email, and I'll have it merged by the end of the week",
+          "utterance_index": 4,
+          "quote": "I'll fix the duplicate welcome email, and I'll have it merged by the end of the week.",
           "kind": "acceptance"
+        },
+        {
+          "utterance_index": 5,
+          "quote": "Good. That one is yours then.",
+          "kind": "owner"
         }
       ],
       "superseded": []
@@ -28,18 +43,22 @@
       "deadline_absolute": "",
       "evidence": [
         {
-          "utterance_index": 7,
-          "quote": "I'll deliver the new checklist copy by Thursday instead",
+          "utterance_index": 13,
+          "quote": "I'll deliver the new checklist copy by Thursday instead.",
           "kind": "correction"
         },
-        { "utterance_index": 8, "quote": "Thursday works", "kind": "acceptance" }
+        {
+          "utterance_index": 14,
+          "quote": "Thursday works.",
+          "kind": "acceptance"
+        }
       ],
       "superseded": [
         {
           "field": "deadline",
           "old_value": "by Tuesday",
-          "utterance_index": 5,
-          "quote": "I can have the new copy ready by Tuesday"
+          "utterance_index": 9,
+          "quote": "I can have the new copy ready by Tuesday."
         }
       ]
     },
@@ -51,13 +70,13 @@
       "deadline_absolute": "",
       "evidence": [
         {
-          "utterance_index": 17,
-          "quote": "the runbook must be updated before the release",
+          "utterance_index": 29,
+          "quote": "The runbook must be updated before the release.",
           "kind": "acceptance"
         },
         {
-          "utterance_index": 18,
-          "quote": "We are not deciding who does that right now",
+          "utterance_index": 30,
+          "quote": "We are not deciding who does that right now.",
           "kind": "owner"
         }
       ],
@@ -69,16 +88,32 @@
       "title": "Add a progress bar to the import screen",
       "reason": "never_accepted",
       "evidence": [
-        { "utterance_index": 10, "quote": "I don't want to commit to that today", "kind": "mention" },
-        { "utterance_index": 11, "quote": "It stays an idea, nobody is picking it up", "kind": "mention" }
+        {
+          "utterance_index": 16,
+          "quote": "We could, but I don't want to commit to that today.",
+          "kind": "mention"
+        },
+        {
+          "utterance_index": 17,
+          "quote": "Let's leave it as an idea.",
+          "kind": "mention"
+        }
       ]
     },
     {
       "title": "Write a migration script for the legacy accounts",
       "reason": "cancelled",
       "evidence": [
-        { "utterance_index": 14, "quote": "Cancel it", "kind": "cancellation" },
-        { "utterance_index": 15, "quote": "The migration script is cancelled", "kind": "cancellation" }
+        {
+          "utterance_index": 22,
+          "quote": "Cancel it.",
+          "kind": "cancellation"
+        },
+        {
+          "utterance_index": 26,
+          "quote": "The migration script is canceled.",
+          "kind": "cancellation"
+        }
       ]
     }
   ],
@@ -88,8 +123,13 @@
       "raised_by": "Daniel Okafor",
       "evidence": [
         {
-          "utterance_index": 19,
-          "quote": "Do we need legal to review the new consent text",
+          "utterance_index": 30,
+          "quote": "Do we need legal to review the new consent text?",
+          "kind": "mention"
+        },
+        {
+          "utterance_index": 32,
+          "quote": "Let's leave that open until we get an answer.",
           "kind": "mention"
         }
       ]

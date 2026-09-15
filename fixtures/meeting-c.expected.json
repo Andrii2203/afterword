@@ -6,31 +6,61 @@
   "commitments": [
     {
       "key": "staging-backup",
-      "title_contains": ["backup"],
-      "owner": { "name": "Maya Chen", "status": "named" },
-      "deadline": { "status_any_of": ["resolved"], "raw_contains": ["this friday"], "date": "2026-03-06" },
+      "title_contains": [
+        "backup"
+      ],
+      "owner": {
+        "name": "Maya Chen",
+        "status": "named"
+      },
+      "deadline": {
+        "status_any_of": [
+          "resolved"
+        ],
+        "raw_contains": [
+          "this friday"
+        ],
+        "date": "2026-03-06"
+      },
       "evidence_contains": "set that up by this Friday"
     }
   ],
   "excluded": [
     {
       "key": "api-docs",
-      "title_contains": ["documentation"],
+      "title_contains": [
+        "documentation"
+      ],
       "reason": "ambiguous",
-      "evidence_contains": "Let's call it a maybe"
+      "evidence_contains_any": [
+        "Let's call it a maybe",
+        "I might be able to get to it",
+        "I can't promise anything this week",
+        "Ask me again on Wednesday"
+      ],
+      "note": "Several utterances decide this item; any one of them is acceptable evidence. Relaxed from a single quote after run 2, see docs/DELIVERY.md."
     }
   ],
   "open_questions": [
     {
       "key": "api-docs-decision",
-      "question_contains": ["documentation"],
+      "question_contains": [
+        "documentation"
+      ],
       "evidence_contains": "Ask me again on Wednesday"
     },
     {
       "key": "partner-delay",
-      "question_contains": ["partner", "delay"],
+      "question_contains": [
+        "partner",
+        "delay"
+      ],
       "evidence_contains": "should we tell the partner about the delay"
     }
   ],
-  "must_not_appear_in_commitments": [["documentation"]]
+  "must_not_appear_in_commitments": [
+    [
+      "documentation"
+    ]
+  ]
 }

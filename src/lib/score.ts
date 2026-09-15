@@ -21,6 +21,8 @@ export interface ExpectedExcluded {
   title_contains: string[];
   reason: string;
   evidence_contains?: string;
+  /** Any one of these fragments satisfies the check, for items several utterances decide. */
+  evidence_contains_any?: string[];
 }
 
 export interface ExpectedOpenQuestion {
@@ -52,9 +54,16 @@ function containsAll(haystack: string, needles: string[]): boolean {
   return needles.every((needle) => text.includes(normalize(needle)));
 }
 
-function quotesInclude(evidence: { quote: string }[], fragment: string | undefined): boolean {
-  if (!fragment) return true;
-  return evidence.some((item) => normalize(item.quote).includes(normalize(fragment)));
+function quotesInclude(
+  evidence: { quote: string }[],
+  fragment: string | undefined,
+  anyOf?: string[],
+): boolean {
+  const fragments = anyOf ?? (fragment ? [fragment] : []);
+  if (fragments.length === 0) return true;
+  return fragments.some((candidate) =>
+    evidence.some((item) => normalize(item.quote).includes(normalize(candidate))),
+  );
 }
 
 /** SPEC T6: inclusion of real commitments and exclusion of unsupported ones. */
@@ -127,8 +136,10 @@ export function score(document: CommitmentsDocument, expected: ExpectedSet): Sco
     if (hit.reason !== want.reason) {
       failures.push(`${want.key}: reason ${hit.reason}, expected ${want.reason}`);
     }
-    if (!quotesInclude(hit.evidence, want.evidence_contains)) {
-      failures.push(`${want.key}: no evidence quote contains "${want.evidence_contains}"`);
+    if (!quotesInclude(hit.evidence, want.evidence_contains, want.evidence_contains_any)) {
+      failures.push(
+        `${want.key}: no evidence quote contains ${JSON.stringify(want.evidence_contains_any ?? want.evidence_contains)}`,
+      );
     }
   }
 

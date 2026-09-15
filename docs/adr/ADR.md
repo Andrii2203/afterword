@@ -171,3 +171,33 @@ Context: The browser path had to be provable before any provider key existed, an
 Decision: `STUB_PROVIDERS=1` makes the server read a recorded transcript and a recorded model response for the uploaded fixture instead of calling the providers, and that flag is set only by `npm run test:e2e:offline`.
 Consequence: Upload, route handling, verification, rendering and segment playback are tested in a real browser on every change, and the live end-to-end suite stays a deliberate, billable run.
 Rejected: Intercepting provider HTTP inside the browser was rejected because the calls happen on the server, and shipping the flag enabled was rejected because the product must process real input.
+
+---
+
+## ADR-0018 — Provider survey
+
+Status: accepted (2026-09-15)
+Context: ADR-0002 and ADR-0008 picked Deepgram from the keys that were available, without comparing the market.
+Decision: Deepgram is kept for both transcription and fixture speech because it is the cheapest batch provider that returns diarization and word timestamps in one call ($0.0043 per audio minute), and because a new account receives $200 of credit that covers this assignment many times over.
+Consequence: AssemblyAI stays the documented swap if diarization accuracy on real, noisy audio ever becomes the binding constraint, and the swap is confined to `src/lib/asr.ts` because transcription sits behind the `AsrProvider` interface.
+Rejected: ElevenLabs Scribe and Google Chirp were rejected on price and on subscription-shaped billing, OpenAI `gpt-4o-transcribe` was rejected because it returns no speaker labels, and local WhisperX with pyannote was rejected because it adds a Python and GPU dependency to a repository that currently needs only Node.
+
+---
+
+## ADR-0019 — Fixture speech provider
+
+Status: accepted (2026-09-15)
+Context: Free open-weight speech synthesis (Kokoro, Piper, edge-tts) would remove the only paid step that is not part of the user flow.
+Decision: Fixture audio keeps Deepgram Aura-2 because the three scripts cost about $0.12 of list price in total, and a local model would add a Python or ONNX runtime to the one command that regenerates the test set.
+Consequence: Regenerating the whole test set stays `npm run fixtures:audio` with no system dependency, and the cost is reported at list price even though the free credit absorbs it.
+Rejected: Kokoro was the strongest free alternative and is the fallback if the test set ever has to be regenerated without a Deepgram account.
+
+---
+
+## ADR-0020 — Written date form from speech recognition
+
+Status: accepted (2026-09-15)
+Context: The first live run showed that `smart_format` rewrites "March second, twenty twenty six" into `03/02/2026`, which the anchor date parser did not read, so a resolvable deadline was reported as unresolved.
+Decision: The anchor date parser accepts the US written order month/day/year for slash and dot separated dates, because the product is English-only and Deepgram normalises to that order.
+Consequence: A date spoken in an English recording resolves whether the provider returns words or digits, and a first component above twelve is rejected instead of being reinterpreted.
+Rejected: Turning `smart_format` off was rejected because it also removes the punctuation that makes quotes readable, and guessing day/month order from context was rejected because it invents a fact the recording did not state.

@@ -47,8 +47,12 @@ export function verify({ llm, transcript, userAnchorDate }: VerifyInput): Verify
     if (!claim.name.trim()) continue;
     const hit = locateQuote(transcript, claim.quote, claim.utterance_index);
     if (!hit) continue;
-    names[claim.speaker_label] = claim.name.trim();
-    speakerEvidence[claim.speaker_label] = {
+    // The label the model echoes back may be the display form (`speaker_0`)
+    // rather than the diarization label (`0`); the quote decides which speaker
+    // it is, and the claimed label is only a fallback.
+    const label = resolveLabel(claim.speaker_label, hit.speaker_label, transcript);
+    names[label] = claim.name.trim();
+    speakerEvidence[label] = {
       speaker: claim.name.trim(),
       quote: claim.quote,
       kind: "mention",
@@ -160,6 +164,15 @@ export function verify({ llm, transcript, userAnchorDate }: VerifyInput): Verify
     anchor,
     warnings: [...warnings].sort(),
   };
+}
+
+/** Map a claimed speaker label onto a real diarization label. */
+function resolveLabel(claimed: string, quotedBy: string, transcript: Transcript): string {
+  const labels = new Set(transcript.utterances.map((u) => u.speaker_label));
+  if (labels.has(claimed)) return claimed;
+  const digits = claimed.match(/\d+/)?.[0];
+  if (digits && labels.has(digits)) return digits;
+  return quotedBy;
 }
 
 function byStart<T extends { evidence: Evidence[] }>(items: T[]): T[] {

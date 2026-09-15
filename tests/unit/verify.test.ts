@@ -232,6 +232,22 @@ describe("verify", () => {
     expect(result.open_questions[0].id).toBe("q1");
   });
 
+  it("binds a name when the model echoes the display label instead of the diarization label", () => {
+    const llm = baseLlm();
+    llm.speakers = llm.speakers.map((s) => ({ ...s, speaker_label: `speaker_${s.speaker_label}` }));
+    const result = verify({ llm, transcript });
+    expect(result.speakers.map((s) => s.name)).toEqual(["Maya Chen", "Daniel Okafor"]);
+    expect(result.warnings).not.toContain("speaker_unnamed");
+    expect(result.commitments[0].evidence[0].speaker).toBe("Daniel Okafor");
+  });
+
+  it("falls back to the speaker of the quoted utterance for an unknown label", () => {
+    const llm = baseLlm();
+    llm.speakers = [{ ...llm.speakers[1], speaker_label: "B" }];
+    const result = verify({ llm, transcript });
+    expect(result.speakers.find((s) => s.label === "1")?.name).toBe("Daniel Okafor");
+  });
+
   it("warns when a diarized speaker never gets a name", () => {
     const llm = baseLlm();
     llm.speakers = [llm.speakers[0]];

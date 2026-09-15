@@ -134,6 +134,13 @@ export function findAnchorDate(text: string): string | null {
     return fromParts(Number(isoMatch[1]), Number(isoMatch[2]), Number(isoMatch[3]));
   }
 
+  // Speech recognition rewrites a spoken date into the written US form, so
+  // "March second, twenty twenty six" arrives as 03/02/2026 (ADR-0020).
+  const slashMatch = text.match(/\b(\d{1,2})[/.](\d{1,2})[/.](\d{4})\b/);
+  if (slashMatch) {
+    return fromParts(Number(slashMatch[3]), Number(slashMatch[1]), Number(slashMatch[2]));
+  }
+
   const tokens = normalize(text).split(" ");
   for (let i = 0; i < tokens.length; i += 1) {
     const month = MONTHS[tokens[i]];

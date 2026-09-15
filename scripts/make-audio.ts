@@ -67,16 +67,18 @@ async function build(id: string, apiKey: string): Promise<void> {
   if (seconds > 180) console.warn(`${id} is longer than the 180 s limit.`);
 }
 
-const apiKey = process.env.DEEPGRAM_API_KEY;
-if (!apiKey) {
-  console.error("DEEPGRAM_API_KEY is not set.");
-  process.exit(1);
+async function main(): Promise<void> {
+  const apiKey = process.env.DEEPGRAM_API_KEY;
+  if (!apiKey) {
+    console.error("DEEPGRAM_API_KEY is not set.");
+    process.exit(1);
+  }
+  const ids = process.argv.slice(2);
+  if (ids.length === 0) {
+    console.error("Pass at least one fixture id, for example meeting-a.");
+    process.exit(1);
+  }
+  for (const id of ids) await build(id, apiKey);
 }
 
-const ids = process.argv.slice(2);
-if (ids.length === 0) {
-  console.error("Pass at least one fixture id, for example meeting-a.");
-  process.exit(1);
-}
-
-for (const id of ids) await build(id, apiKey);
+void main();

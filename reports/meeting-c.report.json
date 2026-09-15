@@ -1,0 +1,36 @@
+{
+  "report": {
+    "id": "meeting-c",
+    "passed": false,
+    "inclusion_recall": 1,
+    "exclusion_precision": 1,
+    "failures": [
+      "api-docs: no evidence quote contains \"Let's call it a maybe\""
+    ],
+    "matched": {
+      "staging-backup": "c1",
+      "api-docs": "x1",
+      "api-docs-decision": "q1",
+      "partner-delay": "q2"
+    }
+  },
+  "metrics": {
+    "audio_seconds": 42.89,
+    "asr_ms": 6907,
+    "llm_ms": 10623,
+    "total_ms": 17531,
+    "asr_cost_usd": 0.003074,
+    "llm_cost_usd": 0.04027,
+    "cost_per_audio_minute_usd": 0.060635,
+    "tokens": {
+      "input": 2924,
+      "output": 1026,
+      "retries": 0
+    },
+    "models": {
+      "asr": "nova-3",
+      "llm": "claude-opus-5"
+    }
+  },
+  "warnings": []
+}
