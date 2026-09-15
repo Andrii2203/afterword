@@ -1,13 +1,3 @@
-/**
- * Build placeholder audio for the offline browser layer.
- *
- * The file is not speech: it is a tone whose pitch changes on every utterance
- * boundary of the deterministic transcript, so seeking to an evidence span is
- * audible and verifiable without spending money on providers. It exists only
- * for `tests/e2e/offline.spec.ts` and is never part of the test set.
- *
- * Usage: npx tsx scripts/make-stub-audio.ts meeting-a meeting-b meeting-c
- */
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { encodeMp3 } from "../src/lib/mp3";
@@ -42,7 +32,7 @@ async function main(): Promise<void> {
     const recorded = join(FIXTURES, `${id}.asr.json`);
     const source = existsSync(recorded) ? recorded : join(FIXTURES, `${id}.synth.asr.json`);
     const transcript = JSON.parse(readFileSync(source, "utf8")) as Transcript;
-    // Encoded like the real recordings, so the stub also obeys the upload limit.
+
     const mp3 = await encodeMp3({
       sampleRate: SAMPLE_RATE,
       channels: 1,

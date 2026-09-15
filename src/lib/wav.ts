@@ -1,8 +1,3 @@
-/**
- * Minimal PCM WAV reader and writer, used to assemble fixture audio from
- * text-to-speech segments without an external binary (ADR-0013).
- */
-
 export interface WavAudio {
   sampleRate: number;
   channels: number;
@@ -67,7 +62,6 @@ export function silence(audio: Omit<WavAudio, "data">, ms: number): Buffer {
   return Buffer.alloc((frames * audio.channels * audio.bitsPerSample) / 8);
 }
 
-/** Concatenate segments that share one PCM format, inserting a gap between them. */
 export function concatWav(segments: Buffer[], gapMs = 0): Buffer {
   if (segments.length === 0) throw new Error("Nothing to concatenate.");
   const parsed = segments.map(parseWav);

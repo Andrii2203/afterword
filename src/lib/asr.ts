@@ -11,7 +11,6 @@ export interface AsrProvider {
   transcribe(audio: Uint8Array, contentType: string): Promise<AsrResult>;
 }
 
-/** The subset of the Deepgram pre-recorded response this product depends on. */
 export interface DeepgramResponse {
   metadata?: { duration?: number };
   results?: {
@@ -36,7 +35,6 @@ export const DEEPGRAM_QUERY = {
   smart_format: "true",
 } as const;
 
-/** Deepgram seconds to the product's millisecond transcript (ADR-0002). */
 export function mapDeepgramResponse(response: DeepgramResponse): Transcript {
   const utterances = response.results?.utterances ?? [];
   return {

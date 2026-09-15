@@ -1,9 +1,3 @@
-/**
- * Generate fixture audio from a checked-in script with Deepgram Aura-2 (ADR-0008).
- *
- * Usage: npx tsx scripts/make-audio.ts meeting-a meeting-b meeting-c
- * Requires DEEPGRAM_API_KEY.
- */
 import "./env";
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";

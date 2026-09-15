@@ -9,12 +9,6 @@ export const maxDuration = 120;
 
 const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/;
 
-/**
- * Returns newline-delimited events, not one JSON document (ADR-0021): the
- * transcript is sent as soon as it exists, while extraction is still running.
- * Rejections that happen before the first byte keep a real HTTP status; a
- * failure after the stream opens arrives as an `error` event carrying one.
- */
 export async function POST(request: Request): Promise<Response> {
   let form: FormData;
   try {

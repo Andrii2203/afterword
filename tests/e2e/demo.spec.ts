@@ -12,7 +12,6 @@ const ready =
 
 test.skip(!ready, "Set RUN_E2E=1, both API keys and generate fixture audio first.");
 
-/** Wall-clock time from the click to the first useful output and to the result. */
 const latencies: { id: string; transcript_ms: number; ms: number; server_ms: number }[] = [];
 
 test.afterAll(() => {
@@ -24,7 +23,6 @@ test.afterAll(() => {
   );
 });
 
-/** Fail fast: an error in the UI ends the wait instead of burning the test timeout. */
 async function waitForResult(page: import("@playwright/test").Page, timeout = 60_000) {
   const outcome = await Promise.race([
     page.getByTestId("metrics").waitFor({ state: "visible", timeout }).then(() => "metrics"),
@@ -41,7 +39,6 @@ async function analyse(page: import("@playwright/test").Page, id: string) {
   const started = Date.now();
   await page.getByTestId("process-button").click();
 
-  // The transcript is the first useful output and must arrive well before the list.
   await expect(page.getByTestId("transcript")).toBeVisible({ timeout: 60_000 });
   const transcriptMs = Date.now() - started;
 

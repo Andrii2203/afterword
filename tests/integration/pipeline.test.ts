@@ -68,8 +68,6 @@ describe("pipeline state rules", () => {
   });
 
   it("changes nothing else between variant A and variant B", async () => {
-    // Titles are free text and differ in wording between runs, so the two
-    // variants are compared by topic, owner and deadline state.
     const topics = ["duplicate", "checklist", "runbook", "progress bar", "migration"];
     const shape = (document: Awaited<ReturnType<typeof run>>) =>
       document.commitments

@@ -1,9 +1,3 @@
-/**
- * Score a recorded run again without calling any provider.
- *
- * Usage: npx tsx scripts/rescore.ts meeting-a meeting-b meeting-c
- * Reads fixtures/<id>.document.json produced by scripts/run-fixture.ts.
- */
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { score, type ExpectedSet } from "../src/lib/score";

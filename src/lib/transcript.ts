@@ -1,6 +1,5 @@
 import type { Transcript, Utterance } from "./types";
 
-/** Lowercase, drop punctuation, collapse whitespace; apostrophes are kept. */
 export function normalize(text: string): string {
   return text
     .toLowerCase()
@@ -11,7 +10,6 @@ export function normalize(text: string): string {
     .replace(/\s+/g, " ");
 }
 
-/** Milliseconds as `m:ss`. */
 export function msToClock(ms: number): string {
   const total = Math.floor(ms / 1000);
   const minutes = Math.floor(total / 60);
@@ -23,7 +21,6 @@ export function speakerDisplay(label: string, names: Record<string, string>): st
   return names[label] ?? `speaker_${label}`;
 }
 
-/** The transcript as the model sees it: one numbered line per utterance. */
 export function renderTranscript(
   transcript: Transcript,
   names: Record<string, string> = {},
@@ -43,10 +40,6 @@ export interface QuoteHit {
   end_ms: number;
 }
 
-/**
- * Bind a quote to real audio. The model's `hintIndex` is checked first, then the
- * whole transcript. Timestamps always come from the transcript (ADR-0005).
- */
 export function locateQuote(
   transcript: Transcript,
   quote: string,
@@ -69,7 +62,6 @@ export function locateQuote(
   };
 }
 
-/** Narrow a quote to the exact word span inside an utterance, when word timings exist. */
 function alignWords(
   utterance: Utterance,
   needle: string,

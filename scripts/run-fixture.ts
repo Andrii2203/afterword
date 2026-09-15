@@ -1,15 +1,3 @@
-/**
- * Run the real pipeline over fixture audio, score it against the expected list
- * and record the run for offline tests.
- *
- * Usage: npx tsx scripts/run-fixture.ts meeting-a meeting-b meeting-c
- *        npx tsx scripts/run-fixture.ts --model=claude-sonnet-5 --tag=sonnet meeting-a
- *
- * Requires DEEPGRAM_API_KEY and ANTHROPIC_API_KEY.
- * Writes fixtures/<id>.asr.json, fixtures/<id>.llm.json, fixtures/<id>.document.json
- * and reports/<id>.report.json. A tagged run writes <id>.<tag>.* instead and reuses
- * the recorded transcript, so the model is the only variable.
- */
 import "./env";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";

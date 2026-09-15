@@ -1,8 +1,3 @@
-/**
- * Verify that both provider keys work, with the smallest possible billable call.
- *
- * Usage: npm run check:keys
- */
 import "./env";
 import Anthropic from "@anthropic-ai/sdk";
 import { PRICING } from "../src/config/pricing";

@@ -2,11 +2,6 @@ import { existsSync } from "node:fs";
 import { join } from "node:path";
 import { expect, test } from "@playwright/test";
 
-/**
- * The whole browser path with both providers stubbed (ADR-0017): real upload,
- * real route handler, real verification, real rendering, real playback.
- * Run with `npm run test:e2e:offline`; it needs no API key.
- */
 const AUDIO = (id: string) => join(process.cwd(), "fixtures", "audio", `${id}.stub.mp3`);
 
 test.skip(
@@ -14,7 +9,6 @@ test.skip(
   "Run with npm run test:e2e:offline.",
 );
 
-/** Fail fast: an error in the UI ends the wait instead of burning the test timeout. */
 async function waitForResult(page: import("@playwright/test").Page, timeout = 60_000) {
   const outcome = await Promise.race([
     page.getByTestId("metrics").waitFor({ state: "visible", timeout }).then(() => "metrics"),

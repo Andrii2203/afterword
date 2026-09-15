@@ -88,7 +88,6 @@ function addDays(anchor: string, days: number): string {
   return iso(date);
 }
 
-/** `first` / `twenty first` / `2nd` / `2` at position `i`; returns the day and tokens consumed. */
 function readDay(tokens: string[], i: number): { day: number; used: number } | null {
   const numeric = tokens[i]?.match(/^(\d{1,2})(st|nd|rd|th)?$/);
   if (numeric) return { day: Number(numeric[1]), used: 1 };
@@ -103,7 +102,6 @@ function readDay(tokens: string[], i: number): { day: number; used: number } | n
   return null;
 }
 
-/** `2026` / `twenty twenty six` / `two thousand twenty six`; returns the year and tokens consumed. */
 function readYear(tokens: string[], i: number): { year: number; used: number } | null {
   if (/^\d{4}$/.test(tokens[i] ?? "")) return { year: Number(tokens[i]), used: 1 };
 
@@ -124,18 +122,12 @@ function readYear(tokens: string[], i: number): { year: number; used: number } |
   return null;
 }
 
-/**
- * The only anchor date the pipeline accepts from a recording: a full calendar
- * date spoken in the transcript. A month without a year is not an anchor (R6).
- */
 export function findAnchorDate(text: string): string | null {
   const isoMatch = text.match(/\b(\d{4})-(\d{2})-(\d{2})\b/);
   if (isoMatch) {
     return fromParts(Number(isoMatch[1]), Number(isoMatch[2]), Number(isoMatch[3]));
   }
 
-  // Speech recognition rewrites a spoken date into the written US form, so
-  // "March second, twenty twenty six" arrives as 03/02/2026 (ADR-0020).
   const slashMatch = text.match(/\b(\d{1,2})[/.](\d{1,2})[/.](\d{4})\b/);
   if (slashMatch) {
     return fromParts(Number(slashMatch[3]), Number(slashMatch[1]), Number(slashMatch[2]));
@@ -157,7 +149,6 @@ export function findAnchorDate(text: string): string | null {
 
 const LEAD_IN = /^(by|on|due|until|till|no later than|before end of|the)\s+/;
 
-/** SPEC D1-D7: resolve only expressions whose meaning is not disputable. */
 export function resolveRelative(raw: string, anchor: string | null): string | null {
   if (!anchor || !raw.trim()) return null;
 

@@ -11,7 +11,6 @@ import {
   stubExtractor,
 } from "../support/fixtures";
 
-/** Collect every event of a streaming response. */
 async function collect(response: Response): Promise<PipelineEvent[]> {
   const events: PipelineEvent[] = [];
   await readEventStream(response, (event) => events.push(event));

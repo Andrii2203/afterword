@@ -6,7 +6,7 @@ import { DocumentSchema, type CommitmentsDocument } from "./types";
 import { verify } from "./verify";
 
 export const MAX_AUDIO_MS = 180_000;
-// The deployment target caps a request body at 4.5 MB (ADR-0023).
+
 export const MAX_UPLOAD_BYTES = 4_500_000;
 export const ACCEPTED_TYPES = [
   "audio/wav",
@@ -44,7 +44,6 @@ export interface PipelineInput {
   userAnchorDate?: string | null;
 }
 
-/** SPEC P1-P7; `onEvent` receives each stage as it completes (ADR-0021). */
 export async function runPipeline(
   input: PipelineInput,
   deps: PipelineDeps,

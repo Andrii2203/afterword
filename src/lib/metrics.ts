@@ -7,11 +7,10 @@ export interface UsageInput {
   llm_ms: number;
   total_ms: number;
   tokens: { input: number; output: number; retries: number };
-  /** The model that produced this run; defaults to the configured one. */
+
   model?: string;
 }
 
-/** SPEC M1-M5: cost is computed from measured usage, never from a target. */
 export function computeMetrics(usage: UsageInput): Metrics {
   const model = usage.model ?? PRICING.llm.model;
   const price = llmPrice(model);

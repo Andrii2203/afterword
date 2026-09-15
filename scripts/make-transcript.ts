@@ -1,12 +1,3 @@
-/**
- * Deterministic stand-in for speech recognition.
- *
- * It turns a fixture script into a transcript with the same shape Deepgram
- * returns, so unit and integration tests can run with no network and no key.
- * It is never used in the product flow.
- *
- * Usage: npx tsx scripts/make-transcript.ts meeting-a meeting-b meeting-c
- */
 import { readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import type { Transcript } from "../src/lib/types";

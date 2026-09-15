@@ -375,10 +375,6 @@ export default function Analyzer() {
   );
 }
 
-/**
- * Rendered as soon as transcription finishes, so the user sees the recording in
- * about four seconds instead of waiting for the whole run (ADR-0021).
- */
 function TranscriptPanel({
   transcript,
   speakers,

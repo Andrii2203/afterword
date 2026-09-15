@@ -30,26 +30,18 @@ export interface VerifyResult {
 
 const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/;
 
-/**
- * Code enforcement of SPEC rules R5-R14. Nothing the model claims about
- * timestamps, dates or owners is trusted; everything is re-derived from the
- * transcript.
- */
 export function verify({ llm, transcript, userAnchorDate }: VerifyInput): VerifyResult {
   const warnings = new Set<string>();
   const transcriptText = transcript.utterances.map((u) => u.text).join(" ");
   const normalizedTranscript = normalize(transcriptText);
 
-  // --- speakers ------------------------------------------------------------
   const names: Record<string, string> = {};
   const speakerEvidence: Record<string, Evidence> = {};
   for (const claim of llm.speakers) {
     if (!claim.name.trim()) continue;
     const hit = locateQuote(transcript, claim.quote, claim.utterance_index);
     if (!hit) continue;
-    // The label the model echoes back may be the display form (`speaker_0`)
-    // rather than the diarization label (`0`); the quote decides which speaker
-    // it is, and the claimed label is only a fallback.
+
     const label = resolveLabel(claim.speaker_label, hit.speaker_label, transcript);
     names[label] = claim.name.trim();
     speakerEvidence[label] = {
@@ -72,10 +64,8 @@ export function verify({ llm, transcript, userAnchorDate }: VerifyInput): Verify
     };
   });
 
-  // --- anchor date ---------------------------------------------------------
   const anchor = resolveAnchor(transcriptText, userAnchorDate ?? null);
 
-  // --- evidence ------------------------------------------------------------
   const toEvidence = (item: LlmEvidence): Evidence | null => {
     const hit = locateQuote(transcript, item.quote, item.utterance_index);
     if (!hit) return null;
@@ -95,7 +85,6 @@ export function verify({ llm, transcript, userAnchorDate }: VerifyInput): Verify
     return mapped;
   };
 
-  // --- commitments ---------------------------------------------------------
   const knownNames = Object.values(names);
   const commitments: Omit<Commitment, "id">[] = [];
   for (const item of llm.commitments) {
@@ -128,7 +117,6 @@ export function verify({ llm, transcript, userAnchorDate }: VerifyInput): Verify
     commitments.push({ title: item.title.trim(), owner, deadline, evidence, superseded });
   }
 
-  // --- excluded and open questions -----------------------------------------
   const excluded: Omit<Excluded, "id">[] = [];
   for (const item of llm.excluded) {
     const evidence = mapEvidence(item.evidence);
@@ -152,7 +140,6 @@ export function verify({ llm, transcript, userAnchorDate }: VerifyInput): Verify
     openQuestions.push({ question: item.question.trim(), raised_by: raisedBy ?? null, evidence });
   }
 
-  // R14: an ambiguous exclusion only exists next to a surviving open question.
   const survivingExcluded =
     openQuestions.length > 0 ? excluded : excluded.filter((e) => e.reason !== "ambiguous");
 
@@ -166,7 +153,6 @@ export function verify({ llm, transcript, userAnchorDate }: VerifyInput): Verify
   };
 }
 
-/** Map a claimed speaker label onto a real diarization label. */
 function resolveLabel(claimed: string, quotedBy: string, transcript: Transcript): string {
   const labels = new Set(transcript.utterances.map((u) => u.speaker_label));
   if (labels.has(claimed)) return claimed;
@@ -191,7 +177,6 @@ function resolveAnchor(
   return { date: null, source: "none" };
 }
 
-/** R5 and R9: an owner is kept only if the recording named that person. */
 function resolveOwner(
   claimed: string,
   knownNames: string[],
@@ -214,7 +199,6 @@ function resolveOwner(
   return { name: null, status: "unassigned" };
 }
 
-/** R6 and D1-D7: a date is produced only from an anchor plus an unambiguous expression. */
 function resolveDeadline(
   kind: "relative" | "absolute" | "none",
   raw: string,

@@ -14,7 +14,6 @@ function read<T>(file: string): T {
   return JSON.parse(readFileSync(join(FIXTURES, file), "utf8")) as T;
 }
 
-/** Real ASR output when it has been recorded, the deterministic stand-in otherwise. */
 export function loadTranscript(id: FixtureId): Transcript {
   try {
     return TranscriptSchema.parse(read(`${id}.asr.json`));

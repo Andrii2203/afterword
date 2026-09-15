@@ -3,11 +3,6 @@ import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 import { MAX_UPLOAD_BYTES } from "@/lib/pipeline";
 
-/**
- * A recording the demo offers must be one the demo accepts. This caught a real
- * regression: after the upload cap dropped to the platform limit, the bundled
- * WAV samples were above it and the browser refused the app's own examples.
- */
 const SAMPLES = join(process.cwd(), "public", "samples");
 
 describe("bundled sample recordings", () => {

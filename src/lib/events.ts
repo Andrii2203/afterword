@@ -1,9 +1,5 @@
 import type { CommitmentsDocument, Transcript } from "./types";
 
-/**
- * The pipeline reports progress as newline-delimited JSON, so the browser can
- * show the transcript while extraction is still running (ADR-0021).
- */
 export type PipelineEvent =
   | { type: "stage"; stage: "transcribing" | "extracting" | "verifying"; at_ms: number }
   | { type: "transcript"; transcript: Transcript; asr_ms: number }
@@ -16,10 +12,6 @@ export function encodeEvent(event: PipelineEvent): string {
   return `${JSON.stringify(event)}\n`;
 }
 
-/**
- * Split a byte stream into events. Chunk boundaries fall anywhere, including
- * inside a JSON object, so the tail is carried over to the next call.
- */
 export class EventDecoder {
   private buffer = "";
 
@@ -36,13 +28,11 @@ export class EventDecoder {
     return events;
   }
 
-  /** Anything left after the last newline; a complete stream leaves nothing. */
   get pending(): string {
     return this.buffer;
   }
 }
 
-/** Read a streaming response and hand every event to `onEvent`, in order. */
 export async function readEventStream(
   response: Response,
   onEvent: (event: PipelineEvent) => void,

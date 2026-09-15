@@ -1,12 +1,3 @@
-/**
- * Measure the variable stage repeatedly, so the reported speed and cost are a
- * distribution rather than one lucky run.
- *
- * Usage: npx tsx scripts/benchmark.ts [--repeat=3] [--model=claude-opus-5] [ids...]
- * Reuses the recorded transcripts, so it measures extraction only and adds no
- * transcription cost; the transcription figure is taken from run-fixture.
- * Writes reports/benchmark.<model>.json.
- */
 import "./env";
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";

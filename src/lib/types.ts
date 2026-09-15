@@ -1,19 +1,5 @@
 import { z } from "zod";
 
-/**
- * Two schema layers, per SPEC section 6.
- *
- * `LlmOutput*` is what the model is allowed to return: flat, no nulls, no unions,
- * no timestamps. Timestamps are never taken from the model (ADR-0005).
- *
- * `Document*` is what the API returns: ids, resolved deadlines, verified
- * millisecond spans, metrics and warnings.
- */
-
-// ---------------------------------------------------------------------------
-// Transcript
-// ---------------------------------------------------------------------------
-
 export const WordSchema = z.object({
   text: z.string(),
   start_ms: z.number().int().nonnegative(),
@@ -37,10 +23,6 @@ export const TranscriptSchema = z.object({
 export type Word = z.infer<typeof WordSchema>;
 export type Utterance = z.infer<typeof UtteranceSchema>;
 export type Transcript = z.infer<typeof TranscriptSchema>;
-
-// ---------------------------------------------------------------------------
-// LLM output (tool schema)
-// ---------------------------------------------------------------------------
 
 export const EVIDENCE_KINDS = [
   "acceptance",
@@ -110,10 +92,6 @@ export type LlmCommitment = z.infer<typeof LlmCommitmentSchema>;
 export type LlmExcluded = z.infer<typeof LlmExcludedSchema>;
 export type LlmOpenQuestion = z.infer<typeof LlmOpenQuestionSchema>;
 export type LlmOutput = z.infer<typeof LlmOutputSchema>;
-
-// ---------------------------------------------------------------------------
-// API document
-// ---------------------------------------------------------------------------
 
 export const WARNING_CODES = [
   "missing_date_context",

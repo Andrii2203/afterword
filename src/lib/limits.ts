@@ -1,11 +1,3 @@
-/**
- * Best-effort spending guard for a public demo (ADR-0022).
- *
- * Every run costs about five cents of provider credit, so an open URL is an open
- * wallet. The counters live in the process, which means a serverless deployment
- * enforces them per instance, not globally; that is a deliberate floor, not a
- * claim of exactness.
- */
 export interface LimitConfig {
   perClientPerHour: number;
   perProcessPerDay: number;
@@ -31,7 +23,6 @@ export class RunLimiter {
 
   constructor(private readonly config: LimitConfig = DEFAULT_LIMITS) {}
 
-  /** Clears every counter; used by tests so one suite cannot exhaust the next. */
   reset(): void {
     this.perClient.clear();
     this.day = [];
@@ -64,7 +55,6 @@ export class RunLimiter {
   }
 }
 
-/** The client identity available on a request, with a stable fallback. */
 export function clientKey(request: Request): string {
   const forwarded = request.headers.get("x-forwarded-for");
   if (forwarded) return forwarded.split(",")[0].trim();

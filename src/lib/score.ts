@@ -21,7 +21,7 @@ export interface ExpectedExcluded {
   title_contains: string[];
   reason: string;
   evidence_contains?: string;
-  /** Any one of these fragments satisfies the check, for items several utterances decide. */
+
   evidence_contains_any?: string[];
 }
 
@@ -66,7 +66,6 @@ function quotesInclude(
   );
 }
 
-/** SPEC T6: inclusion of real commitments and exclusion of unsupported ones. */
 export function score(document: CommitmentsDocument, expected: ExpectedSet): ScoreReport {
   const failures: string[] = [];
   const matched: Record<string, string> = {};

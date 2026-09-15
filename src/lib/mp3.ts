@@ -9,22 +9,11 @@ type LameModule = {
   Mp3Encoder: new (channels: number, sampleRate: number, kbps: number) => Encoder;
 };
 
-/**
- * `@breezystack/lamejs` ships an ES module; a dynamic import gives the same
- * object whether the caller was compiled to ES modules or CommonJS.
- */
 async function loadEncoder(): Promise<LameModule> {
   const loaded = await import("@breezystack/lamejs");
   return ((loaded as { default?: LameModule }).default ?? loaded) as LameModule;
 }
 
-/**
- * Encode 16-bit mono PCM to MP3 (ADR-0023).
- *
- * The recordings have to travel through a serverless function whose request
- * body limit is 4.5 MB, which a three minute WAV exceeds. Encoding happens in
- * JavaScript so the repository still needs no system binary.
- */
 export async function encodeMp3(audio: WavAudio, kbps = 48): Promise<Buffer> {
   if (audio.bitsPerSample !== 16) throw new Error("Only 16-bit PCM can be encoded.");
   if (audio.channels !== 1) throw new Error("Only mono audio can be encoded.");
