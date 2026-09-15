@@ -22,9 +22,14 @@ Click **Sample A — base call**, then **Extract commitments**. Let the timer ru
 > "This is a 109 second call. Everything you are about to see was produced from the audio just now,
 > not prepared in advance."
 
-When the result appears:
+When the transcript appears, about four seconds in, point at it:
 
-> "Fourteen seconds. Three commitments, two items that are not commitments, one open question."
+> "The transcript arrives first, while the model is still reading. You are not staring at a spinner."
+
+When the list appears:
+
+> "Fourteen seconds in total. Three commitments, two items that are not commitments, one open
+> question."
 
 ---
 

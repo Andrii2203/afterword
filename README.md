@@ -55,6 +55,14 @@ audio ──▶ Deepgram nova-3 ──▶ diarized utterances with word timestam
 The model never supplies a timestamp and never supplies a date. It reports what was said and which
 utterance said it; every position, name and date in the output is re-derived from the transcript.
 
+`POST /api/process` takes `multipart/form-data` with a `file` field and an optional
+`anchor_date`, and answers with newline-delimited JSON: a `stage` event per stage, a `transcript`
+event as soon as transcription finishes, and a final `document` or `error` event. The transcript
+lands in about four seconds, the commitments list in about fifteen. Rejections before the stream
+opens keep their HTTP status; a failure after it opens arrives as an `error` event carrying one.
+The demo also caps runs per client address per hour and per process per day, because an open URL
+spends a real key.
+
 ## Commands
 
 | Command | What it does |
