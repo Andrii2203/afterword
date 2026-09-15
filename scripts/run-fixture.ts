@@ -40,7 +40,7 @@ async function runOne(id: string, options: Options): Promise<boolean> {
       ms: 0,
     };
   } else {
-    const audio = new Uint8Array(readFileSync(join(FIXTURES, "audio", `${id}.wav`)));
+    const audio = new Uint8Array(readFileSync(join(process.cwd(), "public", "samples", `${id}.wav`)));
     asrResult = await createDeepgramAsr().transcribe(audio, "audio/wav");
     writeFileSync(asrPath, `${JSON.stringify(asrResult.transcript, null, 2)}\n`);
   }

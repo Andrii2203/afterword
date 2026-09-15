@@ -1,4 +1,4 @@
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { createDeepgramAsr, type AsrProvider } from "./asr";
 import { createAnthropicExtractor, type Extractor } from "./extract";
@@ -28,7 +28,13 @@ function fixtureProviders(filename: string): PipelineDeps {
   const read = (suffix: string) =>
     JSON.parse(readFileSync(join(process.cwd(), "fixtures", `${id}.${suffix}`), "utf8"));
 
-  const transcript = TranscriptSchema.parse(read("synth.asr.json"));
+  // Prefer the recorded provider transcript so the stubbed browser layer works
+  // on the same data the live one does; fall back to the deterministic one.
+  const transcript = TranscriptSchema.parse(
+    existsSync(join(process.cwd(), "fixtures", `${id}.asr.json`))
+      ? read("asr.json")
+      : read("synth.asr.json"),
+  );
   const output = LlmOutputSchema.parse(read("llm.json"));
 
   const asr: AsrProvider = {

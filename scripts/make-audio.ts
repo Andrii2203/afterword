@@ -13,7 +13,6 @@ import { concatWav, durationMs, parseWav } from "../src/lib/wav";
 const GAP_MS = 350;
 const SPEAK = "https://api.deepgram.com/v1/speak";
 const FIXTURES = join(process.cwd(), "fixtures");
-const AUDIO_DIR = join(FIXTURES, "audio");
 const PUBLIC_DIR = join(process.cwd(), "public", "samples");
 
 interface Script {
@@ -54,9 +53,7 @@ async function build(id: string, apiKey: string): Promise<void> {
   }
 
   const wav = concatWav(segments, GAP_MS);
-  mkdirSync(AUDIO_DIR, { recursive: true });
   mkdirSync(PUBLIC_DIR, { recursive: true });
-  writeFileSync(join(AUDIO_DIR, `${id}.wav`), wav);
   writeFileSync(join(PUBLIC_DIR, `${id}.wav`), wav);
 
   const seconds = durationMs(parseWav(wav)) / 1000;

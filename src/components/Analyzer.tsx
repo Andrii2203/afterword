@@ -7,6 +7,12 @@ import type { CommitmentsDocument, Evidence } from "@/lib/types";
 
 type Status = "idle" | "reading" | "processing" | "done" | "error";
 
+const SAMPLES = [
+  { id: "meeting-a", label: "Sample A — base call" },
+  { id: "meeting-b", label: "Sample B — one agreement changed" },
+  { id: "meeting-c", label: "Sample C — hedged answer" },
+];
+
 const WARNING_TEXT: Record<string, string> = {
   missing_date_context:
     "No calendar date was spoken, so relative deadlines are kept as they were said.",
@@ -61,6 +67,30 @@ export default function Analyzer() {
     setFile(picked);
     setAudioUrl(url);
     setStatus("idle");
+  }
+
+  async function loadSample(id: string) {
+    setError(null);
+    const response = await fetch(`/samples/${id}.wav`);
+    if (!response.ok) {
+      setError(`Sample ${id} is not available on this deployment.`);
+      setStatus("error");
+      return;
+    }
+    const blob = await response.blob();
+    await onPick(new File([blob], `${id}.wav`, { type: "audio/wav" }));
+  }
+
+  function downloadResult() {
+    if (!document) return;
+    const url = URL.createObjectURL(
+      new Blob([JSON.stringify(document, null, 2)], { type: "application/json" }),
+    );
+    const link = window.document.createElement("a");
+    link.href = url;
+    link.download = `${document.meta.filename.replace(/\.[a-z0-9]+$/i, "")}.commitments.json`;
+    link.click();
+    URL.revokeObjectURL(url);
   }
 
   async function onProcess() {
@@ -148,6 +178,21 @@ export default function Analyzer() {
           </button>
         </div>
 
+        <div className="mt-4 flex flex-wrap items-center gap-2 text-xs">
+          <span className="text-muted">No recording at hand?</span>
+          {SAMPLES.map((sample) => (
+            <button
+              key={sample.id}
+              type="button"
+              data-testid={`sample-${sample.id}`}
+              onClick={() => void loadSample(sample.id)}
+              className="rounded border border-line px-2 py-1 hover:border-accent"
+            >
+              {sample.label}
+            </button>
+          ))}
+        </div>
+
         {audioUrl && (
           <audio
             ref={audioRef}
@@ -169,6 +214,16 @@ export default function Analyzer() {
       {document && (
         <div className="mt-8 space-y-8">
           <Metrics document={document} />
+          <div className="-mt-6 flex justify-end">
+            <button
+              type="button"
+              data-testid="download-json"
+              onClick={downloadResult}
+              className="text-xs text-muted underline hover:text-foreground"
+            >
+              Download the full result as JSON
+            </button>
+          </div>
 
           {document.warnings.length > 0 && (
             <ul className="space-y-1" data-testid="warnings">

@@ -2,7 +2,7 @@ import { existsSync, mkdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { expect, test } from "@playwright/test";
 
-const AUDIO = (id: string) => join(process.cwd(), "fixtures", "audio", `${id}.wav`);
+const AUDIO = (id: string) => join(process.cwd(), "public", "samples", `${id}.wav`);
 
 const ready =
   process.env.RUN_E2E === "1" &&

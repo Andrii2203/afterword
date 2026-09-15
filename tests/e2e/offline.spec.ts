@@ -96,6 +96,15 @@ test("processes the second upload instead of repeating the first answer", async 
   expect(second).not.toEqual(first);
 });
 
+test("loads a bundled sample and processes it", async ({ page }) => {
+  await page.goto("/");
+  await page.getByTestId("sample-meeting-c").click();
+  await expect(page.getByTestId("player")).toBeVisible();
+  await page.getByTestId("process-button").click();
+  await expect(page.getByTestId("metrics")).toBeVisible();
+  await expect(page.getByTestId("commitment")).toHaveCount(1);
+});
+
 test("rejects a file that is not audio", async ({ page }) => {
   await page.goto("/");
   await page

@@ -8,7 +8,7 @@
  *
  * Usage: npx tsx scripts/make-stub-audio.ts meeting-a meeting-b meeting-c
  */
-import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { writeWav } from "../src/lib/wav";
 import type { Transcript } from "../src/lib/types";
@@ -38,9 +38,9 @@ if (ids.length === 0) {
 
 mkdirSync(AUDIO_DIR, { recursive: true });
 for (const id of ids) {
-  const transcript = JSON.parse(
-    readFileSync(join(FIXTURES, `${id}.synth.asr.json`), "utf8"),
-  ) as Transcript;
+  const recorded = join(FIXTURES, `${id}.asr.json`);
+  const source = existsSync(recorded) ? recorded : join(FIXTURES, `${id}.synth.asr.json`);
+  const transcript = JSON.parse(readFileSync(source, "utf8")) as Transcript;
   const target = join(AUDIO_DIR, `${id}.stub.wav`);
   writeFileSync(target, toneFor(transcript));
   console.log(`${target}  ${(transcript.audio_ms / 1000).toFixed(1)} s`);
