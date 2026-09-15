@@ -14,20 +14,20 @@
   },
   "metrics": {
     "audio_seconds": 42.89,
-    "asr_ms": 6907,
-    "llm_ms": 10623,
-    "total_ms": 17531,
+    "asr_ms": 0,
+    "llm_ms": 7752,
+    "total_ms": 7754,
     "asr_cost_usd": 0.003074,
-    "llm_cost_usd": 0.04027,
-    "cost_per_audio_minute_usd": 0.060635,
+    "llm_cost_usd": 0.015248,
+    "cost_per_audio_minute_usd": 0.025631,
     "tokens": {
       "input": 2924,
-      "output": 1026,
+      "output": 940,
       "retries": 0
     },
     "models": {
       "asr": "nova-3",
-      "llm": "claude-opus-5"
+      "llm": "claude-sonnet-5"
     }
   },
   "warnings": []

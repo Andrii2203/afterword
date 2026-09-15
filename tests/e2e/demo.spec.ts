@@ -1,4 +1,4 @@
-import { existsSync } from "node:fs";
+import { existsSync, mkdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { expect, test } from "@playwright/test";
 
@@ -12,11 +12,28 @@ const ready =
 
 test.skip(!ready, "Set RUN_E2E=1, both API keys and generate fixture audio first.");
 
+/** Wall-clock time from the click to the rendered result, per fixture. */
+const latencies: { id: string; ms: number; server_ms: number }[] = [];
+
+test.afterAll(() => {
+  if (latencies.length === 0) return;
+  mkdirSync(join(process.cwd(), "reports"), { recursive: true });
+  writeFileSync(
+    join(process.cwd(), "reports", "e2e-latency.json"),
+    `${JSON.stringify({ measured_at: new Date().toISOString(), samples: latencies }, null, 2)}\n`,
+  );
+});
+
 async function analyse(page: import("@playwright/test").Page, id: string) {
   await page.goto("/");
   await page.getByTestId("upload-input").setInputFiles(AUDIO(id));
+  const started = Date.now();
   await page.getByTestId("process-button").click();
   await expect(page.getByTestId("metrics")).toBeVisible({ timeout: 150_000 });
+  const serverMs = Number(
+    (await page.getByTestId("metrics").getAttribute("data-total-ms")) ?? Number.NaN,
+  );
+  latencies.push({ id, ms: Date.now() - started, server_ms: serverMs });
 }
 
 test("reports the final state of every task in the base recording", async ({ page }) => {

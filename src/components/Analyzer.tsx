@@ -369,6 +369,7 @@ function Metrics({ document }: { document: CommitmentsDocument }) {
   return (
     <section
       data-testid="metrics"
+      data-total-ms={metrics.total_ms}
       className="grid grid-cols-2 gap-4 rounded-lg border border-line bg-panel p-4 text-sm sm:grid-cols-4"
     >
       <Field label="Audio">{metrics.audio_seconds.toFixed(1)} s</Field>

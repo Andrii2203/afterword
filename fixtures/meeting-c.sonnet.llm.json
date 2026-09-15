@@ -1,0 +1,96 @@
+{
+  "anchor_date": "2026-03-02",
+  "speakers": [
+    {
+      "speaker_label": "speaker_0",
+      "name": "Maya Chen",
+      "utterance_index": 0,
+      "quote": "I'm Maya Chen, and today is Monday, 03/02/2026."
+    },
+    {
+      "speaker_label": "speaker_1",
+      "name": "Daniel Okafor",
+      "utterance_index": 1,
+      "quote": "And I'm Daniel Okafor."
+    }
+  ],
+  "commitments": [
+    {
+      "title": "Set up a backup job for the staging database",
+      "owner_name": "Maya Chen",
+      "deadline_raw": "this Friday",
+      "deadline_kind": "relative",
+      "deadline_absolute": "",
+      "evidence": [
+        {
+          "utterance_index": 9,
+          "quote": "I'll set that up by this Friday.",
+          "kind": "acceptance"
+        },
+        {
+          "utterance_index": 10,
+          "quote": "Good. That one is clear.",
+          "kind": "acceptance"
+        }
+      ],
+      "superseded": []
+    }
+  ],
+  "excluded": [
+    {
+      "title": "Refresh the API documentation before the partner call",
+      "reason": "ambiguous",
+      "evidence": [
+        {
+          "utterance_index": 4,
+          "quote": "I might be able to get to it. I can't promise anything this week.",
+          "kind": "mention"
+        },
+        {
+          "utterance_index": 5,
+          "quote": "So is that a yes? Let's call it a maybe.",
+          "kind": "mention"
+        },
+        {
+          "utterance_index": 6,
+          "quote": "Ask me again on Wednesday.",
+          "kind": "mention"
+        },
+        {
+          "utterance_index": 7,
+          "quote": "Understood. We are not counting on it. Separately,",
+          "kind": "mention"
+        }
+      ]
+    }
+  ],
+  "open_questions": [
+    {
+      "question": "Will Daniel refresh the API documentation, to be confirmed on Wednesday?",
+      "raised_by": "speaker_1",
+      "evidence": [
+        {
+          "utterance_index": 6,
+          "quote": "Ask me again on Wednesday.",
+          "kind": "mention"
+        }
+      ]
+    },
+    {
+      "question": "Should we tell the partner about the delay?",
+      "raised_by": "speaker_0",
+      "evidence": [
+        {
+          "utterance_index": 11,
+          "quote": "And should we tell the partner about the delay? I'm not sure.",
+          "kind": "mention"
+        },
+        {
+          "utterance_index": 12,
+          "quote": "Let's decide after the call.",
+          "kind": "mention"
+        }
+      ]
+    }
+  ]
+}

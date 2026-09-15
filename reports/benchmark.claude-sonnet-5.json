@@ -1,0 +1,122 @@
+{
+  "summary": {
+    "model": "claude-sonnet-5",
+    "repeat": 3,
+    "samples_total": 9,
+    "passed": 8,
+    "llm_ms": {
+      "min": 6434,
+      "median": 16347,
+      "max": 35070
+    },
+    "run_cost_usd": {
+      "min": 0.015792,
+      "median": 0.035712,
+      "max": 0.059878
+    },
+    "note": "Extraction only; transcription latency is measured separately by run-fixture."
+  },
+  "samples": [
+    {
+      "id": "meeting-a",
+      "iteration": 1,
+      "passed": true,
+      "llm_ms": 14183,
+      "input_tokens": 3588,
+      "output_tokens": 1686,
+      "llm_cost_usd": 0.024036,
+      "run_cost_usd": 0.031862,
+      "failures": []
+    },
+    {
+      "id": "meeting-a",
+      "iteration": 2,
+      "passed": true,
+      "llm_ms": 16347,
+      "input_tokens": 3588,
+      "output_tokens": 2071,
+      "llm_cost_usd": 0.027886,
+      "run_cost_usd": 0.035712,
+      "failures": []
+    },
+    {
+      "id": "meeting-a",
+      "iteration": 3,
+      "passed": true,
+      "llm_ms": 20328,
+      "input_tokens": 3588,
+      "output_tokens": 2541,
+      "llm_cost_usd": 0.032586,
+      "run_cost_usd": 0.040412,
+      "failures": []
+    },
+    {
+      "id": "meeting-b",
+      "iteration": 1,
+      "passed": true,
+      "llm_ms": 18634,
+      "input_tokens": 3468,
+      "output_tokens": 2244,
+      "llm_cost_usd": 0.029376,
+      "run_cost_usd": 0.036898,
+      "failures": []
+    },
+    {
+      "id": "meeting-b",
+      "iteration": 2,
+      "passed": true,
+      "llm_ms": 35070,
+      "input_tokens": 3468,
+      "output_tokens": 4542,
+      "llm_cost_usd": 0.052356,
+      "run_cost_usd": 0.059878,
+      "failures": []
+    },
+    {
+      "id": "meeting-b",
+      "iteration": 3,
+      "passed": true,
+      "llm_ms": 17738,
+      "input_tokens": 3468,
+      "output_tokens": 2179,
+      "llm_cost_usd": 0.028726,
+      "run_cost_usd": 0.036248,
+      "failures": []
+    },
+    {
+      "id": "meeting-c",
+      "iteration": 1,
+      "passed": true,
+      "llm_ms": 6434,
+      "input_tokens": 2924,
+      "output_tokens": 687,
+      "llm_cost_usd": 0.012718,
+      "run_cost_usd": 0.015792,
+      "failures": []
+    },
+    {
+      "id": "meeting-c",
+      "iteration": 2,
+      "passed": false,
+      "llm_ms": 12291,
+      "input_tokens": 2924,
+      "output_tokens": 1441,
+      "llm_cost_usd": 0.020258,
+      "run_cost_usd": 0.023332,
+      "failures": [
+        "api-docs-decision: no evidence quote contains \"Ask me again on Wednesday\""
+      ]
+    },
+    {
+      "id": "meeting-c",
+      "iteration": 3,
+      "passed": true,
+      "llm_ms": 8435,
+      "input_tokens": 2924,
+      "output_tokens": 970,
+      "llm_cost_usd": 0.015548,
+      "run_cost_usd": 0.018622,
+      "failures": []
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "measured_at": "2026-09-15T09:44:55.918Z",
+  "samples": [
+    {
+      "id": "meeting-a",
+      "ms": 14701,
+      "server_ms": 14327
+    },
+    {
+      "id": "meeting-a",
+      "ms": 14639,
+      "server_ms": 14247
+    },
+    {
+      "id": "meeting-b",
+      "ms": 19233,
+      "server_ms": 18810
+    },
+    {
+      "id": "meeting-c",
+      "ms": 13678,
+      "server_ms": 13448
+    }
+  ]
+}

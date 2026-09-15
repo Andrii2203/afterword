@@ -1,0 +1,120 @@
+{
+  "summary": {
+    "model": "claude-opus-5",
+    "repeat": 3,
+    "samples_total": 9,
+    "passed": 9,
+    "llm_ms": {
+      "min": 9361,
+      "median": 13161,
+      "max": 36782
+    },
+    "run_cost_usd": {
+      "min": 0.041669,
+      "median": 0.051441,
+      "max": 0.067712
+    },
+    "note": "Extraction only; transcription latency is measured separately by run-fixture."
+  },
+  "samples": [
+    {
+      "id": "meeting-a",
+      "iteration": 1,
+      "passed": true,
+      "llm_ms": 9983,
+      "input_tokens": 3588,
+      "output_tokens": 1027,
+      "llm_cost_usd": 0.043615,
+      "run_cost_usd": 0.051441,
+      "failures": []
+    },
+    {
+      "id": "meeting-a",
+      "iteration": 2,
+      "passed": true,
+      "llm_ms": 34713,
+      "input_tokens": 3588,
+      "output_tokens": 1024,
+      "llm_cost_usd": 0.04354,
+      "run_cost_usd": 0.051366,
+      "failures": []
+    },
+    {
+      "id": "meeting-a",
+      "iteration": 3,
+      "passed": true,
+      "llm_ms": 36782,
+      "input_tokens": 3588,
+      "output_tokens": 1226,
+      "llm_cost_usd": 0.04859,
+      "run_cost_usd": 0.056416,
+      "failures": []
+    },
+    {
+      "id": "meeting-b",
+      "iteration": 1,
+      "passed": true,
+      "llm_ms": 14497,
+      "input_tokens": 3468,
+      "output_tokens": 1546,
+      "llm_cost_usd": 0.05599,
+      "run_cost_usd": 0.063512,
+      "failures": []
+    },
+    {
+      "id": "meeting-b",
+      "iteration": 2,
+      "passed": true,
+      "llm_ms": 13161,
+      "input_tokens": 3468,
+      "output_tokens": 1421,
+      "llm_cost_usd": 0.052865,
+      "run_cost_usd": 0.060387,
+      "failures": []
+    },
+    {
+      "id": "meeting-b",
+      "iteration": 3,
+      "passed": true,
+      "llm_ms": 17168,
+      "input_tokens": 3468,
+      "output_tokens": 1714,
+      "llm_cost_usd": 0.06019,
+      "run_cost_usd": 0.067712,
+      "failures": []
+    },
+    {
+      "id": "meeting-c",
+      "iteration": 1,
+      "passed": true,
+      "llm_ms": 10022,
+      "input_tokens": 2924,
+      "output_tokens": 1019,
+      "llm_cost_usd": 0.040095,
+      "run_cost_usd": 0.043169,
+      "failures": []
+    },
+    {
+      "id": "meeting-c",
+      "iteration": 2,
+      "passed": true,
+      "llm_ms": 12623,
+      "input_tokens": 2924,
+      "output_tokens": 1024,
+      "llm_cost_usd": 0.04022,
+      "run_cost_usd": 0.043294,
+      "failures": []
+    },
+    {
+      "id": "meeting-c",
+      "iteration": 3,
+      "passed": true,
+      "llm_ms": 9361,
+      "input_tokens": 2924,
+      "output_tokens": 959,
+      "llm_cost_usd": 0.038595,
+      "run_cost_usd": 0.041669,
+      "failures": []
+    }
+  ]
+}

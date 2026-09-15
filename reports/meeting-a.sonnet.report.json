@@ -1,0 +1,38 @@
+{
+  "report": {
+    "id": "meeting-a",
+    "passed": true,
+    "inclusion_recall": 1,
+    "exclusion_precision": 1,
+    "failures": [],
+    "matched": {
+      "duplicate-email": "c1",
+      "checklist-copy": "c2",
+      "runbook": "c3",
+      "progress-bar": "x1",
+      "migration-script": "x2",
+      "legal-consent": "q1"
+    }
+  },
+  "metrics": {
+    "audio_seconds": 109.2,
+    "asr_ms": 0,
+    "llm_ms": 22092,
+    "total_ms": 22096,
+    "asr_cost_usd": 0.007826,
+    "llm_cost_usd": 0.032506,
+    "cost_per_audio_minute_usd": 0.02216,
+    "tokens": {
+      "input": 3588,
+      "output": 2533,
+      "retries": 0
+    },
+    "models": {
+      "asr": "nova-3",
+      "llm": "claude-sonnet-5"
+    }
+  },
+  "warnings": [
+    "missing_date_context"
+  ]
+}

@@ -1,4 +1,4 @@
-import { PRICING } from "@/config/pricing";
+import { PRICING, llmPrice } from "@/config/pricing";
 import type { Metrics } from "./types";
 
 export interface UsageInput {
@@ -7,15 +7,18 @@ export interface UsageInput {
   llm_ms: number;
   total_ms: number;
   tokens: { input: number; output: number; retries: number };
+  /** The model that produced this run; defaults to the configured one. */
+  model?: string;
 }
 
 /** SPEC M1-M5: cost is computed from measured usage, never from a target. */
 export function computeMetrics(usage: UsageInput): Metrics {
+  const model = usage.model ?? PRICING.llm.model;
+  const price = llmPrice(model);
   const minutes = usage.audio_seconds / 60;
   const asrCost = minutes * PRICING.asr.usd_per_audio_minute;
   const llmCost =
-    (usage.tokens.input / 1e6) * PRICING.llm.usd_per_input_mtok +
-    (usage.tokens.output / 1e6) * PRICING.llm.usd_per_output_mtok;
+    (usage.tokens.input / 1e6) * price.input + (usage.tokens.output / 1e6) * price.output;
 
   return {
     audio_seconds: round(usage.audio_seconds, 3),
@@ -26,7 +29,7 @@ export function computeMetrics(usage: UsageInput): Metrics {
     llm_cost_usd: round(llmCost, 6),
     cost_per_audio_minute_usd: minutes > 0 ? round((asrCost + llmCost) / minutes, 6) : 0,
     tokens: usage.tokens,
-    models: { asr: PRICING.asr.model, llm: PRICING.llm.model },
+    models: { asr: PRICING.asr.model, llm: model },
   };
 }
 
