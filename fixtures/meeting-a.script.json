@@ -1,0 +1,37 @@
+{
+  "id": "meeting-a",
+  "title": "Onboarding sync, base variant",
+  "language": "en",
+  "anchor_date_spoken": null,
+  "speakers": [
+    { "label": "A", "name": "Maya Chen", "voice": "aura-2-thalia-en" },
+    { "label": "B", "name": "Daniel Okafor", "voice": "aura-2-orion-en" }
+  ],
+  "turns": [
+    { "speaker": "A", "text": "Hi Daniel, thanks for making time. I'm Maya Chen, I lead product on the onboarding project." },
+    { "speaker": "B", "text": "Hi Maya. I'm Daniel Okafor, I'm the backend engineer on the same project. Let's go through the list." },
+    { "speaker": "A", "text": "First one is the duplicate welcome email. Two users reported it this week." },
+    { "speaker": "B", "text": "I've already reproduced it. I'll fix the duplicate welcome email, and I'll have it merged by the end of the week." },
+    { "speaker": "A", "text": "Good, that one is yours then." },
+    { "speaker": "A", "text": "Second, the onboarding checklist copy still says beta. I'll rewrite it. I can have the new copy ready by Tuesday." },
+    { "speaker": "B", "text": "Tuesday is tight. The design review is on Tuesday morning." },
+    { "speaker": "A", "text": "Fair point, let me correct that. I'll deliver the new checklist copy by Thursday instead." },
+    { "speaker": "B", "text": "Thursday works." },
+    { "speaker": "A", "text": "We could also add a progress bar to the import screen. It might reduce the drop off." },
+    { "speaker": "B", "text": "We could, but I don't want to commit to that today. Let's leave it as an idea." },
+    { "speaker": "A", "text": "Fine. It stays an idea, nobody is picking it up." },
+    { "speaker": "B", "text": "Now, about the migration script. Last week I said I would write one for the legacy accounts." },
+    { "speaker": "A", "text": "Yes, that was agreed." },
+    { "speaker": "B", "text": "Cancel it. Operations migrated those accounts manually yesterday, so the script is not needed any more." },
+    { "speaker": "A", "text": "Understood. The migration script is cancelled." },
+    { "speaker": "A", "text": "The release runbook is out of date. Someone needs to update it before we ship." },
+    { "speaker": "B", "text": "Agreed, the runbook must be updated before the release." },
+    { "speaker": "A", "text": "We are not deciding who does that right now." },
+    { "speaker": "B", "text": "One more thing. Do we need legal to review the new consent text?" },
+    { "speaker": "A", "text": "I don't know, I have not asked them." },
+    { "speaker": "B", "text": "Let's leave that open until we get an answer." },
+    { "speaker": "A", "text": "Anything else?" },
+    { "speaker": "B", "text": "No, that's everything." },
+    { "speaker": "A", "text": "Thanks Daniel." }
+  ]
+}

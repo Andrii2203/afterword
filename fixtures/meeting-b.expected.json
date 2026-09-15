@@ -1,0 +1,54 @@
+{
+  "id": "meeting-b",
+  "written_before_first_run": true,
+  "differs_from": "meeting-a",
+  "difference": "The progress bar task is accepted by Daniel Okafor instead of staying an idea.",
+  "warnings_include": ["missing_date_context"],
+  "commitments": [
+    {
+      "key": "duplicate-email",
+      "title_contains": ["duplicate", "email"],
+      "owner": { "name": "Daniel Okafor", "status": "named" },
+      "deadline": { "status_any_of": ["unresolved_relative"], "raw_contains": ["end of the week"] },
+      "evidence_contains": "fix the duplicate welcome email"
+    },
+    {
+      "key": "checklist-copy",
+      "title_contains": ["checklist"],
+      "owner": { "name": "Maya Chen", "status": "named" },
+      "deadline": { "status_any_of": ["unresolved_relative"], "raw_contains": ["thursday"] },
+      "superseded": [{ "field": "deadline", "old_value_contains": ["tuesday"] }],
+      "evidence_contains": "deliver the new checklist copy by Thursday"
+    },
+    {
+      "key": "progress-bar",
+      "title_contains": ["progress bar"],
+      "owner": { "name": "Daniel Okafor", "status": "named" },
+      "deadline": { "status_any_of": ["unresolved_relative"], "raw_contains": ["next week"] },
+      "evidence_contains": "build the progress bar on the import screen"
+    },
+    {
+      "key": "runbook",
+      "title_contains": ["runbook"],
+      "owner": { "name": null, "status": "unassigned" },
+      "deadline": { "status_any_of": ["unresolved_relative", "none"] },
+      "evidence_contains": "runbook must be updated before the release"
+    }
+  ],
+  "excluded": [
+    {
+      "key": "migration-script",
+      "title_contains": ["migration"],
+      "reason": "cancelled",
+      "evidence_contains": "Cancel it"
+    }
+  ],
+  "open_questions": [
+    {
+      "key": "legal-consent",
+      "question_contains": ["legal", "consent"],
+      "evidence_contains": "Do we need legal to review the new consent text"
+    }
+  ],
+  "must_not_appear_in_commitments": [["migration"]]
+}

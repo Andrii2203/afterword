@@ -1,0 +1,24 @@
+{
+  "id": "meeting-c",
+  "title": "Partner prep, hedged acceptance and a spoken anchor date",
+  "language": "en",
+  "anchor_date_spoken": "2026-03-02",
+  "speakers": [
+    { "label": "A", "name": "Maya Chen", "voice": "aura-2-thalia-en" },
+    { "label": "B", "name": "Daniel Okafor", "voice": "aura-2-orion-en" }
+  ],
+  "turns": [
+    { "speaker": "A", "text": "I'm Maya Chen, and today is Monday, March second, twenty twenty six." },
+    { "speaker": "B", "text": "And I'm Daniel Okafor. Short one today, we have two items." },
+    { "speaker": "A", "text": "The API documentation needs a refresh before the partner call." },
+    { "speaker": "B", "text": "I might be able to get to it. I can't promise anything this week." },
+    { "speaker": "A", "text": "So is that a yes?" },
+    { "speaker": "B", "text": "Let's call it a maybe. Ask me again on Wednesday." },
+    { "speaker": "A", "text": "Understood, we are not counting on it." },
+    { "speaker": "A", "text": "Separately, the staging database has no backup job. I'll set that up by this Friday." },
+    { "speaker": "B", "text": "Good, that one is clear." },
+    { "speaker": "A", "text": "And should we tell the partner about the delay?" },
+    { "speaker": "B", "text": "I'm not sure. Let's decide after the call." },
+    { "speaker": "A", "text": "Alright, that's it." }
+  ]
+}

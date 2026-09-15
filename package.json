@@ -1,0 +1,40 @@
+{
+  "name": "afterword",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:unit": "vitest run tests/unit",
+    "test:integration": "vitest run tests/integration",
+    "test:e2e": "playwright test",
+    "fixtures:transcripts": "tsx scripts/make-transcript.ts meeting-a meeting-b meeting-c",
+    "fixtures:audio": "tsx scripts/make-audio.ts meeting-a meeting-b meeting-c",
+    "fixtures:run": "tsx scripts/run-fixture.ts meeting-a meeting-b meeting-c"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.125.0",
+    "next": "16.3.5",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.63.0",
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^24.13.4",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.3.5",
+    "tailwindcss": "^4",
+    "tsx": "^4.23.13",
+    "typescript": "^5",
+    "vitest": "^5.0.0"
+  },
+  "description": "Turn a recorded project discussion into the final agreed commitments with timestamped evidence."
+}

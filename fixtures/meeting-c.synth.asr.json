@@ -1,0 +1,658 @@
+{
+  "audio_ms": 43450,
+  "utterances": [
+    {
+      "index": 0,
+      "speaker_label": "0",
+      "start_ms": 500,
+      "end_ms": 4700,
+      "text": "I'm Maya Chen, and today is Monday, March second, twenty twenty six.",
+      "words": [
+        {
+          "text": "I'm",
+          "start_ms": 500,
+          "end_ms": 850
+        },
+        {
+          "text": "Maya",
+          "start_ms": 850,
+          "end_ms": 1200
+        },
+        {
+          "text": "Chen,",
+          "start_ms": 1200,
+          "end_ms": 1550
+        },
+        {
+          "text": "and",
+          "start_ms": 1550,
+          "end_ms": 1900
+        },
+        {
+          "text": "today",
+          "start_ms": 1900,
+          "end_ms": 2250
+        },
+        {
+          "text": "is",
+          "start_ms": 2250,
+          "end_ms": 2600
+        },
+        {
+          "text": "Monday,",
+          "start_ms": 2600,
+          "end_ms": 2950
+        },
+        {
+          "text": "March",
+          "start_ms": 2950,
+          "end_ms": 3300
+        },
+        {
+          "text": "second,",
+          "start_ms": 3300,
+          "end_ms": 3650
+        },
+        {
+          "text": "twenty",
+          "start_ms": 3650,
+          "end_ms": 4000
+        },
+        {
+          "text": "twenty",
+          "start_ms": 4000,
+          "end_ms": 4350
+        },
+        {
+          "text": "six.",
+          "start_ms": 4350,
+          "end_ms": 4700
+        }
+      ]
+    },
+    {
+      "index": 1,
+      "speaker_label": "1",
+      "start_ms": 5100,
+      "end_ms": 8950,
+      "text": "And I'm Daniel Okafor. Short one today, we have two items.",
+      "words": [
+        {
+          "text": "And",
+          "start_ms": 5100,
+          "end_ms": 5450
+        },
+        {
+          "text": "I'm",
+          "start_ms": 5450,
+          "end_ms": 5800
+        },
+        {
+          "text": "Daniel",
+          "start_ms": 5800,
+          "end_ms": 6150
+        },
+        {
+          "text": "Okafor.",
+          "start_ms": 6150,
+          "end_ms": 6500
+        },
+        {
+          "text": "Short",
+          "start_ms": 6500,
+          "end_ms": 6850
+        },
+        {
+          "text": "one",
+          "start_ms": 6850,
+          "end_ms": 7200
+        },
+        {
+          "text": "today,",
+          "start_ms": 7200,
+          "end_ms": 7550
+        },
+        {
+          "text": "we",
+          "start_ms": 7550,
+          "end_ms": 7900
+        },
+        {
+          "text": "have",
+          "start_ms": 7900,
+          "end_ms": 8250
+        },
+        {
+          "text": "two",
+          "start_ms": 8250,
+          "end_ms": 8600
+        },
+        {
+          "text": "items.",
+          "start_ms": 8600,
+          "end_ms": 8950
+        }
+      ]
+    },
+    {
+      "index": 2,
+      "speaker_label": "0",
+      "start_ms": 9350,
+      "end_ms": 12850,
+      "text": "The API documentation needs a refresh before the partner call.",
+      "words": [
+        {
+          "text": "The",
+          "start_ms": 9350,
+          "end_ms": 9700
+        },
+        {
+          "text": "API",
+          "start_ms": 9700,
+          "end_ms": 10050
+        },
+        {
+          "text": "documentation",
+          "start_ms": 10050,
+          "end_ms": 10400
+        },
+        {
+          "text": "needs",
+          "start_ms": 10400,
+          "end_ms": 10750
+        },
+        {
+          "text": "a",
+          "start_ms": 10750,
+          "end_ms": 11100
+        },
+        {
+          "text": "refresh",
+          "start_ms": 11100,
+          "end_ms": 11450
+        },
+        {
+          "text": "before",
+          "start_ms": 11450,
+          "end_ms": 11800
+        },
+        {
+          "text": "the",
+          "start_ms": 11800,
+          "end_ms": 12150
+        },
+        {
+          "text": "partner",
+          "start_ms": 12150,
+          "end_ms": 12500
+        },
+        {
+          "text": "call.",
+          "start_ms": 12500,
+          "end_ms": 12850
+        }
+      ]
+    },
+    {
+      "index": 3,
+      "speaker_label": "1",
+      "start_ms": 13250,
+      "end_ms": 18150,
+      "text": "I might be able to get to it. I can't promise anything this week.",
+      "words": [
+        {
+          "text": "I",
+          "start_ms": 13250,
+          "end_ms": 13600
+        },
+        {
+          "text": "might",
+          "start_ms": 13600,
+          "end_ms": 13950
+        },
+        {
+          "text": "be",
+          "start_ms": 13950,
+          "end_ms": 14300
+        },
+        {
+          "text": "able",
+          "start_ms": 14300,
+          "end_ms": 14650
+        },
+        {
+          "text": "to",
+          "start_ms": 14650,
+          "end_ms": 15000
+        },
+        {
+          "text": "get",
+          "start_ms": 15000,
+          "end_ms": 15350
+        },
+        {
+          "text": "to",
+          "start_ms": 15350,
+          "end_ms": 15700
+        },
+        {
+          "text": "it.",
+          "start_ms": 15700,
+          "end_ms": 16050
+        },
+        {
+          "text": "I",
+          "start_ms": 16050,
+          "end_ms": 16400
+        },
+        {
+          "text": "can't",
+          "start_ms": 16400,
+          "end_ms": 16750
+        },
+        {
+          "text": "promise",
+          "start_ms": 16750,
+          "end_ms": 17100
+        },
+        {
+          "text": "anything",
+          "start_ms": 17100,
+          "end_ms": 17450
+        },
+        {
+          "text": "this",
+          "start_ms": 17450,
+          "end_ms": 17800
+        },
+        {
+          "text": "week.",
+          "start_ms": 17800,
+          "end_ms": 18150
+        }
+      ]
+    },
+    {
+      "index": 4,
+      "speaker_label": "0",
+      "start_ms": 18550,
+      "end_ms": 20300,
+      "text": "So is that a yes?",
+      "words": [
+        {
+          "text": "So",
+          "start_ms": 18550,
+          "end_ms": 18900
+        },
+        {
+          "text": "is",
+          "start_ms": 18900,
+          "end_ms": 19250
+        },
+        {
+          "text": "that",
+          "start_ms": 19250,
+          "end_ms": 19600
+        },
+        {
+          "text": "a",
+          "start_ms": 19600,
+          "end_ms": 19950
+        },
+        {
+          "text": "yes?",
+          "start_ms": 19950,
+          "end_ms": 20300
+        }
+      ]
+    },
+    {
+      "index": 5,
+      "speaker_label": "1",
+      "start_ms": 20700,
+      "end_ms": 24200,
+      "text": "Let's call it a maybe. Ask me again on Wednesday.",
+      "words": [
+        {
+          "text": "Let's",
+          "start_ms": 20700,
+          "end_ms": 21050
+        },
+        {
+          "text": "call",
+          "start_ms": 21050,
+          "end_ms": 21400
+        },
+        {
+          "text": "it",
+          "start_ms": 21400,
+          "end_ms": 21750
+        },
+        {
+          "text": "a",
+          "start_ms": 21750,
+          "end_ms": 22100
+        },
+        {
+          "text": "maybe.",
+          "start_ms": 22100,
+          "end_ms": 22450
+        },
+        {
+          "text": "Ask",
+          "start_ms": 22450,
+          "end_ms": 22800
+        },
+        {
+          "text": "me",
+          "start_ms": 22800,
+          "end_ms": 23150
+        },
+        {
+          "text": "again",
+          "start_ms": 23150,
+          "end_ms": 23500
+        },
+        {
+          "text": "on",
+          "start_ms": 23500,
+          "end_ms": 23850
+        },
+        {
+          "text": "Wednesday.",
+          "start_ms": 23850,
+          "end_ms": 24200
+        }
+      ]
+    },
+    {
+      "index": 6,
+      "speaker_label": "0",
+      "start_ms": 24600,
+      "end_ms": 27050,
+      "text": "Understood, we are not counting on it.",
+      "words": [
+        {
+          "text": "Understood,",
+          "start_ms": 24600,
+          "end_ms": 24950
+        },
+        {
+          "text": "we",
+          "start_ms": 24950,
+          "end_ms": 25300
+        },
+        {
+          "text": "are",
+          "start_ms": 25300,
+          "end_ms": 25650
+        },
+        {
+          "text": "not",
+          "start_ms": 25650,
+          "end_ms": 26000
+        },
+        {
+          "text": "counting",
+          "start_ms": 26000,
+          "end_ms": 26350
+        },
+        {
+          "text": "on",
+          "start_ms": 26350,
+          "end_ms": 26700
+        },
+        {
+          "text": "it.",
+          "start_ms": 26700,
+          "end_ms": 27050
+        }
+      ]
+    },
+    {
+      "index": 7,
+      "speaker_label": "0",
+      "start_ms": 27450,
+      "end_ms": 32700,
+      "text": "Separately, the staging database has no backup job. I'll set that up by this Friday.",
+      "words": [
+        {
+          "text": "Separately,",
+          "start_ms": 27450,
+          "end_ms": 27800
+        },
+        {
+          "text": "the",
+          "start_ms": 27800,
+          "end_ms": 28150
+        },
+        {
+          "text": "staging",
+          "start_ms": 28150,
+          "end_ms": 28500
+        },
+        {
+          "text": "database",
+          "start_ms": 28500,
+          "end_ms": 28850
+        },
+        {
+          "text": "has",
+          "start_ms": 28850,
+          "end_ms": 29200
+        },
+        {
+          "text": "no",
+          "start_ms": 29200,
+          "end_ms": 29550
+        },
+        {
+          "text": "backup",
+          "start_ms": 29550,
+          "end_ms": 29900
+        },
+        {
+          "text": "job.",
+          "start_ms": 29900,
+          "end_ms": 30250
+        },
+        {
+          "text": "I'll",
+          "start_ms": 30250,
+          "end_ms": 30600
+        },
+        {
+          "text": "set",
+          "start_ms": 30600,
+          "end_ms": 30950
+        },
+        {
+          "text": "that",
+          "start_ms": 30950,
+          "end_ms": 31300
+        },
+        {
+          "text": "up",
+          "start_ms": 31300,
+          "end_ms": 31650
+        },
+        {
+          "text": "by",
+          "start_ms": 31650,
+          "end_ms": 32000
+        },
+        {
+          "text": "this",
+          "start_ms": 32000,
+          "end_ms": 32350
+        },
+        {
+          "text": "Friday.",
+          "start_ms": 32350,
+          "end_ms": 32700
+        }
+      ]
+    },
+    {
+      "index": 8,
+      "speaker_label": "1",
+      "start_ms": 33100,
+      "end_ms": 34850,
+      "text": "Good, that one is clear.",
+      "words": [
+        {
+          "text": "Good,",
+          "start_ms": 33100,
+          "end_ms": 33450
+        },
+        {
+          "text": "that",
+          "start_ms": 33450,
+          "end_ms": 33800
+        },
+        {
+          "text": "one",
+          "start_ms": 33800,
+          "end_ms": 34150
+        },
+        {
+          "text": "is",
+          "start_ms": 34150,
+          "end_ms": 34500
+        },
+        {
+          "text": "clear.",
+          "start_ms": 34500,
+          "end_ms": 34850
+        }
+      ]
+    },
+    {
+      "index": 9,
+      "speaker_label": "0",
+      "start_ms": 35250,
+      "end_ms": 38400,
+      "text": "And should we tell the partner about the delay?",
+      "words": [
+        {
+          "text": "And",
+          "start_ms": 35250,
+          "end_ms": 35600
+        },
+        {
+          "text": "should",
+          "start_ms": 35600,
+          "end_ms": 35950
+        },
+        {
+          "text": "we",
+          "start_ms": 35950,
+          "end_ms": 36300
+        },
+        {
+          "text": "tell",
+          "start_ms": 36300,
+          "end_ms": 36650
+        },
+        {
+          "text": "the",
+          "start_ms": 36650,
+          "end_ms": 37000
+        },
+        {
+          "text": "partner",
+          "start_ms": 37000,
+          "end_ms": 37350
+        },
+        {
+          "text": "about",
+          "start_ms": 37350,
+          "end_ms": 37700
+        },
+        {
+          "text": "the",
+          "start_ms": 37700,
+          "end_ms": 38050
+        },
+        {
+          "text": "delay?",
+          "start_ms": 38050,
+          "end_ms": 38400
+        }
+      ]
+    },
+    {
+      "index": 10,
+      "speaker_label": "1",
+      "start_ms": 38800,
+      "end_ms": 41600,
+      "text": "I'm not sure. Let's decide after the call.",
+      "words": [
+        {
+          "text": "I'm",
+          "start_ms": 38800,
+          "end_ms": 39150
+        },
+        {
+          "text": "not",
+          "start_ms": 39150,
+          "end_ms": 39500
+        },
+        {
+          "text": "sure.",
+          "start_ms": 39500,
+          "end_ms": 39850
+        },
+        {
+          "text": "Let's",
+          "start_ms": 39850,
+          "end_ms": 40200
+        },
+        {
+          "text": "decide",
+          "start_ms": 40200,
+          "end_ms": 40550
+        },
+        {
+          "text": "after",
+          "start_ms": 40550,
+          "end_ms": 40900
+        },
+        {
+          "text": "the",
+          "start_ms": 40900,
+          "end_ms": 41250
+        },
+        {
+          "text": "call.",
+          "start_ms": 41250,
+          "end_ms": 41600
+        }
+      ]
+    },
+    {
+      "index": 11,
+      "speaker_label": "0",
+      "start_ms": 42000,
+      "end_ms": 43050,
+      "text": "Alright, that's it.",
+      "words": [
+        {
+          "text": "Alright,",
+          "start_ms": 42000,
+          "end_ms": 42350
+        },
+        {
+          "text": "that's",
+          "start_ms": 42350,
+          "end_ms": 42700
+        },
+        {
+          "text": "it.",
+          "start_ms": 42700,
+          "end_ms": 43050
+        }
+      ]
+    }
+  ]
+}

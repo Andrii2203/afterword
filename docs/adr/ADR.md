@@ -1,0 +1,163 @@
+# Architecture Decision Record
+
+Append-only log. One decision per entry. Each field is exactly one sentence.
+
+---
+
+## ADR-0001 — Application stack
+
+Status: accepted (2026-09-15)
+Context: The deliverable is a browser demo with server-side API calls and must be reproducible from one repository.
+Decision: The application is a single Next.js 15 App Router project in TypeScript, with the UI in React Server and Client components and the pipeline in route handlers.
+Consequence: One `npm run dev` command starts the whole product and one Vercel project deploys it.
+Rejected: A split React SPA plus Python FastAPI backend was rejected because it doubles setup steps without adding capability.
+
+---
+
+## ADR-0002 — Speech recognition provider
+
+Status: accepted (2026-09-15)
+Context: The output requires speaker attribution and millisecond timestamps for every quote.
+Decision: Speech recognition uses Deepgram `nova-3` pre-recorded transcription with `diarize=true`, `utterances=true`, `punctuate=true` and `smart_format=true`.
+Consequence: Diarization, word timestamps and utterance segmentation arrive in one request and one billed unit.
+Rejected: OpenAI `whisper-1` was rejected because it returns no speaker labels, and local `faster-whisper` plus `pyannote` was rejected because it adds a Python runtime and GPU dependency.
+
+---
+
+## ADR-0003 — Reasoning model
+
+Status: accepted (2026-09-15)
+Context: Commitment extraction requires tracking acceptance, cancellation and correction across the whole transcript.
+Decision: Extraction calls the Anthropic Messages API with model `claude-opus-5`, adaptive thinking and a single strict tool that returns the output document.
+Consequence: The response is schema-validated JSON and the cost is measured from reported token usage.
+Rejected: A cheaper model was not selected by default because the assessment weights correctness above cost, and the model id is configurable through `EXTRACTION_MODEL`.
+
+---
+
+## ADR-0004 — Output validation
+
+Status: accepted (2026-09-15)
+Context: Model output must not reach the UI in a shape the UI cannot render.
+Decision: The tool schema is declared once in Zod and converted to JSON Schema, and every model response is parsed by that Zod schema before further processing.
+Consequence: A malformed response fails at the boundary with a logged reason instead of producing a partial render.
+Rejected: Hand-written JSON Schema plus manual type definitions were rejected because the two copies drift.
+
+---
+
+## ADR-0005 — Evidence binding
+
+Status: accepted (2026-09-15)
+Context: Rule R7 requires every emitted item to be traceable to real spoken text.
+Decision: Verification matches each quote against the transcript after lowercasing and whitespace collapsing, and rebinds `start_ms` and `end_ms` to the matched utterance span.
+Consequence: Timestamps in the UI always point at audio that contains the quoted words, and unmatched items are dropped with a warning.
+Rejected: Trusting model-reported timestamps was rejected because the model has no access to the audio clock.
+
+---
+
+## ADR-0006 — Relative date handling
+
+Status: accepted (2026-09-15)
+Context: The brief forbids inferring a date that was never agreed.
+Decision: A relative deadline is converted to a calendar date only when an absolute anchor date appears in the transcript or is supplied explicitly by the user, and the system clock is never used as an anchor.
+Consequence: Recordings without an anchor return `unresolved_relative` deadlines and a `missing_date_context` warning instead of a guessed date.
+Rejected: Using upload time as the anchor was rejected because it silently fabricates agreement context.
+
+---
+
+## ADR-0007 — Persistence
+
+Status: accepted (2026-09-15)
+Context: The demo needs the audio available for segment playback but has no multi-user or retention requirement.
+Decision: The uploaded file is held in a server-side in-process store keyed by run id and is also kept as an object URL in the browser for playback.
+Consequence: No database is required and a server restart clears all runs.
+Rejected: Object storage and a database were rejected as scope outside the eight-hour window.
+
+---
+
+## ADR-0008 — Test recording production
+
+Status: accepted (2026-09-15)
+Context: The test set must be shareable, reproducible and available in two variants that differ by one agreement.
+Decision: Fixture audio is generated from a checked-in script by Deepgram Aura-2 text-to-speech using one voice per speaker, with segments concatenated by `ffmpeg`.
+Consequence: Regenerating a variant is a script run and the scripts document the ground truth verbatim.
+Rejected: Human recording was rejected because it is not reproducible and cannot be regenerated after a script edit.
+
+---
+
+## ADR-0009 — Test strategy
+
+Status: accepted (2026-09-15)
+Context: Tests must cover pure logic, wired-up stages and the real browser flow without making every run billable and non-deterministic.
+Decision: The suite has three layers — unit tests over pure functions, integration tests that drive the pipeline and the API route with recorded provider responses, and end-to-end tests that drive the browser against live providers — run by `npm run test:unit`, `npm run test:integration` and `npm run test:e2e`.
+Consequence: Unit and integration layers run offline in CI on every change, and the end-to-end layer is run deliberately with `RUN_E2E=1` and real API keys.
+Rejected: Making all tests depend on live APIs was rejected because it makes failures non-deterministic and billable, and mocking only at the HTTP boundary was rejected because it would leave the route handler untested.
+
+---
+
+## ADR-0016 — End-to-end test driver
+
+Status: accepted (2026-09-15)
+Context: Acceptance criterion A8 requires proof that an evidence quote plays the matching audio segment in a real browser.
+Decision: End-to-end tests use Playwright against `next start`, upload the fixture audio through the real file input and assert on rendered commitments and on `currentTime` of the audio element after activating an evidence control.
+Consequence: The browser demo itself is the tested artefact and the same run produces the measured latency and cost reported in the delivery notes.
+Rejected: Asserting the pipeline only through the API route was rejected because it cannot prove playback behaviour.
+
+---
+
+## ADR-0010 — Cost and latency measurement
+
+Status: accepted (2026-09-15)
+Context: The brief requires reported measurements rather than promised targets.
+Decision: Each stage records wall-clock milliseconds and provider usage counters, and all unit prices live in `src/config/pricing.ts` with a source comment per price.
+Consequence: `metrics.cost_per_audio_minute_usd` is computed from the current run only and the pricing assumptions are auditable in one file.
+Rejected: Estimating cost from audio duration alone was rejected because it hides token-driven variance and retries.
+
+---
+
+## ADR-0011 — Language
+
+Status: accepted (2026-09-15)
+Context: The brief limits scope to one language and the chosen providers give best diarization and TTS quality in English.
+Decision: The supported language is English and the UI states this limit.
+Consequence: Non-English input is out of contract and is not tested.
+Rejected: Ukrainian was rejected because the selected TTS voice set does not cover it, which would break the reproducible fixture pipeline.
+
+---
+
+## ADR-0012 — Clarification behaviour
+
+Status: accepted (2026-09-15)
+Context: The brief requires an input on which the product asks for clarification or declines to conclude.
+Decision: A task with a hedged acceptance is emitted in `excluded` with reason `ambiguous` and is paired with an `open_questions` entry naming the undecided point.
+Consequence: The product never converts an unresolved discussion into a task, and the user sees both that the item exists and what has to be decided.
+Rejected: Emitting a low-confidence commitment with a confidence score was rejected because the brief requires final state, not probability.
+
+---
+
+## ADR-0013 — Audio assembly
+
+Status: accepted (2026-09-15)
+Context: `ffmpeg` is not installed on the development machine and adding it would make fixture generation depend on a system binary.
+Decision: Text-to-speech requests ask Deepgram for 24 kHz 16-bit mono WAV, and the generator concatenates segments by parsing and rewriting the WAV header in Node with no external binary.
+Consequence: Fixture generation runs with `npx tsx` alone and produces byte-identical audio for an unchanged script.
+Rejected: `ffmpeg` concatenation was rejected because it adds an install step to the reproduction instructions.
+
+---
+
+## ADR-0014 — Provider transport
+
+Status: accepted (2026-09-15)
+Context: Two providers are called from server code and each adds install size and its own abstraction.
+Decision: Anthropic is called through the official `@anthropic-ai/sdk`, and Deepgram transcription and speech are called with `fetch` against their documented REST endpoints.
+Consequence: The Deepgram request parameters are visible in the source and reproducible with `curl`, while Anthropic tool use, retries and typed errors come from the maintained SDK.
+Rejected: Adding `@deepgram/sdk` was rejected because the two endpoints used are single POST requests.
+
+---
+
+## ADR-0015 — Audio duration source
+
+Status: accepted (2026-09-15)
+Context: The 180-second limit must be enforced before a paid transcription request is made and the exact duration is needed for cost maths.
+Decision: The browser measures duration with an `HTMLAudioElement` before upload and the server re-checks the duration reported by Deepgram in `metadata.duration` after transcription.
+Consequence: Oversized recordings are rejected without a provider call, and reported cost always uses the provider's own duration.
+Rejected: Server-side probing with `ffprobe` was rejected for the reason given in ADR-0013.

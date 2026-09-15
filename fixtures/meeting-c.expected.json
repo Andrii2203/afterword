@@ -1,0 +1,36 @@
+{
+  "id": "meeting-c",
+  "written_before_first_run": true,
+  "warnings_include": [],
+  "anchor_date": "2026-03-02",
+  "commitments": [
+    {
+      "key": "staging-backup",
+      "title_contains": ["backup"],
+      "owner": { "name": "Maya Chen", "status": "named" },
+      "deadline": { "status_any_of": ["resolved"], "raw_contains": ["this friday"], "date": "2026-03-06" },
+      "evidence_contains": "set that up by this Friday"
+    }
+  ],
+  "excluded": [
+    {
+      "key": "api-docs",
+      "title_contains": ["documentation"],
+      "reason": "ambiguous",
+      "evidence_contains": "Let's call it a maybe"
+    }
+  ],
+  "open_questions": [
+    {
+      "key": "api-docs-decision",
+      "question_contains": ["documentation"],
+      "evidence_contains": "Ask me again on Wednesday"
+    },
+    {
+      "key": "partner-delay",
+      "question_contains": ["partner", "delay"],
+      "evidence_contains": "should we tell the partner about the delay"
+    }
+  ],
+  "must_not_appear_in_commitments": [["documentation"]]
+}
