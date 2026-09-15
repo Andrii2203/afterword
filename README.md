@@ -63,6 +63,7 @@ utterance said it; every position, name and date in the output is re-derived fro
 | `npm test` | Unit and integration layers, no network, no keys. |
 | `npm run test:unit` | Pure functions only. |
 | `npm run test:integration` | Pipeline and API route with recorded provider responses. |
+| `npm run test:e2e:offline` | Real browser, both providers stubbed; no API key needed. |
 | `npm run test:e2e` | Real browser, real providers; needs `RUN_E2E=1` and both keys. |
 | `npm run typecheck` | TypeScript, no emit. |
 | `npm run fixtures:transcripts` | Rebuild the deterministic transcripts used by offline tests. |

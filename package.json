@@ -11,10 +11,12 @@
     "test": "vitest run",
     "test:unit": "vitest run tests/unit",
     "test:integration": "vitest run tests/integration",
-    "test:e2e": "playwright test",
+    "test:e2e": "playwright test tests/e2e/demo.spec.ts",
     "fixtures:transcripts": "tsx scripts/make-transcript.ts meeting-a meeting-b meeting-c",
     "fixtures:audio": "tsx scripts/make-audio.ts meeting-a meeting-b meeting-c",
-    "fixtures:run": "tsx scripts/run-fixture.ts meeting-a meeting-b meeting-c"
+    "fixtures:run": "tsx scripts/run-fixture.ts meeting-a meeting-b meeting-c",
+    "fixtures:stub-audio": "tsx scripts/make-stub-audio.ts meeting-a meeting-b meeting-c",
+    "test:e2e:offline": "npm run fixtures:stub-audio && cross-env STUB_PROVIDERS=1 playwright test tests/e2e/offline.spec.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.125.0",
@@ -29,6 +31,7 @@
     "@types/node": "^24.13.4",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "cross-env": "^10.1.0",
     "eslint": "^9",
     "eslint-config-next": "16.3.5",
     "tailwindcss": "^4",

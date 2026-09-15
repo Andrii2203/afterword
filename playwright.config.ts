@@ -20,6 +20,6 @@ export default defineConfig({
     command: "npm run build && npx next start --port 3100",
     url: "http://127.0.0.1:3100",
     timeout: 240_000,
-    reuseExistingServer: !process.env.CI,
+    reuseExistingServer: false,
   },
 });

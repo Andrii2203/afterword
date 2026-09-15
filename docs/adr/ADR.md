@@ -78,7 +78,7 @@ Rejected: Object storage and a database were rejected as scope outside the eight
 
 Status: accepted (2026-09-15)
 Context: The test set must be shareable, reproducible and available in two variants that differ by one agreement.
-Decision: Fixture audio is generated from a checked-in script by Deepgram Aura-2 text-to-speech using one voice per speaker, with segments concatenated by `ffmpeg`.
+Decision: Fixture audio is generated from a checked-in script by Deepgram Aura-2 text-to-speech using one voice per speaker, with segments concatenated as described in ADR-0013.
 Consequence: Regenerating a variant is a script run and the scripts document the ground truth verbatim.
 Rejected: Human recording was rejected because it is not reproducible and cannot be regenerated after a script edit.
 
@@ -161,3 +161,13 @@ Context: The 180-second limit must be enforced before a paid transcription reque
 Decision: The browser measures duration with an `HTMLAudioElement` before upload and the server re-checks the duration reported by Deepgram in `metadata.duration` after transcription.
 Consequence: Oversized recordings are rejected without a provider call, and reported cost always uses the provider's own duration.
 Rejected: Server-side probing with `ffprobe` was rejected for the reason given in ADR-0013.
+
+---
+
+## ADR-0017 — Offline browser layer
+
+Status: accepted (2026-09-15)
+Context: The browser path had to be provable before any provider key existed, and every live run costs money.
+Decision: `STUB_PROVIDERS=1` makes the server read a recorded transcript and a recorded model response for the uploaded fixture instead of calling the providers, and that flag is set only by `npm run test:e2e:offline`.
+Consequence: Upload, route handling, verification, rendering and segment playback are tested in a real browser on every change, and the live end-to-end suite stays a deliberate, billable run.
+Rejected: Intercepting provider HTTP inside the browser was rejected because the calls happen on the server, and shipping the flag enabled was rejected because the product must process real input.

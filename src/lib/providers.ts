@@ -1,6 +1,9 @@
-import { createDeepgramAsr } from "./asr";
-import { createAnthropicExtractor } from "./extract";
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
+import { createDeepgramAsr, type AsrProvider } from "./asr";
+import { createAnthropicExtractor, type Extractor } from "./extract";
 import type { PipelineDeps } from "./pipeline";
+import { LlmOutputSchema, TranscriptSchema } from "./types";
 
 let override: PipelineDeps | null = null;
 
@@ -9,6 +12,36 @@ export function setProviders(deps: PipelineDeps | null): void {
   override = deps;
 }
 
-export function getProviders(): PipelineDeps {
-  return override ?? { asr: createDeepgramAsr(), extractor: createAnthropicExtractor() };
+export function getProviders(filename?: string): PipelineDeps {
+  if (override) return override;
+  if (process.env.STUB_PROVIDERS === "1") return fixtureProviders(filename ?? "");
+  return { asr: createDeepgramAsr(), extractor: createAnthropicExtractor() };
+}
+
+/**
+ * Offline browser layer only (ADR-0017). Enabled by STUB_PROVIDERS=1, which is
+ * set by `npm run test:e2e:offline` and by nothing else; the deployed demo and
+ * `npm run dev` always call the live providers.
+ */
+function fixtureProviders(filename: string): PipelineDeps {
+  const id = filename.replace(/\.stub\.wav$/i, "").replace(/\.[a-z0-9]+$/i, "");
+  const read = (suffix: string) =>
+    JSON.parse(readFileSync(join(process.cwd(), "fixtures", `${id}.${suffix}`), "utf8"));
+
+  const transcript = TranscriptSchema.parse(read("synth.asr.json"));
+  const output = LlmOutputSchema.parse(read("llm.json"));
+
+  const asr: AsrProvider = {
+    name: "stub-asr",
+    async transcribe() {
+      return { transcript, ms: 1, raw: {} };
+    },
+  };
+  const extractor: Extractor = {
+    model: "stub-extractor",
+    async extract() {
+      return { output, ms: 1, tokens: { input: 0, output: 0, retries: 0 } };
+    },
+  };
+  return { asr, extractor };
 }

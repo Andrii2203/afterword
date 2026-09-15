@@ -12,7 +12,7 @@ const ready =
 
 test.skip(!ready, "Set RUN_E2E=1, both API keys and generate fixture audio first.");
 
-async function process(page: import("@playwright/test").Page, id: string) {
+async function analyse(page: import("@playwright/test").Page, id: string) {
   await page.goto("/");
   await page.getByTestId("upload-input").setInputFiles(AUDIO(id));
   await page.getByTestId("process-button").click();
@@ -20,7 +20,7 @@ async function process(page: import("@playwright/test").Page, id: string) {
 }
 
 test("reports the final state of every task in the base recording", async ({ page }) => {
-  await process(page, "meeting-a");
+  await analyse(page, "meeting-a");
 
   const commitments = page.getByTestId("commitment");
   await expect(commitments).toHaveCount(3);
@@ -45,7 +45,7 @@ test("reports the final state of every task in the base recording", async ({ pag
 });
 
 test("plays the audio segment behind a quote", async ({ page }) => {
-  await process(page, "meeting-a");
+  await analyse(page, "meeting-a");
 
   const chip = page.getByTestId("evidence-play").first();
   const startMs = Number(await chip.getAttribute("data-start-ms"));
@@ -62,7 +62,7 @@ test("plays the audio segment behind a quote", async ({ page }) => {
 });
 
 test("changes exactly one item when the recording changes one agreement", async ({ page }) => {
-  await process(page, "meeting-b");
+  await analyse(page, "meeting-b");
 
   const commitments = page.getByTestId("commitment");
   await expect(commitments).toHaveCount(4);
@@ -74,7 +74,7 @@ test("changes exactly one item when the recording changes one agreement", async 
 });
 
 test("declines to conclude on a hedged acceptance", async ({ page }) => {
-  await process(page, "meeting-c");
+  await analyse(page, "meeting-c");
 
   await expect(page.getByTestId("commitment").filter({ hasText: /documentation/i })).toHaveCount(0);
   await expect(

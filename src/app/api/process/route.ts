@@ -40,7 +40,7 @@ export async function POST(request: Request): Promise<NextResponse> {
         filename: file.name,
         userAnchorDate,
       },
-      getProviders(),
+      getProviders(file.name),
     );
     return NextResponse.json(document);
   } catch (error) {

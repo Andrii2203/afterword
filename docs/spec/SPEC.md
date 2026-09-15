@@ -117,8 +117,8 @@ A10. Given any processed recording, when the response is returned, then `metrics
 
 L1. Unit tests cover pure functions in `src/lib` and never touch the network or the filesystem.
 L2. Integration tests drive the full pipeline and the `POST /api/process` route with checked-in provider responses injected through the adapter interfaces.
-L3. End-to-end tests drive the built application in a real browser with live providers and the fixture audio files.
-L4. L1 and L2 run on every change with `npm test`, and L3 runs only with `RUN_E2E=1` and both API keys present.
+L3. End-to-end tests drive the built application in a real browser and exist in two runs: `test:e2e:offline` with both providers stubbed and no key, and `test:e2e` with live providers and the fixture audio.
+L4. L1, L2 and the offline end-to-end run need no key, and the live end-to-end run happens only with `RUN_E2E=1` and both API keys present.
 L5. Every acceptance criterion in section 9 is asserted in at least one layer, and A8 is asserted only in L3.
 
 ## 11. Test set
