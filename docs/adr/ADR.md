@@ -221,3 +221,13 @@ Context: One run costs about five cents of provider credit, so a public demo URL
 Decision: The route refuses a run with HTTP 429 and a `retry-after` header beyond twelve runs per client address per hour or two hundred runs per process per day, both overridable by environment variable.
 Consequence: A shared demo link cannot drain the key faster than its operator intends, and the limits are visible in `src/lib/limits.ts` rather than hidden in a provider dashboard.
 Rejected: A durable counter in Redis or a database was rejected as scope, which means a serverless deployment enforces these limits per instance and the daily cap is a floor rather than an exact ceiling.
+
+---
+
+## ADR-0023 — Audio format and upload limit
+
+Status: accepted (2026-09-15)
+Context: A check against the deployment target found that its request body limit is 4.5 MB and cannot be raised from configuration, while the WAV recordings were 5.2 MB, so the deployed demo would have failed on its own samples with HTTP 413.
+Decision: Recordings are distributed and uploaded as 48 kbps mono MP3, encoded from the assembled WAV by `@breezystack/lamejs`, and the product rejects any upload above 4.5 MB in the browser before the request is made.
+Consequence: A three minute recording is about 1.1 MB instead of 8.6 MB, transcription latency fell from 3.5-6.9 s to 1.4-2.1 s because the upload is eight times smaller, and the repository carries 1.5 MB of audio instead of 12 MB.
+Rejected: A lower WAV sample rate was rejected because three minutes still exceeds the limit, and uploading to object storage first was rejected as scope that does not change the product's answer.

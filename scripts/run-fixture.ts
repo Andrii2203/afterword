@@ -40,8 +40,8 @@ async function runOne(id: string, options: Options): Promise<boolean> {
       ms: 0,
     };
   } else {
-    const audio = new Uint8Array(readFileSync(join(process.cwd(), "public", "samples", `${id}.wav`)));
-    asrResult = await createDeepgramAsr().transcribe(audio, "audio/wav");
+    const audio = new Uint8Array(readFileSync(join(process.cwd(), "public", "samples", `${id}.mp3`)));
+    asrResult = await createDeepgramAsr().transcribe(audio, "audio/mpeg");
     writeFileSync(asrPath, `${JSON.stringify(asrResult.transcript, null, 2)}\n`);
   }
 
@@ -58,7 +58,7 @@ async function runOne(id: string, options: Options): Promise<boolean> {
       run_id: `fixture-${id}`,
       created_at: new Date().toISOString(),
       audio_ms: asrResult.transcript.audio_ms,
-      filename: `${id}.wav`,
+      filename: `${id}.mp3`,
       anchor_date: verified.anchor.date,
       anchor_date_source: verified.anchor.source,
     },

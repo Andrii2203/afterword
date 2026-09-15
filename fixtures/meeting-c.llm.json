@@ -23,19 +23,14 @@
       "deadline_absolute": "",
       "evidence": [
         {
-          "utterance_index": 9,
+          "utterance_index": 8,
           "quote": "I'll set that up by this Friday.",
           "kind": "acceptance"
         },
         {
-          "utterance_index": 10,
+          "utterance_index": 9,
           "quote": "Good. That one is clear.",
           "kind": "acceptance"
-        },
-        {
-          "utterance_index": 8,
-          "quote": "the staging database has no backup job.",
-          "kind": "mention"
         }
       ],
       "superseded": []
@@ -48,17 +43,12 @@
       "evidence": [
         {
           "utterance_index": 4,
-          "quote": "I might be able to get to it. I can't promise anything this week.",
+          "quote": "I might be able to get to it. I can't promise anything this week. So is that a yes? Let's call it a maybe. Ask me again on Wednesday.",
           "kind": "mention"
         },
         {
           "utterance_index": 6,
-          "quote": "Ask me again on Wednesday.",
-          "kind": "mention"
-        },
-        {
-          "utterance_index": 7,
-          "quote": "Understood. We are not counting on it.",
+          "quote": "We are not counting on it.",
           "kind": "mention"
         }
       ]
@@ -66,17 +56,12 @@
   ],
   "open_questions": [
     {
-      "question": "Will Daniel Okafor refresh the API documentation, to be confirmed when asked again on Wednesday?",
+      "question": "Will Daniel Okafor take on the API documentation refresh (to be re-asked Wednesday)?",
       "raised_by": "Maya Chen",
       "evidence": [
         {
-          "utterance_index": 5,
-          "quote": "So is that a yes? Let's call it a maybe.",
-          "kind": "mention"
-        },
-        {
-          "utterance_index": 6,
-          "quote": "Ask me again on Wednesday.",
+          "utterance_index": 4,
+          "quote": "Let's call it a maybe. Ask me again on Wednesday.",
           "kind": "mention"
         }
       ]
@@ -86,13 +71,13 @@
       "raised_by": "Maya Chen",
       "evidence": [
         {
-          "utterance_index": 11,
-          "quote": "And should we tell the partner about the delay? I'm not sure.",
+          "utterance_index": 10,
+          "quote": "But should we tell the partner about the delay?",
           "kind": "mention"
         },
         {
-          "utterance_index": 12,
-          "quote": "Let's decide after the call.",
+          "utterance_index": 11,
+          "quote": "I'm not sure. Let's decide after the call.",
           "kind": "mention"
         }
       ]

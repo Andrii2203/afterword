@@ -6,7 +6,8 @@ import { DocumentSchema, type CommitmentsDocument } from "./types";
 import { verify } from "./verify";
 
 export const MAX_AUDIO_MS = 180_000;
-export const MAX_UPLOAD_BYTES = 25 * 1024 * 1024;
+// The deployment target caps a request body at 4.5 MB (ADR-0023).
+export const MAX_UPLOAD_BYTES = 4_500_000;
 export const ACCEPTED_TYPES = [
   "audio/wav",
   "audio/x-wav",
@@ -54,7 +55,10 @@ export async function runPipeline(
 
   if (input.audio.byteLength === 0) throw new PipelineError("The uploaded file is empty.", 400);
   if (input.audio.byteLength > MAX_UPLOAD_BYTES) {
-    throw new PipelineError("The uploaded file is larger than 25 MB.", 413);
+    throw new PipelineError(
+      "The uploaded file is larger than 4.5 MB; upload a compressed recording such as MP3 or M4A.",
+      413,
+    );
   }
 
   onEvent({ type: "stage", stage: "transcribing", at_ms: since() });

@@ -8,6 +8,7 @@ import "./env";
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { PRICING } from "../src/config/pricing";
+import { encodeMp3 } from "../src/lib/mp3";
 import { concatWav, durationMs, parseWav } from "../src/lib/wav";
 
 const GAP_MS = 350;
@@ -53,13 +54,14 @@ async function build(id: string, apiKey: string): Promise<void> {
   }
 
   const wav = concatWav(segments, GAP_MS);
+  const mp3 = await encodeMp3(parseWav(wav));
   mkdirSync(PUBLIC_DIR, { recursive: true });
-  writeFileSync(join(PUBLIC_DIR, `${id}.wav`), wav);
+  writeFileSync(join(PUBLIC_DIR, `${id}.mp3`), mp3);
 
   const seconds = durationMs(parseWav(wav)) / 1000;
   const cost = (characters / 1000) * PRICING.tts.usd_per_1k_characters;
   console.log(
-    `${id}: ${seconds.toFixed(1)} s, ${characters} characters, tts cost $${cost.toFixed(4)}`,
+    `${id}: ${seconds.toFixed(1)} s, ${characters} characters, ${(mp3.length / 1024).toFixed(0)} KB, tts cost ${cost.toFixed(4)}`,
   );
   if (seconds > 180) console.warn(`${id} is longer than the 180 s limit.`);
 }

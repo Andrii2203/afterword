@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { MAX_AUDIO_MS } from "@/lib/pipeline";
+import { MAX_AUDIO_MS, MAX_UPLOAD_BYTES } from "@/lib/pipeline";
 import { readEventStream } from "@/lib/events";
 import { msToClock } from "@/lib/transcript";
 import type { CommitmentsDocument, Evidence, Transcript } from "@/lib/types";
@@ -66,6 +66,16 @@ export default function Analyzer() {
       setStatus("idle");
       return;
     }
+    if (picked.size > MAX_UPLOAD_BYTES) {
+      setFile(null);
+      setAudioUrl(null);
+      setError(
+        `This file is ${(picked.size / 1_000_000).toFixed(1)} MB; the limit is 4.5 MB. Upload a compressed recording such as MP3 or M4A.`,
+      );
+      setStatus("error");
+      return;
+    }
+
     const url = URL.createObjectURL(picked);
     const seconds = await readDuration(url);
     if (seconds !== null && seconds * 1000 > MAX_AUDIO_MS) {
@@ -83,14 +93,14 @@ export default function Analyzer() {
 
   async function loadSample(id: string) {
     setError(null);
-    const response = await fetch(`/samples/${id}.wav`);
+    const response = await fetch(`/samples/${id}.mp3`);
     if (!response.ok) {
       setError(`Sample ${id} is not available on this deployment.`);
       setStatus("error");
       return;
     }
     const blob = await response.blob();
-    await onPick(new File([blob], `${id}.wav`, { type: "audio/wav" }));
+    await onPick(new File([blob], `${id}.mp3`, { type: "audio/mpeg" }));
   }
 
   function downloadResult() {

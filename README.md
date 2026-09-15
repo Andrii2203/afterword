@@ -11,7 +11,7 @@ and an owner that was never named stays empty.
 
 - One language: English.
 - Two speakers who introduce themselves by name.
-- Audio up to 180 seconds and 25 MB.
+- Audio up to 180 seconds and 4.5 MB; a three minute MP3 is about 1.1 MB, a three minute WAV is not accepted.
 - No calendar integration, no task delivery to any system, no accounts.
 
 ## Setup

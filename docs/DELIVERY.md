@@ -47,6 +47,7 @@ Three defects only the live providers could expose. All three are fixed and cove
 
 | Defect | Symptom | Fix |
 | --- | --- | --- |
+| Upload too large for the platform | The 5.2 MB WAV samples exceeded the 4.5 MB request body limit, so the deployed demo would have returned 413 on its own examples | Recordings are 48 kbps MP3, about 0.6 MB, and the browser refuses anything above the limit (ADR-0023) |
 | Written date form | `smart_format` rewrote "March second, twenty twenty six" as `03/02/2026`, which the anchor parser did not read, so a resolvable deadline was reported as unresolved | `findAnchorDate` accepts the US written order (ADR-0020) |
 | Speaker label mismatch | The model echoed the display label `speaker_0` instead of the diarization label `0`, so no name ever bound and every quote lost its speaker | `verify` resolves a claimed label against the transcript and falls back to the speaker of the quoted utterance |
 | Prompt gap | An agreed task with no named owner was classified `never_accepted`, losing a real commitment | The prompt states that acceptance and ownership are independent |
@@ -64,9 +65,8 @@ Known limits, not fixed:
 - Diarization is trusted as given; two speakers on one channel who talk over each other are out of
   scope and untested.
 - The fixture audio is synthetic speech, so real-room noise, accents and crosstalk are unmeasured.
-- The three WAV recordings add about 12 MB to the repository, because no audio encoder is available
-  without a system binary; they live in `public/samples` and are served by the demo, so there is one
-  copy rather than two.
+- Uploads are capped at 4.5 MB because that is the deployment target's request body limit; a three
+  minute WAV does not fit and has to be compressed first. The product says so before sending.
 
 ## 4. Speed
 

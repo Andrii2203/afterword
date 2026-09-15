@@ -35,8 +35,8 @@ G10. Anchor date — an absolute calendar date spoken inside the recording.
 
 ## 5. Input contract
 
-I1. Accepted container formats are `wav`, `mp3`, `m4a`, `ogg` and `webm`.
-I2. Maximum upload size is 25 MB.
+I1. Accepted container formats are `mp3`, `m4a`, `ogg`, `webm` and `wav`, and a compressed format is required for a recording near the duration limit.
+I2. Maximum upload size is 4.5 MB, which is the request body limit of the deployment target, and the browser rejects a larger file before sending it.
 I3. Maximum accepted duration is 180 seconds and longer input is rejected with an explicit error.
 I4. The audio file is the only required input.
 I5. The user may optionally supply the recording date, which is used only as an anchor date and is labelled as user-supplied in the output.
