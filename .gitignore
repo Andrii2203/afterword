@@ -48,3 +48,4 @@ next-env.d.ts
 /playwright-report/
 /fixtures/audio/*.stub.wav
 /fixtures/audio/
+/fixtures/audio/*.stub.mp3

@@ -24,6 +24,17 @@ test.afterAll(() => {
   );
 });
 
+/** Fail fast: an error in the UI ends the wait instead of burning the test timeout. */
+async function waitForResult(page: import("@playwright/test").Page, timeout = 60_000) {
+  const outcome = await Promise.race([
+    page.getByTestId("metrics").waitFor({ state: "visible", timeout }).then(() => "metrics"),
+    page.getByTestId("error").waitFor({ state: "visible", timeout }).then(() => "error"),
+  ]);
+  if (outcome === "error") {
+    throw new Error(`the app reported: ${await page.getByTestId("error").textContent()}`);
+  }
+}
+
 async function analyse(page: import("@playwright/test").Page, id: string) {
   await page.goto("/");
   await page.getByTestId("upload-input").setInputFiles(AUDIO(id));
@@ -34,7 +45,7 @@ async function analyse(page: import("@playwright/test").Page, id: string) {
   await expect(page.getByTestId("transcript")).toBeVisible({ timeout: 60_000 });
   const transcriptMs = Date.now() - started;
 
-  await expect(page.getByTestId("metrics")).toBeVisible({ timeout: 150_000 });
+  await waitForResult(page, 150_000);
   const serverMs = Number(
     (await page.getByTestId("metrics").getAttribute("data-total-ms")) ?? Number.NaN,
   );

@@ -7,18 +7,29 @@ import { expect, test } from "@playwright/test";
  * real route handler, real verification, real rendering, real playback.
  * Run with `npm run test:e2e:offline`; it needs no API key.
  */
-const AUDIO = (id: string) => join(process.cwd(), "fixtures", "audio", `${id}.stub.wav`);
+const AUDIO = (id: string) => join(process.cwd(), "fixtures", "audio", `${id}.stub.mp3`);
 
 test.skip(
   process.env.STUB_PROVIDERS !== "1" || !existsSync(AUDIO("meeting-a")),
   "Run with npm run test:e2e:offline.",
 );
 
+/** Fail fast: an error in the UI ends the wait instead of burning the test timeout. */
+async function waitForResult(page: import("@playwright/test").Page, timeout = 60_000) {
+  const outcome = await Promise.race([
+    page.getByTestId("metrics").waitFor({ state: "visible", timeout }).then(() => "metrics"),
+    page.getByTestId("error").waitFor({ state: "visible", timeout }).then(() => "error"),
+  ]);
+  if (outcome === "error") {
+    throw new Error(`the app reported: ${await page.getByTestId("error").textContent()}`);
+  }
+}
+
 async function analyse(page: import("@playwright/test").Page, id: string) {
   await page.goto("/");
   await page.getByTestId("upload-input").setInputFiles(AUDIO(id));
   await page.getByTestId("process-button").click();
-  await expect(page.getByTestId("metrics")).toBeVisible();
+  await waitForResult(page, 30_000);
 }
 
 test("renders the final state of every task", async ({ page }) => {
@@ -101,7 +112,7 @@ test("loads a bundled sample and processes it", async ({ page }) => {
   await page.getByTestId("sample-meeting-c").click();
   await expect(page.getByTestId("player")).toBeVisible();
   await page.getByTestId("process-button").click();
-  await expect(page.getByTestId("metrics")).toBeVisible();
+  await waitForResult(page, 30_000);
   await expect(page.getByTestId("commitment")).toHaveCount(1);
 });
 

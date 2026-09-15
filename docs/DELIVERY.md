@@ -17,9 +17,9 @@ expected commitments list written before the pipeline was ever run against it.
 
 | Fixture | Audio | Result | Recall | Precision |
 | --- | --- | --- | --- | --- |
-| `meeting-a` | 109.2 s | PASS | 1.00 | 1.00 |
-| `meeting-b` | 105.0 s | PASS | 1.00 | 1.00 |
-| `meeting-c` | 42.9 s | PASS | 1.00 | 1.00 |
+| `meeting-a` | 105.9 s | PASS | 1.00 | 1.00 |
+| `meeting-b` | 108.0 s | PASS | 1.00 | 1.00 |
+| `meeting-c` | 42.5 s | PASS | 1.00 | 1.00 |
 
 `meeting-a` contains all five required cases. Actual output:
 
@@ -48,6 +48,8 @@ Three defects only the live providers could expose. All three are fixed and cove
 | Defect | Symptom | Fix |
 | --- | --- | --- |
 | Upload too large for the platform | The 5.2 MB WAV samples exceeded the 4.5 MB request body limit, so the deployed demo would have returned 413 on its own examples | Recordings are 48 kbps MP3, about 0.6 MB, and the browser refuses anything above the limit (ADR-0023) |
+| Placeholder audio left behind | Lowering the upload cap broke the offline browser suite, whose placeholder recordings were still 5 MB WAV | The placeholder is encoded the same way as a real recording, and an integration test now asserts every bundled sample is inside the cap |
+| Stale filename rule | After the format change the stubbed layer derived the fixture id from `meeting-a.stub.mp3` as `meeting-a.stub` and answered 500 | The rule is one exported function with its own unit test |
 | Written date form | `smart_format` rewrote "March second, twenty twenty six" as `03/02/2026`, which the anchor parser did not read, so a resolvable deadline was reported as unresolved | `findAnchorDate` accepts the US written order (ADR-0020) |
 | Speaker label mismatch | The model echoed the display label `speaker_0` instead of the diarization label `0`, so no name ever bound and every quote lost its speaker | `verify` resolves a claimed label against the transcript and falls back to the speaker of the quoted utterance |
 | Prompt gap | An agreed task with no named owner was classified `never_accepted`, losing a real commitment | The prompt states that acceptance and ownership are independent |
@@ -76,12 +78,12 @@ when the commitments list is complete. Both are measured in the browser from the
 
 | Fixture | Audio | Transcript visible | Full result | Server total |
 | --- | --- | --- | --- | --- |
-| `meeting-a` | 109.2 s | 3.9 s | 13.9 s | 13.6 s |
-| `meeting-a` (repeat) | 109.2 s | 3.4 s | 12.9 s | 12.8 s |
-| `meeting-b` | 105.0 s | 4.0 s | 17.6 s | 17.4 s |
-| `meeting-c` | 42.9 s | 2.4 s | 13.5 s | 13.3 s |
+| `meeting-a` | 105.9 s | 2.4 s | 13.5 s | 13.1 s |
+| `meeting-a` (repeat) | 105.9 s | 2.5 s | 13.0 s | 12.6 s |
+| `meeting-b` | 108.0 s | 2.5 s | 16.6 s | 16.3 s |
+| `meeting-c` | 42.5 s | 1.9 s | 14.0 s | 13.5 s |
 
-Stage split from the recorded runs: transcription 3.5–6.9 s, extraction 9.4–36.8 s. The model is
+Stage split from the recorded runs: transcription 1.4–2.1 s, extraction 9.8–15.6 s. The model is
 the whole latency budget; transcription is noise. Nine extraction samples on `claude-opus-5` gave a
 median of 13.2 s with a range of 9.4–36.8 s (`reports/benchmark.claude-opus-5.json`).
 
@@ -99,9 +101,9 @@ Measured cost per operation:
 
 | Fixture | Transcription | Model | Total per run | Per audio minute |
 | --- | --- | --- | --- | --- |
-| `meeting-a` | $0.00783 | $0.04362 | $0.0514 | $0.0283 |
-| `meeting-b` | $0.00752 | $0.05349 | $0.0610 | $0.0349 |
-| `meeting-c` | $0.00307 | $0.04027 | $0.0433 | $0.0606 |
+| `meeting-a` | $0.00759 | $0.04356 | $0.0512 | $0.0290 |
+| `meeting-b` | $0.00774 | $0.05933 | $0.0671 | $0.0373 |
+| `meeting-c` | $0.00305 | $0.03789 | $0.0409 | $0.0578 |
 
 Across nine `claude-opus-5` samples the cost per run was $0.0417 minimum, $0.0514 median, $0.0677
 maximum.
@@ -185,12 +187,12 @@ undecided. After the prompt fix the item is a commitment with `owner.status = "u
 
 | Layer | Count | Needs a key | What it proves |
 | --- | --- | --- | --- |
-| Unit | 75 | no | Quote binding, date resolution, verification rules, cost maths, event framing, spending limits, WAV assembly. |
-| Integration | 26 | no | The pipeline and the API route over recorded provider output, including both variants, the event order and every error path. |
+| Unit | 86 | no | Quote binding, date resolution, verification rules, cost maths, event framing, spending limits, WAV assembly. |
+| Integration | 33 | no | The pipeline and the API route over recorded provider output, including both variants, the event order and every error path. |
 | End-to-end, offline | 7 | no | The real browser path with both providers stubbed, including segment playback and the bundled samples. |
 | End-to-end, live | 5 | yes | The same path against live providers on the fixture audio. |
 
-`npm test` runs the first two layers in under a second. `npm run test:e2e:offline` runs the browser
+`npm test` runs the first two layers in about a second. `npm run test:e2e:offline` runs the browser
 layer with no key. `npm run test:e2e` runs the live layer and costs about $0.20.
 
 ## 9. Reused components and own work
