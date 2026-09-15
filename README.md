@@ -33,7 +33,7 @@ Node 20.19+ or 24+ is required. No system binaries are needed.
 
 ## How it works
 
-```
+```text
 audio ──▶ Deepgram nova-3 ──▶ diarized utterances with word timestamps
                                         │
                                         ▼
@@ -69,6 +69,21 @@ utterance said it; every position, name and date in the output is re-derived fro
 | `npm run fixtures:transcripts` | Rebuild the deterministic transcripts used by offline tests. |
 | `npm run fixtures:audio` | Regenerate fixture audio from the scripts with Deepgram Aura-2. |
 | `npm run fixtures:run` | Run the real pipeline over the fixture audio and score it. |
+
+## Deploying the demo
+
+The application is one Next.js project with two server-side secrets and no database.
+
+```bash
+npx vercel            # link the project, first deploy goes to a preview URL
+npx vercel env add DEEPGRAM_API_KEY production
+npx vercel env add ANTHROPIC_API_KEY production
+npx vercel --prod
+```
+
+The three sample recordings are served from `public/samples`, so the deployed demo can be tried
+without uploading anything. `maxDuration` on the route is 120 seconds, which covers the measured
+worst case of 19 seconds with a wide margin.
 
 ## Test set
 
