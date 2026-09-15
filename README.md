@@ -69,6 +69,9 @@ utterance said it; every position, name and date in the output is re-derived fro
 | `npm run fixtures:transcripts` | Rebuild the deterministic transcripts used by offline tests. |
 | `npm run fixtures:audio` | Regenerate fixture audio from the scripts with Deepgram Aura-2. |
 | `npm run fixtures:run` | Run the real pipeline over the fixture audio and score it. |
+| `npm run fixtures:rescore` | Score the recorded runs again, without calling a provider. |
+| `npm run check:keys` | Verify both provider keys with the smallest possible call. |
+| `npx tsx scripts/benchmark.ts --repeat=3` | Repeat the extraction stage to measure its spread. |
 
 ## Deploying the demo
 
@@ -87,9 +90,9 @@ worst case of 19 seconds with a wide margin.
 
 ## Test set
 
-`fixtures/` holds three conversations. Each one has a `*.script.json` source, a generated `*.wav`,
-a checked-in transcript and an `*.expected.json` ground truth that was written before the pipeline
-was ever run against it.
+`fixtures/` holds three conversations. Each one has a `*.script.json` source, the audio generated
+from it in `public/samples/<id>.wav`, the recorded transcript and model response, and an
+`*.expected.json` ground truth that was written before the pipeline was ever run against it.
 
 | Fixture | Contains |
 | --- | --- |
@@ -105,6 +108,8 @@ commitment the expected list does not contain.
 - `docs/spec/SPEC.md` — the contract: input, output, decision rules, acceptance criteria.
 - `docs/adr/ADR.md` — every architectural decision with its rejected alternative.
 - `docs/DELIVERY.md` — measured speed and cost, what failed, what was reused, what is next.
+- `docs/VIDEO.md` — the three minute walkthrough script.
+- `reports/` — every recorded run behind the numbers in the delivery notes.
 - `src/config/pricing.ts` — every unit price with its source and the date it was checked.
 
 ## Reused components
