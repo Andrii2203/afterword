@@ -65,3 +65,9 @@ to the recording.
 Automated tests checked **what** was said and **which** items were produced. No test checked **who**
 said a quote or **which date source** won. Each fix for #1 and #2 adds that assertion, so
 the same class of error is caught automatically next time.
+
+## Follow-up
+
+| ID | Outcome |
+| --- | --- |
+| [#1](https://github.com/Andrii2203/afterword/issues/1) | Fixed on 2026-09-16. All eight misattributed phrases found in this session are now asserted by integration tests. |

@@ -19,10 +19,22 @@ export interface DeepgramResponse {
       end: number;
       transcript: string;
       speaker?: number;
-      words?: { word: string; punctuated_word?: string; start: number; end: number }[];
+      words?: DeepgramWord[];
     }[];
   };
 }
+
+interface DeepgramWord {
+  word: string;
+  punctuated_word?: string;
+  start: number;
+  end: number;
+  speaker?: number;
+  confidence?: number;
+  speaker_confidence?: number;
+}
+
+type DeepgramUtterance = NonNullable<NonNullable<DeepgramResponse["results"]>["utterances"]>[number];
 
 const ENDPOINT = "https://api.deepgram.com/v1/listen";
 
@@ -36,22 +48,59 @@ export const DEEPGRAM_QUERY = {
 } as const;
 
 export function mapDeepgramResponse(response: DeepgramResponse): Transcript {
-  const utterances = response.results?.utterances ?? [];
+  const turns = (response.results?.utterances ?? []).flatMap(splitBySpeaker);
   return {
-    audio_ms: Math.round((response.metadata?.duration ?? 0) * 1000),
-    utterances: utterances.map((u, index) => ({
-      index,
-      speaker_label: String(u.speaker ?? 0),
-      start_ms: Math.round(u.start * 1000),
-      end_ms: Math.round(u.end * 1000),
-      text: u.transcript,
-      words: (u.words ?? []).map((w) => ({
-        text: w.punctuated_word ?? w.word,
-        start_ms: Math.round(w.start * 1000),
-        end_ms: Math.round(w.end * 1000),
-      })),
-    })),
+    audio_ms: toMs(response.metadata?.duration ?? 0),
+    utterances: turns.map((turn, index) => ({ index, ...turn })),
   };
+}
+
+function splitBySpeaker(utterance: DeepgramUtterance): Omit<Transcript["utterances"][number], "index">[] {
+  const fallback = utterance.speaker ?? 0;
+  const words = utterance.words ?? [];
+
+  if (words.length === 0) {
+    return [
+      {
+        speaker_label: String(fallback),
+        start_ms: toMs(utterance.start),
+        end_ms: toMs(utterance.end),
+        text: utterance.transcript,
+        words: [],
+      },
+    ];
+  }
+
+  const runs: { speaker: number; words: DeepgramWord[] }[] = [];
+  for (const word of words) {
+    const speaker = word.speaker ?? fallback;
+    const last = runs.at(-1);
+    if (last && last.speaker === speaker) last.words.push(word);
+    else runs.push({ speaker, words: [word] });
+  }
+
+  const single = runs.length === 1;
+  return runs.map((run) => ({
+    speaker_label: String(run.speaker),
+    start_ms: toMs(single ? utterance.start : run.words[0].start),
+    end_ms: toMs(single ? utterance.end : run.words.at(-1)!.end),
+    text: single
+      ? utterance.transcript
+      : run.words.map((word) => word.punctuated_word ?? word.word).join(" "),
+    words: run.words.map((word) => ({
+      text: word.punctuated_word ?? word.word,
+      start_ms: toMs(word.start),
+      end_ms: toMs(word.end),
+      ...(word.confidence === undefined ? {} : { confidence: word.confidence }),
+      ...(word.speaker_confidence === undefined
+        ? {}
+        : { speaker_confidence: word.speaker_confidence }),
+    })),
+  }));
+}
+
+function toMs(seconds: number): number {
+  return Math.round(seconds * 1000);
 }
 
 export function createDeepgramAsr(apiKey = process.env.DEEPGRAM_API_KEY): AsrProvider {

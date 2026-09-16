@@ -47,7 +47,10 @@ test("renders the final state of every task", async ({ page }) => {
   );
   await expect(page.getByTestId("open-question")).toHaveCount(1);
   await expect(page.getByTestId("unassigned")).toHaveCount(1);
-  await expect(page.getByTestId("superseded")).toHaveCount(1);
+  const checklist = commitments.filter({ hasText: /checklist/i });
+  await expect(checklist.getByTestId("superseded").filter({ hasText: /tuesday/i })).not.toHaveCount(0);
+  await expect(checklist.getByTestId("superseded").filter({ hasText: /thursday/i })).toHaveCount(0);
+  await expect(checklist).toContainText(/thursday/i);
   await expect(page.getByTestId("deadline-unresolved").first()).toContainText("no date context");
   await expect(page.getByTestId("warning").filter({ hasText: /No calendar date/ })).toBeVisible();
 });

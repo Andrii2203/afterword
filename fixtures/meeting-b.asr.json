@@ -11,82 +11,114 @@
         {
           "text": "Hi,",
           "start_ms": 0,
-          "end_ms": 480
+          "end_ms": 480,
+          "confidence": 0.99658203,
+          "speaker_confidence": 0.65623623
         },
         {
           "text": "Daniel.",
           "start_ms": 480,
-          "end_ms": 1040
+          "end_ms": 1040,
+          "confidence": 0.9951172,
+          "speaker_confidence": 0.65623623
         },
         {
           "text": "Thanks",
           "start_ms": 1040,
-          "end_ms": 1360
+          "end_ms": 1360,
+          "confidence": 1,
+          "speaker_confidence": 0.65623623
         },
         {
           "text": "for",
           "start_ms": 1360,
-          "end_ms": 1520
+          "end_ms": 1520,
+          "confidence": 1,
+          "speaker_confidence": 0.65623623
         },
         {
           "text": "making",
           "start_ms": 1520,
-          "end_ms": 1840
+          "end_ms": 1840,
+          "confidence": 1,
+          "speaker_confidence": 0.65623623
         },
         {
           "text": "time.",
           "start_ms": 1840,
-          "end_ms": 2480
+          "end_ms": 2480,
+          "confidence": 1,
+          "speaker_confidence": 0.65623623
         },
         {
           "text": "I'm",
           "start_ms": 2560,
-          "end_ms": 2880
+          "end_ms": 2880,
+          "confidence": 0.9995117,
+          "speaker_confidence": 0.65623623
         },
         {
           "text": "Maya",
           "start_ms": 2880,
-          "end_ms": 3120
+          "end_ms": 3120,
+          "confidence": 0.8642578,
+          "speaker_confidence": 0.65623623
         },
         {
           "text": "Chen.",
           "start_ms": 3120,
-          "end_ms": 3840
+          "end_ms": 3840,
+          "confidence": 0.99365234,
+          "speaker_confidence": 0.65623623
         },
         {
           "text": "I",
           "start_ms": 3840,
-          "end_ms": 4080
+          "end_ms": 4080,
+          "confidence": 1,
+          "speaker_confidence": 0.65623623
         },
         {
           "text": "led",
           "start_ms": 4080,
-          "end_ms": 4320
+          "end_ms": 4320,
+          "confidence": 0.8017578,
+          "speaker_confidence": 0.65623623
         },
         {
           "text": "product",
           "start_ms": 4320,
-          "end_ms": 4640
+          "end_ms": 4640,
+          "confidence": 0.96875,
+          "speaker_confidence": 0.65623623
         },
         {
           "text": "on",
           "start_ms": 4640,
-          "end_ms": 4880
+          "end_ms": 4880,
+          "confidence": 1,
+          "speaker_confidence": 0.65623623
         },
         {
           "text": "the",
           "start_ms": 4880,
-          "end_ms": 5040
+          "end_ms": 5040,
+          "confidence": 1,
+          "speaker_confidence": 0.65623623
         },
         {
           "text": "onboarding",
           "start_ms": 5040,
-          "end_ms": 5520
+          "end_ms": 5520,
+          "confidence": 0.99316406,
+          "speaker_confidence": 0.65623623
         },
         {
           "text": "project.",
           "start_ms": 5520,
-          "end_ms": 6320
+          "end_ms": 6320,
+          "confidence": 0.9995117,
+          "speaker_confidence": 0.65623623
         }
       ]
     },
@@ -100,27 +132,37 @@
         {
           "text": "Hi,",
           "start_ms": 6720,
-          "end_ms": 7120
+          "end_ms": 7120,
+          "confidence": 0.9951172,
+          "speaker_confidence": 0.5776321
         },
         {
           "text": "Maya.",
           "start_ms": 7120,
-          "end_ms": 7680
+          "end_ms": 7680,
+          "confidence": 1,
+          "speaker_confidence": 0.5776321
         },
         {
           "text": "I'm",
           "start_ms": 7680,
-          "end_ms": 7920
+          "end_ms": 7920,
+          "confidence": 1,
+          "speaker_confidence": 0.5776321
         },
         {
           "text": "Daniel",
           "start_ms": 7920,
-          "end_ms": 8240
+          "end_ms": 8240,
+          "confidence": 0.98095703,
+          "speaker_confidence": 0.5776321
         },
         {
           "text": "Okafor.",
           "start_ms": 8240,
-          "end_ms": 9120
+          "end_ms": 9120,
+          "confidence": 0.901001,
+          "speaker_confidence": 0.5776321
         }
       ]
     },
@@ -134,47 +176,65 @@
         {
           "text": "I'm",
           "start_ms": 9120,
-          "end_ms": 9440
+          "end_ms": 9440,
+          "confidence": 0.99902344,
+          "speaker_confidence": 0.5776321
         },
         {
           "text": "the",
           "start_ms": 9440,
-          "end_ms": 9600
+          "end_ms": 9600,
+          "confidence": 1,
+          "speaker_confidence": 0.5776321
         },
         {
           "text": "back",
           "start_ms": 9600,
-          "end_ms": 9760
+          "end_ms": 9760,
+          "confidence": 0.9580078,
+          "speaker_confidence": 0.5776321
         },
         {
           "text": "end",
           "start_ms": 9760,
-          "end_ms": 10000
+          "end_ms": 10000,
+          "confidence": 1,
+          "speaker_confidence": 0.5776321
         },
         {
           "text": "engineer",
           "start_ms": 10000,
-          "end_ms": 10400
+          "end_ms": 10400,
+          "confidence": 1,
+          "speaker_confidence": 0.5776321
         },
         {
           "text": "on",
           "start_ms": 10400,
-          "end_ms": 10640
+          "end_ms": 10640,
+          "confidence": 1,
+          "speaker_confidence": 0.5776321
         },
         {
           "text": "the",
           "start_ms": 10640,
-          "end_ms": 10720
+          "end_ms": 10720,
+          "confidence": 1,
+          "speaker_confidence": 0.44377846
         },
         {
           "text": "same",
           "start_ms": 10720,
-          "end_ms": 10960
+          "end_ms": 10960,
+          "confidence": 1,
+          "speaker_confidence": 0.44377846
         },
         {
           "text": "project.",
           "start_ms": 10960,
-          "end_ms": 11680
+          "end_ms": 11680,
+          "confidence": 1,
+          "speaker_confidence": 0.44377846
         }
       ]
     },
@@ -182,208 +242,304 @@
       "index": 3,
       "speaker_label": "1",
       "start_ms": 12000,
-      "end_ms": 24245,
-      "text": "Let's go through the list. First one is the duplicate welcome email. Two users reported it this week. I've already reproduced it. I'll fix the duplicate welcome email, and I'll have it merged by the end of the week.",
+      "end_ms": 13120,
+      "text": "Let's go through the list.",
       "words": [
         {
           "text": "Let's",
           "start_ms": 12000,
-          "end_ms": 12320
+          "end_ms": 12320,
+          "confidence": 1,
+          "speaker_confidence": 0.44377846
         },
         {
           "text": "go",
           "start_ms": 12320,
-          "end_ms": 12480
+          "end_ms": 12480,
+          "confidence": 1,
+          "speaker_confidence": 0.44377846
         },
         {
           "text": "through",
           "start_ms": 12480,
-          "end_ms": 12720
+          "end_ms": 12720,
+          "confidence": 1,
+          "speaker_confidence": 0.44377846
         },
         {
           "text": "the",
           "start_ms": 12720,
-          "end_ms": 12880
+          "end_ms": 12880,
+          "confidence": 1,
+          "speaker_confidence": 0.44377846
         },
         {
           "text": "list.",
           "start_ms": 12880,
-          "end_ms": 13120
-        },
-        {
-          "text": "First",
-          "start_ms": 13445,
-          "end_ms": 13925
-        },
-        {
-          "text": "one",
-          "start_ms": 13925,
-          "end_ms": 14165
-        },
-        {
-          "text": "is",
-          "start_ms": 14165,
-          "end_ms": 14325
-        },
-        {
-          "text": "the",
-          "start_ms": 14325,
-          "end_ms": 14485
-        },
-        {
-          "text": "duplicate",
-          "start_ms": 14485,
-          "end_ms": 14885
-        },
-        {
-          "text": "welcome",
-          "start_ms": 14885,
-          "end_ms": 15365
-        },
-        {
-          "text": "email.",
-          "start_ms": 15365,
-          "end_ms": 16005
-        },
-        {
-          "text": "Two",
-          "start_ms": 16085,
-          "end_ms": 16405
-        },
-        {
-          "text": "users",
-          "start_ms": 16405,
-          "end_ms": 16805
-        },
-        {
-          "text": "reported",
-          "start_ms": 16805,
-          "end_ms": 17205
-        },
-        {
-          "text": "it",
-          "start_ms": 17205,
-          "end_ms": 17445
-        },
-        {
-          "text": "this",
-          "start_ms": 17445,
-          "end_ms": 17605
-        },
-        {
-          "text": "week.",
-          "start_ms": 17605,
-          "end_ms": 18165
-        },
-        {
-          "text": "I've",
-          "start_ms": 18325,
-          "end_ms": 18725
-        },
-        {
-          "text": "already",
-          "start_ms": 18725,
-          "end_ms": 18965
-        },
-        {
-          "text": "reproduced",
-          "start_ms": 18965,
-          "end_ms": 19525
-        },
-        {
-          "text": "it.",
-          "start_ms": 19525,
-          "end_ms": 20005
-        },
-        {
-          "text": "I'll",
-          "start_ms": 20005,
-          "end_ms": 20245
-        },
-        {
-          "text": "fix",
-          "start_ms": 20245,
-          "end_ms": 20485
-        },
-        {
-          "text": "the",
-          "start_ms": 20485,
-          "end_ms": 20645
-        },
-        {
-          "text": "duplicate",
-          "start_ms": 20645,
-          "end_ms": 21125
-        },
-        {
-          "text": "welcome",
-          "start_ms": 21125,
-          "end_ms": 21445
-        },
-        {
-          "text": "email,",
-          "start_ms": 21445,
-          "end_ms": 22085
-        },
-        {
-          "text": "and",
-          "start_ms": 22085,
-          "end_ms": 22245
-        },
-        {
-          "text": "I'll",
-          "start_ms": 22245,
-          "end_ms": 22485
-        },
-        {
-          "text": "have",
-          "start_ms": 22485,
-          "end_ms": 22565
-        },
-        {
-          "text": "it",
-          "start_ms": 22565,
-          "end_ms": 22725
-        },
-        {
-          "text": "merged",
-          "start_ms": 22725,
-          "end_ms": 23045
-        },
-        {
-          "text": "by",
-          "start_ms": 23045,
-          "end_ms": 23285
-        },
-        {
-          "text": "the",
-          "start_ms": 23285,
-          "end_ms": 23365
-        },
-        {
-          "text": "end",
-          "start_ms": 23365,
-          "end_ms": 23525
-        },
-        {
-          "text": "of",
-          "start_ms": 23525,
-          "end_ms": 23605
-        },
-        {
-          "text": "the",
-          "start_ms": 23605,
-          "end_ms": 23765
-        },
-        {
-          "text": "week.",
-          "start_ms": 23765,
-          "end_ms": 24245
+          "end_ms": 13120,
+          "confidence": 1,
+          "speaker_confidence": 0.44377846
         }
       ]
     },
     {
       "index": 4,
+      "speaker_label": "0",
+      "start_ms": 13445,
+      "end_ms": 18165,
+      "text": "First one is the duplicate welcome email. Two users reported it this week.",
+      "words": [
+        {
+          "text": "First",
+          "start_ms": 13445,
+          "end_ms": 13925,
+          "confidence": 0.93408203,
+          "speaker_confidence": 0.7737423
+        },
+        {
+          "text": "one",
+          "start_ms": 13925,
+          "end_ms": 14165,
+          "confidence": 1,
+          "speaker_confidence": 0.7737423
+        },
+        {
+          "text": "is",
+          "start_ms": 14165,
+          "end_ms": 14325,
+          "confidence": 1,
+          "speaker_confidence": 0.7737423
+        },
+        {
+          "text": "the",
+          "start_ms": 14325,
+          "end_ms": 14485,
+          "confidence": 1,
+          "speaker_confidence": 0.7737423
+        },
+        {
+          "text": "duplicate",
+          "start_ms": 14485,
+          "end_ms": 14885,
+          "confidence": 1,
+          "speaker_confidence": 0.7737423
+        },
+        {
+          "text": "welcome",
+          "start_ms": 14885,
+          "end_ms": 15365,
+          "confidence": 1,
+          "speaker_confidence": 0.7737423
+        },
+        {
+          "text": "email.",
+          "start_ms": 15365,
+          "end_ms": 16005,
+          "confidence": 0.9995117,
+          "speaker_confidence": 0.7737423
+        },
+        {
+          "text": "Two",
+          "start_ms": 16085,
+          "end_ms": 16405,
+          "confidence": 1,
+          "speaker_confidence": 0.7737423
+        },
+        {
+          "text": "users",
+          "start_ms": 16405,
+          "end_ms": 16805,
+          "confidence": 1,
+          "speaker_confidence": 0.7737423
+        },
+        {
+          "text": "reported",
+          "start_ms": 16805,
+          "end_ms": 17205,
+          "confidence": 0.99902344,
+          "speaker_confidence": 0.7737423
+        },
+        {
+          "text": "it",
+          "start_ms": 17205,
+          "end_ms": 17445,
+          "confidence": 0.99121094,
+          "speaker_confidence": 0.7737423
+        },
+        {
+          "text": "this",
+          "start_ms": 17445,
+          "end_ms": 17605,
+          "confidence": 1,
+          "speaker_confidence": 0.7737423
+        },
+        {
+          "text": "week.",
+          "start_ms": 17605,
+          "end_ms": 18165,
+          "confidence": 1,
+          "speaker_confidence": 0.7737423
+        }
+      ]
+    },
+    {
+      "index": 5,
+      "speaker_label": "1",
+      "start_ms": 18325,
+      "end_ms": 24245,
+      "text": "I've already reproduced it. I'll fix the duplicate welcome email, and I'll have it merged by the end of the week.",
+      "words": [
+        {
+          "text": "I've",
+          "start_ms": 18325,
+          "end_ms": 18725,
+          "confidence": 1,
+          "speaker_confidence": 0.39844382
+        },
+        {
+          "text": "already",
+          "start_ms": 18725,
+          "end_ms": 18965,
+          "confidence": 1,
+          "speaker_confidence": 0.39844382
+        },
+        {
+          "text": "reproduced",
+          "start_ms": 18965,
+          "end_ms": 19525,
+          "confidence": 1,
+          "speaker_confidence": 0.39844382
+        },
+        {
+          "text": "it.",
+          "start_ms": 19525,
+          "end_ms": 20005,
+          "confidence": 0.9995117,
+          "speaker_confidence": 0.39844382
+        },
+        {
+          "text": "I'll",
+          "start_ms": 20005,
+          "end_ms": 20245,
+          "confidence": 1,
+          "speaker_confidence": 0.39844382
+        },
+        {
+          "text": "fix",
+          "start_ms": 20245,
+          "end_ms": 20485,
+          "confidence": 0.99902344,
+          "speaker_confidence": 0.39844382
+        },
+        {
+          "text": "the",
+          "start_ms": 20485,
+          "end_ms": 20645,
+          "confidence": 1,
+          "speaker_confidence": 0.39844382
+        },
+        {
+          "text": "duplicate",
+          "start_ms": 20645,
+          "end_ms": 21125,
+          "confidence": 1,
+          "speaker_confidence": 0.39844382
+        },
+        {
+          "text": "welcome",
+          "start_ms": 21125,
+          "end_ms": 21445,
+          "confidence": 1,
+          "speaker_confidence": 0.39844382
+        },
+        {
+          "text": "email,",
+          "start_ms": 21445,
+          "end_ms": 22085,
+          "confidence": 0.95581055,
+          "speaker_confidence": 0.39844382
+        },
+        {
+          "text": "and",
+          "start_ms": 22085,
+          "end_ms": 22245,
+          "confidence": 1,
+          "speaker_confidence": 0.39844382
+        },
+        {
+          "text": "I'll",
+          "start_ms": 22245,
+          "end_ms": 22485,
+          "confidence": 1,
+          "speaker_confidence": 0.39844382
+        },
+        {
+          "text": "have",
+          "start_ms": 22485,
+          "end_ms": 22565,
+          "confidence": 1,
+          "speaker_confidence": 0.39844382
+        },
+        {
+          "text": "it",
+          "start_ms": 22565,
+          "end_ms": 22725,
+          "confidence": 1,
+          "speaker_confidence": 0.39844382
+        },
+        {
+          "text": "merged",
+          "start_ms": 22725,
+          "end_ms": 22965,
+          "confidence": 0.99902344,
+          "speaker_confidence": 0.39844382
+        },
+        {
+          "text": "by",
+          "start_ms": 22965,
+          "end_ms": 23285,
+          "confidence": 1,
+          "speaker_confidence": 0.39844382
+        },
+        {
+          "text": "the",
+          "start_ms": 23285,
+          "end_ms": 23365,
+          "confidence": 1,
+          "speaker_confidence": 0.16301048
+        },
+        {
+          "text": "end",
+          "start_ms": 23365,
+          "end_ms": 23525,
+          "confidence": 1,
+          "speaker_confidence": 0.16301048
+        },
+        {
+          "text": "of",
+          "start_ms": 23525,
+          "end_ms": 23605,
+          "confidence": 1,
+          "speaker_confidence": 0.16301048
+        },
+        {
+          "text": "the",
+          "start_ms": 23605,
+          "end_ms": 23765,
+          "confidence": 1,
+          "speaker_confidence": 0.16301048
+        },
+        {
+          "text": "week.",
+          "start_ms": 23765,
+          "end_ms": 24245,
+          "confidence": 1,
+          "speaker_confidence": 0.16301048
+        }
+      ]
+    },
+    {
+      "index": 6,
       "speaker_label": "0",
       "start_ms": 24645,
       "end_ms": 26245,
@@ -392,37 +548,49 @@
         {
           "text": "Good.",
           "start_ms": 24645,
-          "end_ms": 25125
+          "end_ms": 25125,
+          "confidence": 0.9995117,
+          "speaker_confidence": 0.83654493
         },
         {
           "text": "That",
           "start_ms": 25125,
-          "end_ms": 25365
+          "end_ms": 25365,
+          "confidence": 1,
+          "speaker_confidence": 0.83654493
         },
         {
           "text": "one",
           "start_ms": 25365,
-          "end_ms": 25605
+          "end_ms": 25605,
+          "confidence": 1,
+          "speaker_confidence": 0.83654493
         },
         {
           "text": "is",
           "start_ms": 25605,
-          "end_ms": 25765
+          "end_ms": 25765,
+          "confidence": 1,
+          "speaker_confidence": 0.83654493
         },
         {
           "text": "yours",
           "start_ms": 25765,
-          "end_ms": 26005
+          "end_ms": 26005,
+          "confidence": 1,
+          "speaker_confidence": 0.83654493
         },
         {
           "text": "then.",
           "start_ms": 26005,
-          "end_ms": 26245
+          "end_ms": 26245,
+          "confidence": 0.9970703,
+          "speaker_confidence": 0.83654493
         }
       ]
     },
     {
-      "index": 5,
+      "index": 7,
       "speaker_label": "0",
       "start_ms": 26860,
       "end_ms": 27580,
@@ -431,12 +599,14 @@
         {
           "text": "Second,",
           "start_ms": 26860,
-          "end_ms": 27580
+          "end_ms": 27580,
+          "confidence": 0.99609375,
+          "speaker_confidence": 0.83654493
         }
       ]
     },
     {
-      "index": 6,
+      "index": 8,
       "speaker_label": "0",
       "start_ms": 27660,
       "end_ms": 31020,
@@ -445,42 +615,56 @@
         {
           "text": "the",
           "start_ms": 27660,
-          "end_ms": 27900
+          "end_ms": 27900,
+          "confidence": 0.99902344,
+          "speaker_confidence": 0.83654493
         },
         {
           "text": "onboarding",
           "start_ms": 27900,
-          "end_ms": 28540
+          "end_ms": 28380,
+          "confidence": 0.99121094,
+          "speaker_confidence": 0.83654493
         },
         {
           "text": "checklist",
-          "start_ms": 28540,
-          "end_ms": 29020
+          "start_ms": 28380,
+          "end_ms": 29020,
+          "confidence": 0.99902344,
+          "speaker_confidence": 0.83654493
         },
         {
           "text": "copy",
           "start_ms": 29020,
-          "end_ms": 29500
+          "end_ms": 29500,
+          "confidence": 0.9951172,
+          "speaker_confidence": 0.83654493
         },
         {
           "text": "still",
           "start_ms": 29500,
-          "end_ms": 29900
+          "end_ms": 29900,
+          "confidence": 1,
+          "speaker_confidence": 0.83654493
         },
         {
           "text": "says",
           "start_ms": 29900,
-          "end_ms": 30220
+          "end_ms": 30220,
+          "confidence": 1,
+          "speaker_confidence": 0.83654493
         },
         {
           "text": "beta.",
           "start_ms": 30220,
-          "end_ms": 31020
+          "end_ms": 31020,
+          "confidence": 0.99658203,
+          "speaker_confidence": 0.83654493
         }
       ]
     },
     {
-      "index": 7,
+      "index": 9,
       "speaker_label": "0",
       "start_ms": 31260,
       "end_ms": 35020,
@@ -489,67 +673,91 @@
         {
           "text": "I'll",
           "start_ms": 31260,
-          "end_ms": 31580
+          "end_ms": 31580,
+          "confidence": 1,
+          "speaker_confidence": 0.83654493
         },
         {
           "text": "rewrite",
           "start_ms": 31580,
-          "end_ms": 31900
+          "end_ms": 31900,
+          "confidence": 0.9995117,
+          "speaker_confidence": 0.83654493
         },
         {
           "text": "it.",
           "start_ms": 31900,
-          "end_ms": 32380
+          "end_ms": 32380,
+          "confidence": 0.9995117,
+          "speaker_confidence": 0.83654493
         },
         {
           "text": "I",
           "start_ms": 32460,
-          "end_ms": 32700
+          "end_ms": 32700,
+          "confidence": 1,
+          "speaker_confidence": 0.83654493
         },
         {
           "text": "can",
           "start_ms": 32700,
-          "end_ms": 32860
+          "end_ms": 32860,
+          "confidence": 1,
+          "speaker_confidence": 0.83654493
         },
         {
           "text": "have",
           "start_ms": 32860,
-          "end_ms": 33100
+          "end_ms": 33100,
+          "confidence": 1,
+          "speaker_confidence": 0.83654493
         },
         {
           "text": "the",
           "start_ms": 33100,
-          "end_ms": 33180
+          "end_ms": 33180,
+          "confidence": 1,
+          "speaker_confidence": 0.5978385
         },
         {
           "text": "new",
           "start_ms": 33180,
-          "end_ms": 33420
+          "end_ms": 33420,
+          "confidence": 1,
+          "speaker_confidence": 0.5978385
         },
         {
           "text": "copy",
           "start_ms": 33420,
-          "end_ms": 33740
+          "end_ms": 33740,
+          "confidence": 1,
+          "speaker_confidence": 0.5978385
         },
         {
           "text": "ready",
           "start_ms": 33740,
-          "end_ms": 34060
+          "end_ms": 34060,
+          "confidence": 1,
+          "speaker_confidence": 0.5978385
         },
         {
           "text": "by",
           "start_ms": 34060,
-          "end_ms": 34300
+          "end_ms": 34300,
+          "confidence": 1,
+          "speaker_confidence": 0.5978385
         },
         {
           "text": "Tuesday.",
           "start_ms": 34300,
-          "end_ms": 35020
+          "end_ms": 35020,
+          "confidence": 0.9995117,
+          "speaker_confidence": 0.5978385
         }
       ]
     },
     {
-      "index": 8,
+      "index": 10,
       "speaker_label": "1",
       "start_ms": 35500,
       "end_ms": 36940,
@@ -558,96 +766,137 @@
         {
           "text": "Tuesday",
           "start_ms": 35500,
-          "end_ms": 35980
+          "end_ms": 35980,
+          "confidence": 1,
+          "speaker_confidence": 0.63018924
         },
         {
           "text": "is",
           "start_ms": 35980,
-          "end_ms": 36220
+          "end_ms": 36220,
+          "confidence": 0.6777344,
+          "speaker_confidence": 0.63018924
         },
         {
           "text": "tight.",
           "start_ms": 36220,
-          "end_ms": 36940
+          "end_ms": 36940,
+          "confidence": 0.9995117,
+          "speaker_confidence": 0.63018924
         }
       ]
     },
     {
-      "index": 9,
+      "index": 11,
       "speaker_label": "1",
       "start_ms": 37100,
-      "end_ms": 42045,
-      "text": "The design review is on Tuesday morning. Fair point. Let me correct that.",
+      "end_ms": 39100,
+      "text": "The design review is on Tuesday morning.",
       "words": [
         {
           "text": "The",
           "start_ms": 37100,
-          "end_ms": 37420
+          "end_ms": 37340,
+          "confidence": 1,
+          "speaker_confidence": 0.63018924
         },
         {
           "text": "design",
-          "start_ms": 37420,
-          "end_ms": 37740
+          "start_ms": 37340,
+          "end_ms": 37740,
+          "confidence": 0.9970703,
+          "speaker_confidence": 0.63018924
         },
         {
           "text": "review",
           "start_ms": 37740,
-          "end_ms": 38060
+          "end_ms": 38060,
+          "confidence": 1,
+          "speaker_confidence": 0.63018924
         },
         {
           "text": "is",
           "start_ms": 38060,
-          "end_ms": 38220
+          "end_ms": 38220,
+          "confidence": 1,
+          "speaker_confidence": 0.63018924
         },
         {
           "text": "on",
           "start_ms": 38220,
-          "end_ms": 38380
+          "end_ms": 38380,
+          "confidence": 1,
+          "speaker_confidence": 0.63018924
         },
         {
           "text": "Tuesday",
           "start_ms": 38380,
-          "end_ms": 38780
+          "end_ms": 38780,
+          "confidence": 1,
+          "speaker_confidence": 0.63018924
         },
         {
           "text": "morning.",
           "start_ms": 38780,
-          "end_ms": 39100
-        },
-        {
-          "text": "Fair",
-          "start_ms": 39565,
-          "end_ms": 39965
-        },
-        {
-          "text": "point.",
-          "start_ms": 39965,
-          "end_ms": 40605
-        },
-        {
-          "text": "Let",
-          "start_ms": 40685,
-          "end_ms": 41005
-        },
-        {
-          "text": "me",
-          "start_ms": 41005,
-          "end_ms": 41165
-        },
-        {
-          "text": "correct",
-          "start_ms": 41165,
-          "end_ms": 41485
-        },
-        {
-          "text": "that.",
-          "start_ms": 41485,
-          "end_ms": 42045
+          "end_ms": 39100,
+          "confidence": 1,
+          "speaker_confidence": 0.63018924
         }
       ]
     },
     {
-      "index": 10,
+      "index": 12,
+      "speaker_label": "0",
+      "start_ms": 39565,
+      "end_ms": 42045,
+      "text": "Fair point. Let me correct that.",
+      "words": [
+        {
+          "text": "Fair",
+          "start_ms": 39565,
+          "end_ms": 39965,
+          "confidence": 0.9941406,
+          "speaker_confidence": 0.81068516
+        },
+        {
+          "text": "point.",
+          "start_ms": 39965,
+          "end_ms": 40605,
+          "confidence": 0.99853516,
+          "speaker_confidence": 0.81068516
+        },
+        {
+          "text": "Let",
+          "start_ms": 40685,
+          "end_ms": 41005,
+          "confidence": 1,
+          "speaker_confidence": 0.81068516
+        },
+        {
+          "text": "me",
+          "start_ms": 41005,
+          "end_ms": 41165,
+          "confidence": 1,
+          "speaker_confidence": 0.81068516
+        },
+        {
+          "text": "correct",
+          "start_ms": 41165,
+          "end_ms": 41485,
+          "confidence": 1,
+          "speaker_confidence": 0.81068516
+        },
+        {
+          "text": "that.",
+          "start_ms": 41485,
+          "end_ms": 42045,
+          "confidence": 1,
+          "speaker_confidence": 0.81068516
+        }
+      ]
+    },
+    {
+      "index": 13,
       "speaker_label": "0",
       "start_ms": 42365,
       "end_ms": 45885,
@@ -656,52 +905,70 @@
         {
           "text": "I'll",
           "start_ms": 42365,
-          "end_ms": 42685
+          "end_ms": 42685,
+          "confidence": 1,
+          "speaker_confidence": 0.81068516
         },
         {
           "text": "deliver",
           "start_ms": 42685,
-          "end_ms": 43085
+          "end_ms": 43085,
+          "confidence": 1,
+          "speaker_confidence": 0.81068516
         },
         {
           "text": "the",
           "start_ms": 43085,
-          "end_ms": 43245
+          "end_ms": 43245,
+          "confidence": 1,
+          "speaker_confidence": 0.81068516
         },
         {
           "text": "new",
           "start_ms": 43245,
-          "end_ms": 43405
+          "end_ms": 43405,
+          "confidence": 1,
+          "speaker_confidence": 0.81068516
         },
         {
           "text": "checklist",
           "start_ms": 43405,
-          "end_ms": 43885
+          "end_ms": 43885,
+          "confidence": 0.9970703,
+          "speaker_confidence": 0.81068516
         },
         {
           "text": "copy",
           "start_ms": 43885,
-          "end_ms": 44365
+          "end_ms": 44365,
+          "confidence": 0.99902344,
+          "speaker_confidence": 0.81068516
         },
         {
           "text": "by",
           "start_ms": 44365,
-          "end_ms": 44605
+          "end_ms": 44605,
+          "confidence": 1,
+          "speaker_confidence": 0.81068516
         },
         {
           "text": "Thursday",
           "start_ms": 44605,
-          "end_ms": 45085
+          "end_ms": 45085,
+          "confidence": 1,
+          "speaker_confidence": 0.81068516
         },
         {
           "text": "instead.",
           "start_ms": 45085,
-          "end_ms": 45885
+          "end_ms": 45885,
+          "confidence": 0.99560547,
+          "speaker_confidence": 0.81068516
         }
       ]
     },
     {
-      "index": 11,
+      "index": 14,
       "speaker_label": "1",
       "start_ms": 46365,
       "end_ms": 47725,
@@ -710,17 +977,21 @@
         {
           "text": "Thursday",
           "start_ms": 46365,
-          "end_ms": 46845
+          "end_ms": 46845,
+          "confidence": 1,
+          "speaker_confidence": 0.25181448
         },
         {
           "text": "works.",
           "start_ms": 46845,
-          "end_ms": 47725
+          "end_ms": 47725,
+          "confidence": 0.99902344,
+          "speaker_confidence": 0.25181448
         }
       ]
     },
     {
-      "index": 12,
+      "index": 15,
       "speaker_label": "0",
       "start_ms": 48125,
       "end_ms": 52685,
@@ -729,266 +1000,384 @@
         {
           "text": "We",
           "start_ms": 48125,
-          "end_ms": 48365
+          "end_ms": 48365,
+          "confidence": 1,
+          "speaker_confidence": 0.77386564
         },
         {
           "text": "can",
           "start_ms": 48365,
-          "end_ms": 48605
+          "end_ms": 48605,
+          "confidence": 0.9951172,
+          "speaker_confidence": 0.77386564
         },
         {
           "text": "also",
           "start_ms": 48605,
-          "end_ms": 48845
+          "end_ms": 48845,
+          "confidence": 1,
+          "speaker_confidence": 0.77386564
         },
         {
           "text": "add",
           "start_ms": 48845,
-          "end_ms": 49085
+          "end_ms": 49085,
+          "confidence": 1,
+          "speaker_confidence": 0.77386564
         },
         {
           "text": "a",
           "start_ms": 49085,
-          "end_ms": 49245
+          "end_ms": 49245,
+          "confidence": 1,
+          "speaker_confidence": 0.77386564
         },
         {
           "text": "progress",
           "start_ms": 49245,
-          "end_ms": 49565
+          "end_ms": 49565,
+          "confidence": 0.99902344,
+          "speaker_confidence": 0.77386564
         },
         {
           "text": "bar",
           "start_ms": 49565,
-          "end_ms": 49885
+          "end_ms": 49885,
+          "confidence": 1,
+          "speaker_confidence": 0.77386564
         },
         {
           "text": "to",
           "start_ms": 49885,
-          "end_ms": 50045
+          "end_ms": 50045,
+          "confidence": 1,
+          "speaker_confidence": 0.77386564
         },
         {
           "text": "the",
           "start_ms": 50045,
-          "end_ms": 50205
+          "end_ms": 50205,
+          "confidence": 1,
+          "speaker_confidence": 0.77386564
         },
         {
           "text": "import",
           "start_ms": 50205,
-          "end_ms": 50525
+          "end_ms": 50525,
+          "confidence": 0.99609375,
+          "speaker_confidence": 0.77386564
         },
         {
           "text": "screen.",
           "start_ms": 50525,
-          "end_ms": 51165
+          "end_ms": 51165,
+          "confidence": 0.99560547,
+          "speaker_confidence": 0.77386564
         },
         {
           "text": "It",
           "start_ms": 51245,
-          "end_ms": 51485
+          "end_ms": 51485,
+          "confidence": 1,
+          "speaker_confidence": 0.77386564
         },
         {
           "text": "might",
           "start_ms": 51485,
-          "end_ms": 51725
+          "end_ms": 51725,
+          "confidence": 1,
+          "speaker_confidence": 0.77386564
         },
         {
           "text": "reduce",
           "start_ms": 51725,
-          "end_ms": 52045
+          "end_ms": 52045,
+          "confidence": 1,
+          "speaker_confidence": 0.77386564
         },
         {
           "text": "the",
           "start_ms": 52045,
-          "end_ms": 52205
+          "end_ms": 52205,
+          "confidence": 1,
+          "speaker_confidence": 0.77386564
         },
         {
           "text": "drop",
           "start_ms": 52205,
-          "end_ms": 52445
+          "end_ms": 52445,
+          "confidence": 1,
+          "speaker_confidence": 0.77386564
         },
         {
           "text": "off.",
           "start_ms": 52445,
-          "end_ms": 52685
+          "end_ms": 52685,
+          "confidence": 0.9921875,
+          "speaker_confidence": 0.77386564
         }
       ]
     },
     {
-      "index": 13,
+      "index": 16,
       "speaker_label": "1",
       "start_ms": 53340,
-      "end_ms": 64860,
-      "text": "Actually, yes. I'll build the progress bar on the import screen, and I'll finish it by the end of next week. Good. That one is yours as well. Now about the migration script.",
+      "end_ms": 59900,
+      "text": "Actually, yes. I'll build the progress bar on the import screen, and I'll finish it by the end of next week.",
       "words": [
         {
           "text": "Actually,",
           "start_ms": 53340,
-          "end_ms": 53980
+          "end_ms": 53980,
+          "confidence": 0.9667969,
+          "speaker_confidence": 0.35146946
         },
         {
           "text": "yes.",
           "start_ms": 54060,
-          "end_ms": 54700
+          "end_ms": 54700,
+          "confidence": 0.96191406,
+          "speaker_confidence": 0.35146946
         },
         {
           "text": "I'll",
           "start_ms": 54780,
-          "end_ms": 55100
+          "end_ms": 55100,
+          "confidence": 1,
+          "speaker_confidence": 0.35146946
         },
         {
           "text": "build",
           "start_ms": 55100,
-          "end_ms": 55420
+          "end_ms": 55420,
+          "confidence": 1,
+          "speaker_confidence": 0.35146946
         },
         {
           "text": "the",
           "start_ms": 55420,
-          "end_ms": 55580
+          "end_ms": 55580,
+          "confidence": 0.9980469,
+          "speaker_confidence": 0.35146946
         },
         {
           "text": "progress",
           "start_ms": 55580,
-          "end_ms": 55900
+          "end_ms": 55900,
+          "confidence": 1,
+          "speaker_confidence": 0.36173254
         },
         {
           "text": "bar",
           "start_ms": 55900,
-          "end_ms": 56220
+          "end_ms": 56220,
+          "confidence": 1,
+          "speaker_confidence": 0.36173254
         },
         {
           "text": "on",
           "start_ms": 56220,
-          "end_ms": 56460
+          "end_ms": 56460,
+          "confidence": 1,
+          "speaker_confidence": 0.36173254
         },
         {
           "text": "the",
           "start_ms": 56460,
-          "end_ms": 56620
+          "end_ms": 56620,
+          "confidence": 1,
+          "speaker_confidence": 0.36173254
         },
         {
           "text": "import",
           "start_ms": 56620,
-          "end_ms": 56940
+          "end_ms": 56940,
+          "confidence": 0.9970703,
+          "speaker_confidence": 0.36173254
         },
         {
           "text": "screen,",
           "start_ms": 56940,
-          "end_ms": 57580
+          "end_ms": 57580,
+          "confidence": 0.90893555,
+          "speaker_confidence": 0.36173254
         },
         {
           "text": "and",
           "start_ms": 57740,
-          "end_ms": 57820
+          "end_ms": 57820,
+          "confidence": 1,
+          "speaker_confidence": 0.36206168
         },
         {
           "text": "I'll",
           "start_ms": 57820,
-          "end_ms": 58060
+          "end_ms": 58060,
+          "confidence": 1,
+          "speaker_confidence": 0.36206168
         },
         {
           "text": "finish",
           "start_ms": 58060,
-          "end_ms": 58300
+          "end_ms": 58300,
+          "confidence": 1,
+          "speaker_confidence": 0.36206168
         },
         {
           "text": "it",
           "start_ms": 58300,
-          "end_ms": 58540
+          "end_ms": 58540,
+          "confidence": 1,
+          "speaker_confidence": 0.36206168
         },
         {
           "text": "by",
           "start_ms": 58540,
-          "end_ms": 58700
+          "end_ms": 58700,
+          "confidence": 1,
+          "speaker_confidence": 0.36206168
         },
         {
           "text": "the",
           "start_ms": 58700,
-          "end_ms": 58860
+          "end_ms": 58860,
+          "confidence": 1,
+          "speaker_confidence": 0.36206168
         },
         {
           "text": "end",
           "start_ms": 58860,
-          "end_ms": 59020
+          "end_ms": 59020,
+          "confidence": 1,
+          "speaker_confidence": 0.36206168
         },
         {
           "text": "of",
           "start_ms": 59020,
-          "end_ms": 59180
+          "end_ms": 59180,
+          "confidence": 1,
+          "speaker_confidence": 0.36206168
         },
         {
           "text": "next",
           "start_ms": 59180,
-          "end_ms": 59420
+          "end_ms": 59420,
+          "confidence": 1,
+          "speaker_confidence": 0.36206168
         },
         {
           "text": "week.",
           "start_ms": 59420,
-          "end_ms": 59900
-        },
-        {
-          "text": "Good.",
-          "start_ms": 60060,
-          "end_ms": 60700
-        },
-        {
-          "text": "That",
-          "start_ms": 60700,
-          "end_ms": 60860
-        },
-        {
-          "text": "one",
-          "start_ms": 60860,
-          "end_ms": 61100
-        },
-        {
-          "text": "is",
-          "start_ms": 61100,
-          "end_ms": 61260
-        },
-        {
-          "text": "yours",
-          "start_ms": 61260,
-          "end_ms": 61500
-        },
-        {
-          "text": "as",
-          "start_ms": 61500,
-          "end_ms": 61740
-        },
-        {
-          "text": "well.",
-          "start_ms": 61740,
-          "end_ms": 62220
-        },
-        {
-          "text": "Now",
-          "start_ms": 62540,
-          "end_ms": 63100
-        },
-        {
-          "text": "about",
-          "start_ms": 63100,
-          "end_ms": 63500
-        },
-        {
-          "text": "the",
-          "start_ms": 63500,
-          "end_ms": 63660
-        },
-        {
-          "text": "migration",
-          "start_ms": 63660,
-          "end_ms": 64140
-        },
-        {
-          "text": "script.",
-          "start_ms": 64140,
-          "end_ms": 64860
+          "end_ms": 59900,
+          "confidence": 1,
+          "speaker_confidence": 0.36206168
         }
       ]
     },
     {
-      "index": 14,
+      "index": 17,
+      "speaker_label": "0",
+      "start_ms": 60060,
+      "end_ms": 62220,
+      "text": "Good. That one is yours as well.",
+      "words": [
+        {
+          "text": "Good.",
+          "start_ms": 60060,
+          "end_ms": 60700,
+          "confidence": 1,
+          "speaker_confidence": 0.5015482
+        },
+        {
+          "text": "That",
+          "start_ms": 60700,
+          "end_ms": 60860,
+          "confidence": 1,
+          "speaker_confidence": 0.5015482
+        },
+        {
+          "text": "one",
+          "start_ms": 60860,
+          "end_ms": 61100,
+          "confidence": 1,
+          "speaker_confidence": 0.5015482
+        },
+        {
+          "text": "is",
+          "start_ms": 61100,
+          "end_ms": 61260,
+          "confidence": 1,
+          "speaker_confidence": 0.5015482
+        },
+        {
+          "text": "yours",
+          "start_ms": 61260,
+          "end_ms": 61500,
+          "confidence": 1,
+          "speaker_confidence": 0.5015482
+        },
+        {
+          "text": "as",
+          "start_ms": 61500,
+          "end_ms": 61740,
+          "confidence": 0.9951172,
+          "speaker_confidence": 0.5015482
+        },
+        {
+          "text": "well.",
+          "start_ms": 61740,
+          "end_ms": 62220,
+          "confidence": 0.9995117,
+          "speaker_confidence": 0.5015482
+        }
+      ]
+    },
+    {
+      "index": 18,
+      "speaker_label": "1",
+      "start_ms": 62540,
+      "end_ms": 64860,
+      "text": "Now about the migration script.",
+      "words": [
+        {
+          "text": "Now",
+          "start_ms": 62540,
+          "end_ms": 63100,
+          "confidence": 0.9980469,
+          "speaker_confidence": 0.6012226
+        },
+        {
+          "text": "about",
+          "start_ms": 63100,
+          "end_ms": 63500,
+          "confidence": 0.8520508,
+          "speaker_confidence": 0.6012226
+        },
+        {
+          "text": "the",
+          "start_ms": 63500,
+          "end_ms": 63660,
+          "confidence": 1,
+          "speaker_confidence": 0.6012226
+        },
+        {
+          "text": "migration",
+          "start_ms": 63660,
+          "end_ms": 64140,
+          "confidence": 0.9980469,
+          "speaker_confidence": 0.6012226
+        },
+        {
+          "text": "script.",
+          "start_ms": 64140,
+          "end_ms": 64860,
+          "confidence": 0.9604492,
+          "speaker_confidence": 0.6012226
+        }
+      ]
+    },
+    {
+      "index": 19,
       "speaker_label": "1",
       "start_ms": 65260,
       "end_ms": 68540,
@@ -997,67 +1386,91 @@
         {
           "text": "Last",
           "start_ms": 65260,
-          "end_ms": 65660
+          "end_ms": 65660,
+          "confidence": 1,
+          "speaker_confidence": 0.6012226
         },
         {
           "text": "week,",
           "start_ms": 65660,
-          "end_ms": 65980
+          "end_ms": 65980,
+          "confidence": 0.9313965,
+          "speaker_confidence": 0.6012226
         },
         {
           "text": "I",
           "start_ms": 65980,
-          "end_ms": 66140
+          "end_ms": 66140,
+          "confidence": 1,
+          "speaker_confidence": 0.6012226
         },
         {
           "text": "said",
           "start_ms": 66140,
-          "end_ms": 66380
+          "end_ms": 66380,
+          "confidence": 1,
+          "speaker_confidence": 0.6012226
         },
         {
           "text": "I",
           "start_ms": 66380,
-          "end_ms": 66620
+          "end_ms": 66620,
+          "confidence": 0.92578125,
+          "speaker_confidence": 0.6012226
         },
         {
           "text": "would",
           "start_ms": 66620,
-          "end_ms": 66860
+          "end_ms": 66860,
+          "confidence": 1,
+          "speaker_confidence": 0.6012226
         },
         {
           "text": "write",
           "start_ms": 66860,
-          "end_ms": 67100
+          "end_ms": 67100,
+          "confidence": 0.99902344,
+          "speaker_confidence": 0.6012226
         },
         {
           "text": "one",
           "start_ms": 67100,
-          "end_ms": 67340
+          "end_ms": 67340,
+          "confidence": 1,
+          "speaker_confidence": 0.6012226
         },
         {
           "text": "for",
           "start_ms": 67340,
-          "end_ms": 67500
+          "end_ms": 67500,
+          "confidence": 1,
+          "speaker_confidence": 0.6012226
         },
         {
           "text": "the",
           "start_ms": 67500,
-          "end_ms": 67660
+          "end_ms": 67660,
+          "confidence": 1,
+          "speaker_confidence": 0.6012226
         },
         {
           "text": "legacy",
           "start_ms": 67660,
-          "end_ms": 68140
+          "end_ms": 68140,
+          "confidence": 0.97802734,
+          "speaker_confidence": 0.6012226
         },
         {
           "text": "accounts.",
           "start_ms": 68140,
-          "end_ms": 68540
+          "end_ms": 68540,
+          "confidence": 0.99853516,
+          "speaker_confidence": 0.6012226
         }
       ]
     },
     {
-      "index": 15,
+      "index": 20,
       "speaker_label": "0",
       "start_ms": 69155,
       "end_ms": 70675,
@@ -1066,27 +1479,35 @@
         {
           "text": "Yes.",
           "start_ms": 69155,
-          "end_ms": 69715
+          "end_ms": 69715,
+          "confidence": 0.9675293,
+          "speaker_confidence": 0.4466582
         },
         {
           "text": "That",
           "start_ms": 69715,
-          "end_ms": 69875
+          "end_ms": 69875,
+          "confidence": 1,
+          "speaker_confidence": 0.4466582
         },
         {
           "text": "was",
           "start_ms": 69875,
-          "end_ms": 70035
+          "end_ms": 70035,
+          "confidence": 1,
+          "speaker_confidence": 0.4466582
         },
         {
           "text": "agreed.",
           "start_ms": 70035,
-          "end_ms": 70675
+          "end_ms": 70675,
+          "confidence": 1,
+          "speaker_confidence": 0.4466582
         }
       ]
     },
     {
-      "index": 16,
+      "index": 21,
       "speaker_label": "1",
       "start_ms": 71075,
       "end_ms": 72035,
@@ -1095,17 +1516,21 @@
         {
           "text": "Cancel",
           "start_ms": 71075,
-          "end_ms": 71475
+          "end_ms": 71475,
+          "confidence": 0.99316406,
+          "speaker_confidence": 0.6088738
         },
         {
           "text": "it.",
           "start_ms": 71475,
-          "end_ms": 72035
+          "end_ms": 72035,
+          "confidence": 0.9995117,
+          "speaker_confidence": 0.6088738
         }
       ]
     },
     {
-      "index": 17,
+      "index": 22,
       "speaker_label": "1",
       "start_ms": 72275,
       "end_ms": 75955,
@@ -1114,37 +1539,49 @@
         {
           "text": "Operations",
           "start_ms": 72275,
-          "end_ms": 73075
+          "end_ms": 73075,
+          "confidence": 0.99316406,
+          "speaker_confidence": 0.6088738
         },
         {
           "text": "migrated",
           "start_ms": 73075,
-          "end_ms": 73795
+          "end_ms": 73795,
+          "confidence": 1,
+          "speaker_confidence": 0.6088738
         },
         {
           "text": "those",
           "start_ms": 73795,
-          "end_ms": 74115
+          "end_ms": 74115,
+          "confidence": 1,
+          "speaker_confidence": 0.6088738
         },
         {
           "text": "accounts",
           "start_ms": 74115,
-          "end_ms": 74515
+          "end_ms": 74515,
+          "confidence": 1,
+          "speaker_confidence": 0.6088738
         },
         {
           "text": "manually",
           "start_ms": 74515,
-          "end_ms": 75155
+          "end_ms": 75155,
+          "confidence": 1,
+          "speaker_confidence": 0.6088738
         },
         {
           "text": "yesterday,",
           "start_ms": 75155,
-          "end_ms": 75955
+          "end_ms": 75955,
+          "confidence": 0.92993164,
+          "speaker_confidence": 0.6088738
         }
       ]
     },
     {
-      "index": 18,
+      "index": 23,
       "speaker_label": "1",
       "start_ms": 76115,
       "end_ms": 78515,
@@ -1153,42 +1590,56 @@
         {
           "text": "so",
           "start_ms": 76115,
-          "end_ms": 76195
+          "end_ms": 76195,
+          "confidence": 1,
+          "speaker_confidence": 0.6088738
         },
         {
           "text": "the",
           "start_ms": 76195,
-          "end_ms": 76435
+          "end_ms": 76435,
+          "confidence": 0.9980469,
+          "speaker_confidence": 0.6088738
         },
         {
           "text": "script",
           "start_ms": 76435,
-          "end_ms": 76915
+          "end_ms": 76915,
+          "confidence": 1,
+          "speaker_confidence": 0.6088738
         },
         {
           "text": "is",
           "start_ms": 76915,
-          "end_ms": 77155
+          "end_ms": 77155,
+          "confidence": 0.99902344,
+          "speaker_confidence": 0.6088738
         },
         {
           "text": "not",
           "start_ms": 77155,
-          "end_ms": 77395
+          "end_ms": 77395,
+          "confidence": 1,
+          "speaker_confidence": 0.6088738
         },
         {
           "text": "needed",
           "start_ms": 77395,
-          "end_ms": 77795
+          "end_ms": 77795,
+          "confidence": 1,
+          "speaker_confidence": 0.6088738
         },
         {
           "text": "anymore.",
           "start_ms": 77795,
-          "end_ms": 78515
+          "end_ms": 78515,
+          "confidence": 0.99609375,
+          "speaker_confidence": 0.6088738
         }
       ]
     },
     {
-      "index": 19,
+      "index": 24,
       "speaker_label": "0",
       "start_ms": 78835,
       "end_ms": 79715,
@@ -1197,12 +1648,14 @@
         {
           "text": "Understood.",
           "start_ms": 78835,
-          "end_ms": 79715
+          "end_ms": 79715,
+          "confidence": 0.9995117,
+          "speaker_confidence": 0.74660796
         }
       ]
     },
     {
-      "index": 20,
+      "index": 25,
       "speaker_label": "0",
       "start_ms": 79955,
       "end_ms": 81955,
@@ -1211,32 +1664,42 @@
         {
           "text": "The",
           "start_ms": 79955,
-          "end_ms": 80275
+          "end_ms": 80275,
+          "confidence": 1,
+          "speaker_confidence": 0.74660796
         },
         {
           "text": "migration",
           "start_ms": 80275,
-          "end_ms": 80755
+          "end_ms": 80755,
+          "confidence": 0.99902344,
+          "speaker_confidence": 0.74660796
         },
         {
           "text": "script",
           "start_ms": 80755,
-          "end_ms": 81235
+          "end_ms": 81235,
+          "confidence": 1,
+          "speaker_confidence": 0.74660796
         },
         {
           "text": "is",
           "start_ms": 81235,
-          "end_ms": 81555
+          "end_ms": 81555,
+          "confidence": 1,
+          "speaker_confidence": 0.74660796
         },
         {
           "text": "canceled.",
           "start_ms": 81555,
-          "end_ms": 81955
+          "end_ms": 81955,
+          "confidence": 0.9382324,
+          "speaker_confidence": 0.74660796
         }
       ]
     },
     {
-      "index": 21,
+      "index": 26,
       "speaker_label": "0",
       "start_ms": 82720,
       "end_ms": 87200,
@@ -1245,82 +1708,112 @@
         {
           "text": "The",
           "start_ms": 82720,
-          "end_ms": 82960
+          "end_ms": 82960,
+          "confidence": 1,
+          "speaker_confidence": 0.74660796
         },
         {
           "text": "release",
           "start_ms": 82960,
-          "end_ms": 83280
+          "end_ms": 83280,
+          "confidence": 0.9819336,
+          "speaker_confidence": 0.74660796
         },
         {
           "text": "runbook",
           "start_ms": 83280,
-          "end_ms": 83680
+          "end_ms": 83680,
+          "confidence": 0.9748535,
+          "speaker_confidence": 0.74660796
         },
         {
           "text": "is",
           "start_ms": 83680,
-          "end_ms": 83840
+          "end_ms": 83840,
+          "confidence": 1,
+          "speaker_confidence": 0.74660796
         },
         {
           "text": "out",
           "start_ms": 83840,
-          "end_ms": 84000
+          "end_ms": 84000,
+          "confidence": 1,
+          "speaker_confidence": 0.74660796
         },
         {
           "text": "of",
           "start_ms": 84000,
-          "end_ms": 84160
+          "end_ms": 84160,
+          "confidence": 1,
+          "speaker_confidence": 0.74660796
         },
         {
           "text": "date.",
           "start_ms": 84160,
-          "end_ms": 84640
+          "end_ms": 84640,
+          "confidence": 0.9975586,
+          "speaker_confidence": 0.74660796
         },
         {
           "text": "Someone",
           "start_ms": 84880,
-          "end_ms": 85280
+          "end_ms": 85280,
+          "confidence": 1,
+          "speaker_confidence": 0.5529849
         },
         {
           "text": "needs",
           "start_ms": 85280,
-          "end_ms": 85600
+          "end_ms": 85600,
+          "confidence": 1,
+          "speaker_confidence": 0.5529849
         },
         {
           "text": "to",
           "start_ms": 85600,
-          "end_ms": 85760
+          "end_ms": 85760,
+          "confidence": 1,
+          "speaker_confidence": 0.5529849
         },
         {
           "text": "update",
           "start_ms": 85760,
-          "end_ms": 86000
+          "end_ms": 86000,
+          "confidence": 1,
+          "speaker_confidence": 0.5529849
         },
         {
           "text": "it",
           "start_ms": 86000,
-          "end_ms": 86160
+          "end_ms": 86160,
+          "confidence": 1,
+          "speaker_confidence": 0.5529849
         },
         {
           "text": "before",
           "start_ms": 86160,
-          "end_ms": 86480
+          "end_ms": 86400,
+          "confidence": 1,
+          "speaker_confidence": 0.5529849
         },
         {
           "text": "we",
-          "start_ms": 86480,
-          "end_ms": 86640
+          "start_ms": 86400,
+          "end_ms": 86640,
+          "confidence": 0.9790039,
+          "speaker_confidence": 0.5529849
         },
         {
           "text": "ship.",
           "start_ms": 86640,
-          "end_ms": 87200
+          "end_ms": 87200,
+          "confidence": 0.99902344,
+          "speaker_confidence": 0.5529849
         }
       ]
     },
     {
-      "index": 22,
+      "index": 27,
       "speaker_label": "1",
       "start_ms": 87600,
       "end_ms": 90880,
@@ -1329,280 +1822,418 @@
         {
           "text": "Agreed.",
           "start_ms": 87600,
-          "end_ms": 88320
+          "end_ms": 88320,
+          "confidence": 0.9973958,
+          "speaker_confidence": 0.41441178
         },
         {
           "text": "The",
           "start_ms": 88320,
-          "end_ms": 88480
+          "end_ms": 88480,
+          "confidence": 0.99902344,
+          "speaker_confidence": 0.41441178
         },
         {
           "text": "runbook",
           "start_ms": 88480,
-          "end_ms": 88960
+          "end_ms": 88960,
+          "confidence": 0.99121094,
+          "speaker_confidence": 0.41441178
         },
         {
           "text": "must",
           "start_ms": 88960,
-          "end_ms": 89200
+          "end_ms": 89200,
+          "confidence": 1,
+          "speaker_confidence": 0.41441178
         },
         {
           "text": "be",
           "start_ms": 89200,
-          "end_ms": 89360
+          "end_ms": 89360,
+          "confidence": 1,
+          "speaker_confidence": 0.41441178
         },
         {
           "text": "updated",
           "start_ms": 89360,
-          "end_ms": 89680
+          "end_ms": 89680,
+          "confidence": 1,
+          "speaker_confidence": 0.41441178
         },
         {
           "text": "before",
           "start_ms": 89680,
-          "end_ms": 90080
+          "end_ms": 90080,
+          "confidence": 1,
+          "speaker_confidence": 0.41441178
         },
         {
           "text": "the",
           "start_ms": 90080,
-          "end_ms": 90240
+          "end_ms": 90240,
+          "confidence": 1,
+          "speaker_confidence": 0.41441178
         },
         {
           "text": "release.",
           "start_ms": 90240,
-          "end_ms": 90880
+          "end_ms": 90880,
+          "confidence": 0.9995117,
+          "speaker_confidence": 0.41441178
         }
       ]
     },
     {
-      "index": 23,
-      "speaker_label": "1",
+      "index": 28,
+      "speaker_label": "0",
       "start_ms": 91040,
-      "end_ms": 97600,
-      "text": "We are not deciding who does that right now. One more thing. Do we need legal to review the new consent text?",
+      "end_ms": 93440,
+      "text": "We are not deciding who does that right now.",
       "words": [
         {
           "text": "We",
           "start_ms": 91040,
-          "end_ms": 91280
+          "end_ms": 91280,
+          "confidence": 0.99902344,
+          "speaker_confidence": 0.5294301
         },
         {
           "text": "are",
           "start_ms": 91280,
-          "end_ms": 91440
+          "end_ms": 91440,
+          "confidence": 0.8911133,
+          "speaker_confidence": 0.5294301
         },
         {
           "text": "not",
           "start_ms": 91440,
-          "end_ms": 91680
+          "end_ms": 91680,
+          "confidence": 1,
+          "speaker_confidence": 0.5294301
         },
         {
           "text": "deciding",
           "start_ms": 91680,
-          "end_ms": 92080
+          "end_ms": 92080,
+          "confidence": 1,
+          "speaker_confidence": 0.5294301
         },
         {
           "text": "who",
           "start_ms": 92080,
-          "end_ms": 92320
+          "end_ms": 92320,
+          "confidence": 1,
+          "speaker_confidence": 0.5294301
         },
         {
           "text": "does",
           "start_ms": 92320,
-          "end_ms": 92560
+          "end_ms": 92560,
+          "confidence": 1,
+          "speaker_confidence": 0.5294301
         },
         {
           "text": "that",
           "start_ms": 92560,
-          "end_ms": 92720
+          "end_ms": 92720,
+          "confidence": 1,
+          "speaker_confidence": 0.5294301
         },
         {
           "text": "right",
           "start_ms": 92720,
-          "end_ms": 92960
+          "end_ms": 92960,
+          "confidence": 1,
+          "speaker_confidence": 0.5294301
         },
         {
           "text": "now.",
           "start_ms": 92960,
-          "end_ms": 93440
-        },
+          "end_ms": 93440,
+          "confidence": 0.9995117,
+          "speaker_confidence": 0.5294301
+        }
+      ]
+    },
+    {
+      "index": 29,
+      "speaker_label": "1",
+      "start_ms": 93680,
+      "end_ms": 97520,
+      "text": "One more thing. Do we need legal to review the new consent text?",
+      "words": [
         {
           "text": "One",
           "start_ms": 93680,
-          "end_ms": 93920
+          "end_ms": 93920,
+          "confidence": 0.99902344,
+          "speaker_confidence": 0.5969071
         },
         {
           "text": "more",
           "start_ms": 93920,
-          "end_ms": 94160
+          "end_ms": 94160,
+          "confidence": 1,
+          "speaker_confidence": 0.5969071
         },
         {
           "text": "thing.",
           "start_ms": 94160,
-          "end_ms": 94720
+          "end_ms": 94640,
+          "confidence": 0.9501953,
+          "speaker_confidence": 0.5969071
         },
         {
           "text": "Do",
           "start_ms": 94800,
-          "end_ms": 95040
+          "end_ms": 95040,
+          "confidence": 0.99902344,
+          "speaker_confidence": 0.5969071
         },
         {
           "text": "we",
           "start_ms": 95040,
-          "end_ms": 95120
+          "end_ms": 95120,
+          "confidence": 1,
+          "speaker_confidence": 0.5969071
         },
         {
           "text": "need",
           "start_ms": 95120,
-          "end_ms": 95360
+          "end_ms": 95360,
+          "confidence": 1,
+          "speaker_confidence": 0.5969071
         },
         {
           "text": "legal",
           "start_ms": 95360,
-          "end_ms": 95760
+          "end_ms": 95760,
+          "confidence": 0.95166016,
+          "speaker_confidence": 0.5969071
         },
         {
           "text": "to",
           "start_ms": 95760,
-          "end_ms": 96000
+          "end_ms": 96000,
+          "confidence": 1,
+          "speaker_confidence": 0.5969071
         },
         {
           "text": "review",
           "start_ms": 96000,
-          "end_ms": 96320
+          "end_ms": 96320,
+          "confidence": 1,
+          "speaker_confidence": 0.5969071
         },
         {
           "text": "the",
           "start_ms": 96320,
-          "end_ms": 96560
+          "end_ms": 96560,
+          "confidence": 1,
+          "speaker_confidence": 0.5969071
         },
         {
           "text": "new",
           "start_ms": 96560,
-          "end_ms": 96720
+          "end_ms": 96720,
+          "confidence": 1,
+          "speaker_confidence": 0.5969071
         },
         {
           "text": "consent",
           "start_ms": 96720,
-          "end_ms": 97200
+          "end_ms": 97200,
+          "confidence": 0.9980469,
+          "speaker_confidence": 0.5969071
         },
         {
           "text": "text?",
           "start_ms": 97200,
-          "end_ms": 97600
+          "end_ms": 97520,
+          "confidence": 0.9995117,
+          "speaker_confidence": 0.5969071
         }
       ]
     },
     {
-      "index": 24,
-      "speaker_label": "1",
+      "index": 30,
+      "speaker_label": "0",
       "start_ms": 98225,
-      "end_ms": 105505,
-      "text": "I don't know. I have not asked them. Let's leave that open until we get an answer. Anything else? No.",
+      "end_ms": 100785,
+      "text": "I don't know. I have not asked them.",
       "words": [
         {
           "text": "I",
           "start_ms": 98225,
-          "end_ms": 98465
+          "end_ms": 98465,
+          "confidence": 0.9980469,
+          "speaker_confidence": 0.46674263
         },
         {
           "text": "don't",
           "start_ms": 98465,
-          "end_ms": 98705
+          "end_ms": 98705,
+          "confidence": 0.99853516,
+          "speaker_confidence": 0.46674263
         },
         {
           "text": "know.",
           "start_ms": 98705,
-          "end_ms": 99265
+          "end_ms": 99265,
+          "confidence": 0.9914551,
+          "speaker_confidence": 0.46674263
         },
         {
           "text": "I",
           "start_ms": 99425,
-          "end_ms": 99585
+          "end_ms": 99585,
+          "confidence": 1,
+          "speaker_confidence": 0.46674263
         },
         {
           "text": "have",
           "start_ms": 99585,
-          "end_ms": 99825
+          "end_ms": 99825,
+          "confidence": 0.9980469,
+          "speaker_confidence": 0.46674263
         },
         {
           "text": "not",
           "start_ms": 99825,
-          "end_ms": 99985
+          "end_ms": 99985,
+          "confidence": 1,
+          "speaker_confidence": 0.46674263
         },
         {
           "text": "asked",
           "start_ms": 99985,
-          "end_ms": 100305
+          "end_ms": 100305,
+          "confidence": 0.99902344,
+          "speaker_confidence": 0.46674263
         },
         {
           "text": "them.",
           "start_ms": 100305,
-          "end_ms": 100785
-        },
-        {
-          "text": "Let's",
-          "start_ms": 100945,
-          "end_ms": 101345
-        },
-        {
-          "text": "leave",
-          "start_ms": 101345,
-          "end_ms": 101585
-        },
-        {
-          "text": "that",
-          "start_ms": 101585,
-          "end_ms": 101825
-        },
-        {
-          "text": "open",
-          "start_ms": 101825,
-          "end_ms": 102065
-        },
-        {
-          "text": "until",
-          "start_ms": 102065,
-          "end_ms": 102385
-        },
-        {
-          "text": "we",
-          "start_ms": 102385,
-          "end_ms": 102545
-        },
-        {
-          "text": "get",
-          "start_ms": 102545,
-          "end_ms": 102705
-        },
-        {
-          "text": "an",
-          "start_ms": 102705,
-          "end_ms": 102865
-        },
-        {
-          "text": "answer.",
-          "start_ms": 102865,
-          "end_ms": 103425
-        },
-        {
-          "text": "Anything",
-          "start_ms": 103585,
-          "end_ms": 103985
-        },
-        {
-          "text": "else?",
-          "start_ms": 103985,
-          "end_ms": 104545
-        },
-        {
-          "text": "No.",
-          "start_ms": 104705,
-          "end_ms": 105505
+          "end_ms": 100785,
+          "confidence": 0.99853516,
+          "speaker_confidence": 0.46674263
         }
       ]
     },
     {
-      "index": 25,
+      "index": 31,
+      "speaker_label": "1",
+      "start_ms": 100945,
+      "end_ms": 103425,
+      "text": "Let's leave that open until we get an answer.",
+      "words": [
+        {
+          "text": "Let's",
+          "start_ms": 100945,
+          "end_ms": 101345,
+          "confidence": 0.99853516,
+          "speaker_confidence": 0.4691357
+        },
+        {
+          "text": "leave",
+          "start_ms": 101345,
+          "end_ms": 101585,
+          "confidence": 1,
+          "speaker_confidence": 0.4691357
+        },
+        {
+          "text": "that",
+          "start_ms": 101585,
+          "end_ms": 101825,
+          "confidence": 0.99902344,
+          "speaker_confidence": 0.4691357
+        },
+        {
+          "text": "open",
+          "start_ms": 101825,
+          "end_ms": 102065,
+          "confidence": 1,
+          "speaker_confidence": 0.4691357
+        },
+        {
+          "text": "until",
+          "start_ms": 102065,
+          "end_ms": 102385,
+          "confidence": 0.99902344,
+          "speaker_confidence": 0.4691357
+        },
+        {
+          "text": "we",
+          "start_ms": 102385,
+          "end_ms": 102545,
+          "confidence": 1,
+          "speaker_confidence": 0.4691357
+        },
+        {
+          "text": "get",
+          "start_ms": 102545,
+          "end_ms": 102705,
+          "confidence": 1,
+          "speaker_confidence": 0.4691357
+        },
+        {
+          "text": "an",
+          "start_ms": 102705,
+          "end_ms": 102865,
+          "confidence": 1,
+          "speaker_confidence": 0.4691357
+        },
+        {
+          "text": "answer.",
+          "start_ms": 102865,
+          "end_ms": 103425,
+          "confidence": 0.99853516,
+          "speaker_confidence": 0.4691357
+        }
+      ]
+    },
+    {
+      "index": 32,
+      "speaker_label": "0",
+      "start_ms": 103585,
+      "end_ms": 104545,
+      "text": "Anything else?",
+      "words": [
+        {
+          "text": "Anything",
+          "start_ms": 103585,
+          "end_ms": 103985,
+          "confidence": 0.9980469,
+          "speaker_confidence": 0.43483073
+        },
+        {
+          "text": "else?",
+          "start_ms": 103985,
+          "end_ms": 104545,
+          "confidence": 0.99902344,
+          "speaker_confidence": 0.43483073
+        }
+      ]
+    },
+    {
+      "index": 33,
+      "speaker_label": "1",
+      "start_ms": 104705,
+      "end_ms": 105505,
+      "text": "No.",
+      "words": [
+        {
+          "text": "No.",
+          "start_ms": 104705,
+          "end_ms": 105505,
+          "confidence": 0.888916,
+          "speaker_confidence": 0.2609542
+        }
+      ]
+    },
+    {
+      "index": 34,
       "speaker_label": "1",
       "start_ms": 105585,
       "end_ms": 106785,
@@ -1611,17 +2242,21 @@
         {
           "text": "That's",
           "start_ms": 105585,
-          "end_ms": 106065
+          "end_ms": 106065,
+          "confidence": 0.9980469,
+          "speaker_confidence": 0.2609542
         },
         {
           "text": "everything.",
           "start_ms": 106065,
-          "end_ms": 106785
+          "end_ms": 106785,
+          "confidence": 0.99194336,
+          "speaker_confidence": 0.2609542
         }
       ]
     },
     {
-      "index": 26,
+      "index": 35,
       "speaker_label": "0",
       "start_ms": 106945,
       "end_ms": 107905,
@@ -1630,12 +2265,16 @@
         {
           "text": "Thanks,",
           "start_ms": 106945,
-          "end_ms": 107585
+          "end_ms": 107585,
+          "confidence": 0.8918457,
+          "speaker_confidence": 0.31929862
         },
         {
           "text": "Daniel.",
           "start_ms": 107585,
-          "end_ms": 107905
+          "end_ms": 107905,
+          "confidence": 0.9916992,
+          "speaker_confidence": 0.31929862
         }
       ]
     }

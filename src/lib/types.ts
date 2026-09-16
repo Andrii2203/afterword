@@ -4,6 +4,8 @@ export const WordSchema = z.object({
   text: z.string(),
   start_ms: z.number().int().nonnegative(),
   end_ms: z.number().int().nonnegative(),
+  confidence: z.number().min(0).max(1).optional(),
+  speaker_confidence: z.number().min(0).max(1).optional(),
 });
 
 export const UtteranceSchema = z.object({

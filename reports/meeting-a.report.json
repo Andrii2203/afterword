@@ -16,15 +16,15 @@
   },
   "metrics": {
     "audio_seconds": 105.864,
-    "asr_ms": 2070,
-    "llm_ms": 10844,
-    "total_ms": 12917,
+    "asr_ms": 3473,
+    "llm_ms": 10177,
+    "total_ms": 13657,
     "asr_cost_usd": 0.007587,
-    "llm_cost_usd": 0.043565,
-    "cost_per_audio_minute_usd": 0.028991,
+    "llm_cost_usd": 0.04434,
+    "cost_per_audio_minute_usd": 0.02943,
     "tokens": {
-      "input": 3423,
-      "output": 1058,
+      "input": 3543,
+      "output": 1065,
       "retries": 0
     },
     "models": {

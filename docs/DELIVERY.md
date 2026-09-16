@@ -30,7 +30,7 @@ expected commitments list written before the pipeline was ever run against it.
 | Release runbook | commitment, owner unassigned | as expected |
 | Progress bar | excluded, `never_accepted` | as expected |
 | Migration script | excluded, `cancelled` | as expected |
-| Legal review of consent text | open question | as expected, plus a second open question asking who will update the runbook |
+| Legal review of consent text | open question | as expected |
 | Warnings | `missing_date_context` | as expected |
 
 `meeting-b` is `meeting-a` with one agreement changed: the progress bar is accepted. Actual output
@@ -43,10 +43,11 @@ other four items unchanged in topic, owner and deadline state.
 
 ## 3. What failed
 
-Three defects only the live providers could expose. All three are fixed and covered by a test.
+Defects found so far. Every one is fixed and covered by a test that would have caught it.
 
 | Defect | Symptom | Fix |
 | --- | --- | --- |
+| Wrong speaker on merged turns ([#1](https://github.com/Andrii2203/afterword/issues/1)) | Deepgram merges adjacent turns separated by a short pause into one utterance, and the product took the speaker from the utterance, so quotes appeared under the other person's name; found in the manual review, not by a test | Utterances are split wherever the speaker of a word changes, and integration tests now assert who said eight known phrases and that every quote sits under its utterance's speaker |
 | Upload too large for the platform | The 5.2 MB WAV samples exceeded the 4.5 MB request body limit, so the deployed demo would have returned 413 on its own examples | Recordings are 48 kbps MP3, about 0.6 MB, and the browser refuses anything above the limit (ADR-0023) |
 | Placeholder audio left behind | Lowering the upload cap broke the offline browser suite, whose placeholder recordings were still 5 MB WAV | The placeholder is encoded the same way as a real recording, and an integration test now asserts every bundled sample is inside the cap |
 | Stale filename rule | After the format change the stubbed layer derived the fixture id from `meeting-a.stub.mp3` as `meeting-a.stub` and answered 500 | The rule is one exported function with its own unit test |
@@ -67,7 +68,6 @@ Open issues from the manual review on 2026-09-16, none of which the automated su
 
 | ID | Severity | Summary |
 | --- | --- | --- |
-| [#1](https://github.com/Andrii2203/afterword/issues/1) | High | Quotes are attributed to the wrong speaker when turns are merged |
 | [#2](https://github.com/Andrii2203/afterword/issues/2) | High | The recording date field silently overrides a date spoken in the recording |
 | [#4](https://github.com/Andrii2203/afterword/issues/4) | Medium | Quotes under an item are out of order and their role is hidden |
 | [#3](https://github.com/Andrii2203/afterword/issues/3) | Low | An unresolved deadline says "no date context" when a date is known |
@@ -88,12 +88,14 @@ when the commitments list is complete. Both are measured in the browser from the
 
 | Fixture | Audio | Transcript visible | Full result | Server total |
 | --- | --- | --- | --- | --- |
-| `meeting-a` | 105.9 s | 2.4 s | 13.5 s | 13.1 s |
-| `meeting-a` (repeat) | 105.9 s | 2.5 s | 13.0 s | 12.6 s |
-| `meeting-b` | 108.0 s | 2.5 s | 16.6 s | 16.3 s |
-| `meeting-c` | 42.5 s | 1.9 s | 14.0 s | 13.5 s |
+| `meeting-a` | 105.9 s | 2.5 s | 14.1 s | 13.7 s |
+| `meeting-a` (repeat) | 105.9 s | 2.0 s | 14.2 s | 14.0 s |
+| `meeting-b` | 108.0 s | 2.0 s | 12.7 s | 12.2 s |
+| `meeting-c` | 42.5 s | 1.5 s | 10.6 s | 9.9 s |
 
-Stage split from the recorded runs: transcription 1.4–2.1 s, extraction 9.8–15.6 s. The model is
+Stage split across the recorded runs: transcription 1.4–4.3 s, extraction 9.8–15.6 s. Transcription
+of the same MP3 files ranged that widely from run to run, so it tracks network conditions rather than
+file size. The model is
 the whole latency budget; transcription is noise. Nine extraction samples on `claude-opus-5` gave a
 median of 13.2 s with a range of 9.4–36.8 s (`reports/benchmark.claude-opus-5.json`).
 
@@ -111,9 +113,9 @@ Measured cost per operation:
 
 | Fixture | Transcription | Model | Total per run | Per audio minute |
 | --- | --- | --- | --- | --- |
-| `meeting-a` | $0.00759 | $0.04356 | $0.0512 | $0.0290 |
-| `meeting-b` | $0.00774 | $0.05933 | $0.0671 | $0.0373 |
-| `meeting-c` | $0.00305 | $0.03789 | $0.0409 | $0.0578 |
+| `meeting-a` | $0.00759 | $0.04434 | $0.0519 | $0.0294 |
+| `meeting-b` | $0.00774 | $0.04561 | $0.0534 | $0.0296 |
+| `meeting-c` | $0.00305 | $0.03975 | $0.0428 | $0.0604 |
 
 Across nine `claude-opus-5` samples the cost per run was $0.0417 minimum, $0.0514 median, $0.0677
 maximum.
@@ -132,9 +134,10 @@ Pricing assumptions:
 
 ### What this assignment actually spent
 
-Anthropic, metered from the recorded token counts: about $1.40 in total — two full fixture runs
-(about $0.27), a nine-sample benchmark on each of two models ($0.42 and $0.24), one tagged
-comparison run ($0.12), three live browser suites (about $0.53) and the key check. Deepgram: about
+Anthropic, estimated from recorded token counts and run counts: about $2.60 in total by 2026-09-16 —
+four full fixture runs (about $0.55), a nine-sample benchmark on each of two models ($0.42 and $0.24),
+one tagged comparison run ($0.12), six live browser suites (about $1.05), about a dozen manual runs
+in the demo (about $0.20) and small diagnostic calls. Deepgram: about
 $0.11 of speech synthesis for the fixtures and under $0.05 of transcription, all inside the free
 credit, and all still counted above at list price.
 
@@ -197,8 +200,8 @@ undecided. After the prompt fix the item is a commitment with `owner.status = "u
 
 | Layer | Count | Needs a key | What it proves |
 | --- | --- | --- | --- |
-| Unit | 86 | no | Quote binding, date resolution, verification rules, cost maths, event framing, spending limits, WAV assembly. |
-| Integration | 33 | no | The pipeline and the API route over recorded provider output, including both variants, the event order and every error path. |
+| Unit | 94 | no | Quote binding, date resolution, verification rules, cost maths, event framing, spending limits, WAV assembly. |
+| Integration | 44 | no | The pipeline and the API route over recorded provider output, including both variants, speaker attribution, the event order and every error path. |
 | End-to-end, offline | 7 | no | The real browser path with both providers stubbed, including segment playback and the bundled samples. |
 | End-to-end, live | 5 | yes | The same path against live providers on the fixture audio. |
 

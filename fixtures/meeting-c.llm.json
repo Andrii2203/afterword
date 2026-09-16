@@ -23,12 +23,17 @@
       "deadline_absolute": "",
       "evidence": [
         {
-          "utterance_index": 8,
+          "utterance_index": 10,
           "quote": "I'll set that up by this Friday.",
           "kind": "acceptance"
         },
         {
           "utterance_index": 9,
+          "quote": "the staging database has no backup job",
+          "kind": "mention"
+        },
+        {
+          "utterance_index": 11,
           "quote": "Good. That one is clear.",
           "kind": "acceptance"
         }
@@ -43,11 +48,16 @@
       "evidence": [
         {
           "utterance_index": 4,
-          "quote": "I might be able to get to it. I can't promise anything this week. So is that a yes? Let's call it a maybe. Ask me again on Wednesday.",
+          "quote": "I might be able to get to it. I can't promise anything this week.",
           "kind": "mention"
         },
         {
           "utterance_index": 6,
+          "quote": "Let's call it a maybe. Ask me again on Wednesday.",
+          "kind": "mention"
+        },
+        {
+          "utterance_index": 8,
           "quote": "We are not counting on it.",
           "kind": "mention"
         }
@@ -56,11 +66,16 @@
   ],
   "open_questions": [
     {
-      "question": "Will Daniel Okafor take on the API documentation refresh (to be re-asked Wednesday)?",
+      "question": "Will Daniel Okafor take on the API documentation refresh before the partner call?",
       "raised_by": "Maya Chen",
       "evidence": [
         {
-          "utterance_index": 4,
+          "utterance_index": 5,
+          "quote": "So is that a yes?",
+          "kind": "mention"
+        },
+        {
+          "utterance_index": 6,
           "quote": "Let's call it a maybe. Ask me again on Wednesday.",
           "kind": "mention"
         }
@@ -71,12 +86,12 @@
       "raised_by": "Maya Chen",
       "evidence": [
         {
-          "utterance_index": 10,
+          "utterance_index": 12,
           "quote": "But should we tell the partner about the delay?",
           "kind": "mention"
         },
         {
-          "utterance_index": 11,
+          "utterance_index": 13,
           "quote": "I'm not sure. Let's decide after the call.",
           "kind": "mention"
         }

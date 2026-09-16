@@ -229,5 +229,16 @@ Rejected: A durable counter in Redis or a database was rejected as scope, which 
 Status: accepted (2026-09-15)
 Context: A check against the deployment target found that its request body limit is 4.5 MB and cannot be raised from configuration, while the WAV recordings were 5.2 MB, so the deployed demo would have failed on its own samples with HTTP 413.
 Decision: Recordings are distributed and uploaded as 48 kbps mono MP3, encoded from the assembled WAV by `@breezystack/lamejs`, and the product rejects any upload above 4.5 MB in the browser before the request is made.
-Consequence: A three minute recording is about 1.1 MB instead of 8.6 MB, transcription latency fell from 3.5-6.9 s to 1.4-2.1 s because the upload is eight times smaller, and the repository carries 1.5 MB of audio instead of 12 MB.
+Consequence: A three minute recording is about 1.1 MB instead of 8.6 MB and the repository carries 1.5 MB of audio instead of 12 MB.
+Correction (2026-09-16): an earlier version of this entry credited the format with faster transcription, but later runs on the same MP3 files took 1.4-4.3 s, so that latency difference was network variance.
 Rejected: A lower WAV sample rate was rejected because three minutes still exceeds the limit, and uploading to object storage first was rejected as scope that does not change the product's answer.
+
+---
+
+## ADR-0024 — Speaker of an utterance
+
+Status: accepted (2026-09-16)
+Context: The manual review found quotes under the wrong speaker, because Deepgram merges adjacent turns separated by a pause shorter than its utterance threshold while still labelling every word with the right speaker.
+Decision: The transcript is built from word-level speaker labels, splitting a Deepgram utterance wherever the speaker changes, and every word keeps its recognition and speaker confidence.
+Consequence: Each utterance belongs to one speaker, the model reads correct labels, and confidence is available for flagging uncertain quotes without another paid transcription.
+Rejected: Raising Deepgram's pause threshold was rejected because real speakers also answer without a pause, and sending audio per speaker was rejected because both speakers share one channel.

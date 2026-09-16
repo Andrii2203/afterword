@@ -23,9 +23,14 @@
       "deadline_absolute": "",
       "evidence": [
         {
-          "utterance_index": 4,
+          "utterance_index": 5,
           "quote": "I'll fix the duplicate welcome email, and I'll have it merged by the end of the week.",
           "kind": "acceptance"
+        },
+        {
+          "utterance_index": 6,
+          "quote": "That one is yours then.",
+          "kind": "owner"
         }
       ],
       "superseded": []
@@ -38,12 +43,12 @@
       "deadline_absolute": "",
       "evidence": [
         {
-          "utterance_index": 8,
+          "utterance_index": 10,
           "quote": "I'll deliver the new checklist copy by Thursday instead.",
           "kind": "correction"
         },
         {
-          "utterance_index": 9,
+          "utterance_index": 11,
           "quote": "Thursday works.",
           "kind": "acceptance"
         }
@@ -52,7 +57,7 @@
         {
           "field": "deadline",
           "old_value": "by Tuesday",
-          "utterance_index": 6,
+          "utterance_index": 8,
           "quote": "I'll rewrite it. I can have the new copy ready by Tuesday."
         }
       ]
@@ -65,14 +70,14 @@
       "deadline_absolute": "",
       "evidence": [
         {
-          "utterance_index": 19,
+          "utterance_index": 24,
           "quote": "Agreed. The runbook must be updated before the release.",
           "kind": "acceptance"
         },
         {
-          "utterance_index": 20,
+          "utterance_index": 25,
           "quote": "We are not deciding who does that right now.",
-          "kind": "owner"
+          "kind": "mention"
         }
       ],
       "superseded": []
@@ -84,13 +89,13 @@
       "reason": "never_accepted",
       "evidence": [
         {
-          "utterance_index": 10,
+          "utterance_index": 13,
           "quote": "We could, but I don't want to commit to that today.",
           "kind": "mention"
         },
         {
-          "utterance_index": 11,
-          "quote": "Let's leave it as an idea. Fine. It stays an idea. Nobody is picking it up.",
+          "utterance_index": 15,
+          "quote": "Fine. It stays an idea. Nobody is picking it up.",
           "kind": "mention"
         }
       ]
@@ -100,12 +105,12 @@
       "reason": "cancelled",
       "evidence": [
         {
-          "utterance_index": 14,
+          "utterance_index": 19,
           "quote": "Cancel it. Operations migrated those accounts manually yesterday,",
           "kind": "cancellation"
         },
         {
-          "utterance_index": 17,
+          "utterance_index": 22,
           "quote": "The migration script is canceled.",
           "kind": "cancellation"
         }
@@ -114,17 +119,17 @@
   ],
   "open_questions": [
     {
-      "question": "Do we need legal to review the new consent text?",
+      "question": "Does legal need to review the new consent text?",
       "raised_by": "Daniel Okafor",
       "evidence": [
         {
-          "utterance_index": 20,
+          "utterance_index": 26,
           "quote": "Do we need legal to review the new consent text?",
           "kind": "mention"
         },
         {
-          "utterance_index": 21,
-          "quote": "I don't know. I have not asked them. Let's leave that open until we get an answer.",
+          "utterance_index": 28,
+          "quote": "Let's leave that open until we get an answer.",
           "kind": "mention"
         }
       ]

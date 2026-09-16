@@ -115,3 +115,42 @@ describe("pipeline state rules", () => {
     ).rejects.toThrow(/180 second/);
   });
 });
+
+describe("speaker attribution on the recorded runs", () => {
+  async function speakerOf(id: (typeof FIXTURE_IDS)[number], fragment: string) {
+    const document = await run(id);
+    const needle = fragment.toLowerCase();
+    const utterance = document.transcript.utterances.find((u) =>
+      u.text.toLowerCase().includes(needle),
+    );
+    expect(utterance, `no utterance contains "${fragment}"`).toBeDefined();
+    return document.speakers.find((s) => s.label === utterance!.speaker_label)?.name;
+  }
+
+  it.each([
+    ["meeting-a", "commit to that today", "Daniel Okafor"],
+    ["meeting-a", "nobody is picking it up", "Maya Chen"],
+    ["meeting-a", "I have not asked them", "Maya Chen"],
+    ["meeting-b", "Fair point", "Maya Chen"],
+    ["meeting-b", "That one is yours as well", "Maya Chen"],
+    ["meeting-b", "We are not deciding who does that", "Maya Chen"],
+    ["meeting-c", "So is that a yes", "Maya Chen"],
+    ["meeting-c", "Let's call it a maybe", "Daniel Okafor"],
+  ] as const)("%s: \"%s\" is said by %s", async (id, fragment, speaker) => {
+    expect(await speakerOf(id, fragment)).toBe(speaker);
+  });
+
+  it.each(FIXTURE_IDS)("%s: every quote is shown under the speaker of its utterance", async (id) => {
+    const document = await run(id);
+    const nameOf = (label: string) => document.speakers.find((s) => s.label === label)?.name ?? null;
+    const evidence = [
+      ...document.commitments.flatMap((c) => c.evidence),
+      ...document.excluded.flatMap((x) => x.evidence),
+      ...document.open_questions.flatMap((q) => q.evidence),
+    ];
+    for (const item of evidence) {
+      const utterance = document.transcript.utterances.find((u) => u.index === item.utterance_index);
+      expect(item.speaker).toBe(nameOf(utterance!.speaker_label));
+    }
+  });
+});

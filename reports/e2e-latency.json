@@ -1,29 +1,29 @@
 {
-  "measured_at": "2026-09-15T10:44:30.293Z",
+  "measured_at": "2026-09-16T19:22:07.513Z",
   "samples": [
     {
       "id": "meeting-a",
-      "transcript_ms": 2409,
-      "ms": 13479,
-      "server_ms": 13132
+      "transcript_ms": 2532,
+      "ms": 14139,
+      "server_ms": 13732
     },
     {
       "id": "meeting-a",
-      "transcript_ms": 2476,
-      "ms": 13046,
-      "server_ms": 12583
+      "transcript_ms": 1983,
+      "ms": 14213,
+      "server_ms": 14010
     },
     {
       "id": "meeting-b",
-      "transcript_ms": 2472,
-      "ms": 16625,
-      "server_ms": 16326
+      "transcript_ms": 2019,
+      "ms": 12657,
+      "server_ms": 12222
     },
     {
       "id": "meeting-c",
-      "transcript_ms": 1911,
-      "ms": 14026,
-      "server_ms": 13450
+      "transcript_ms": 1479,
+      "ms": 10557,
+      "server_ms": 9936
     }
   ]
 }
