@@ -49,3 +49,6 @@ next-env.d.ts
 /fixtures/audio/*.stub.wav
 /fixtures/audio/
 /fixtures/audio/*.stub.mp3
+
+# assignment brief, kept local only
+/rec.md

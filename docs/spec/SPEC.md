@@ -1,6 +1,6 @@
 # SPEC — Recorded conversation to final commitments
 
-Status: draft-1. Source brief: `rec.md`. Every statement below is testable.
+Status: draft-1. Source brief: the assignment email, kept outside the repository. Every statement below is testable.
 
 ## 1. Purpose
 
