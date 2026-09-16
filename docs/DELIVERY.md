@@ -67,10 +67,10 @@ Open issues from the manual review on 2026-09-16, none of which the automated su
 
 | ID | Severity | Summary |
 | --- | --- | --- |
-| [ISSUE-001](issues/ISSUE-001-speaker-attribution.md) | High | Quotes are attributed to the wrong speaker when turns are merged |
-| [ISSUE-002](issues/ISSUE-002-anchor-date-conflict.md) | High | The recording date field silently overrides a date spoken in the recording |
-| [ISSUE-004](issues/ISSUE-004-evidence-order.md) | Medium | Quotes under an item are out of order and their role is hidden |
-| [ISSUE-003](issues/ISSUE-003-unresolved-deadline-label.md) | Low | An unresolved deadline says "no date context" when a date is known |
+| [#1](https://github.com/Andrii2203/afterword/issues/1) | High | Quotes are attributed to the wrong speaker when turns are merged |
+| [#2](https://github.com/Andrii2203/afterword/issues/2) | High | The recording date field silently overrides a date spoken in the recording |
+| [#4](https://github.com/Andrii2203/afterword/issues/4) | Medium | Quotes under an item are out of order and their role is hidden |
+| [#3](https://github.com/Andrii2203/afterword/issues/3) | Low | An unresolved deadline says "no date context" when a date is known |
 
 Known limits, not fixed:
 
