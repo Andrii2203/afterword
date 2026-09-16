@@ -117,6 +117,8 @@ commitment the expected list does not contain.
 - `docs/adr/ADR.md` — every architectural decision with its rejected alternative.
 - `docs/DELIVERY.md` — measured speed and cost, what failed, what was reused, what is next.
 - `docs/VIDEO.md` — the three minute walkthrough script.
+- `docs/issues/` — every known defect, one file each, with steps to reproduce and acceptance criteria.
+- `docs/testing/` — notes from manual review sessions.
 - `reports/` — every recorded run behind the numbers in the delivery notes.
 - `src/config/pricing.ts` — every unit price with its source and the date it was checked.
 

@@ -62,6 +62,16 @@ Two test-side corrections, disclosed because they changed the ground truth or th
 2. An integration test compared commitment titles verbatim between two independent model runs. Title
    wording is free text, so the test now compares topic, owner status and deadline status.
 
+Open issues from the manual review on 2026-09-16, none of which the automated suites caught
+(`docs/testing/2026-09-16-manual-review.md`):
+
+| ID | Severity | Summary |
+| --- | --- | --- |
+| [ISSUE-001](issues/ISSUE-001-speaker-attribution.md) | High | Quotes are attributed to the wrong speaker when turns are merged |
+| [ISSUE-002](issues/ISSUE-002-anchor-date-conflict.md) | High | The recording date field silently overrides a date spoken in the recording |
+| [ISSUE-004](issues/ISSUE-004-evidence-order.md) | Medium | Quotes under an item are out of order and their role is hidden |
+| [ISSUE-003](issues/ISSUE-003-unresolved-deadline-label.md) | Low | An unresolved deadline says "no date context" when a date is known |
+
 Known limits, not fixed:
 
 - Diarization is trusted as given; two speakers on one channel who talk over each other are out of
