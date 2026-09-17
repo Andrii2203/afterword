@@ -277,6 +277,59 @@ describe("verify", () => {
     expect(result.speakers.find((s) => s.label === "1")?.name).toBeNull();
   });
 
+  it("puts the quotes under an item in time order", () => {
+    const llm = baseLlm();
+    llm.commitments[0].evidence = [
+      {
+        utterance_index: 2,
+        quote: "I'll fix the duplicate welcome email by this Friday",
+        kind: "acceptance",
+      },
+      { utterance_index: 1, quote: "I'm Daniel Okafor", kind: "owner" },
+      { utterance_index: 0, quote: "today is Monday", kind: "mention" },
+    ];
+    const result = verify({ llm, transcript });
+    const starts = result.commitments[0].evidence.map((e) => e.start_ms);
+    expect(starts).toEqual([...starts].sort((a, b) => a - b));
+    expect(result.commitments[0].evidence.map((e) => e.kind)).toEqual([
+      "mention",
+      "owner",
+      "acceptance",
+    ]);
+  });
+
+  it("keeps items ordered by their deciding quote, not by their earliest quote", () => {
+    const llm = baseLlm();
+    llm.commitments[0].evidence = [
+      {
+        utterance_index: 2,
+        quote: "I'll fix the duplicate welcome email by this Friday",
+        kind: "acceptance",
+      },
+    ];
+    llm.commitments.push({
+      title: "Update the release runbook",
+      owner_name: "",
+      deadline_raw: "",
+      deadline_kind: "none",
+      deadline_absolute: "",
+      evidence: [
+        { utterance_index: 3, quote: "Someone needs to update the runbook", kind: "acceptance" },
+        { utterance_index: 0, quote: "today is Monday", kind: "mention" },
+      ],
+      superseded: [],
+    });
+    const result = verify({ llm, transcript });
+    expect(result.commitments.map((c) => c.title)).toEqual([
+      "Fix the duplicate welcome email",
+      "Update the release runbook",
+    ]);
+    expect(result.commitments[1].evidence[0].kind).toBe("mention");
+    expect(result.commitments[1].evidence[0].start_ms).toBeLessThan(
+      result.commitments[0].evidence[0].start_ms,
+    );
+  });
+
   it("orders commitments by the start of their first evidence", () => {
     const llm = baseLlm();
     llm.commitments.push({

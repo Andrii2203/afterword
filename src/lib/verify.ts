@@ -85,8 +85,11 @@ export function verify({ llm, transcript, userAnchorDate }: VerifyInput): Verify
     return mapped;
   };
 
+  const byTime = (evidence: Evidence[]): Evidence[] =>
+    [...evidence].sort((a, b) => a.start_ms - b.start_ms);
+
   const knownNames = Object.values(names);
-  const commitments: Omit<Commitment, "id">[] = [];
+  const commitments: Entry<Omit<Commitment, "id">>[] = [];
   for (const item of llm.commitments) {
     const evidence = mapEvidence(item.evidence);
     if (evidence.length === 0) {
@@ -114,20 +117,26 @@ export function verify({ llm, transcript, userAnchorDate }: VerifyInput): Verify
       })
       .filter((entry): entry is Commitment["superseded"][number] => entry !== null);
 
-    commitments.push({ title: item.title.trim(), owner, deadline, evidence, superseded });
+    commitments.push({
+      deciding_ms: evidence[0].start_ms,
+      item: { title: item.title.trim(), owner, deadline, evidence: byTime(evidence), superseded },
+    });
   }
 
-  const excluded: Omit<Excluded, "id">[] = [];
+  const excluded: Entry<Omit<Excluded, "id">>[] = [];
   for (const item of llm.excluded) {
     const evidence = mapEvidence(item.evidence);
     if (evidence.length === 0) {
       warnings.add("evidence_unverified");
       continue;
     }
-    excluded.push({ title: item.title.trim(), reason: item.reason, evidence });
+    excluded.push({
+      deciding_ms: evidence[0].start_ms,
+      item: { title: item.title.trim(), reason: item.reason, evidence: byTime(evidence) },
+    });
   }
 
-  const openQuestions: Omit<OpenQuestion, "id">[] = [];
+  const openQuestions: Entry<Omit<OpenQuestion, "id">>[] = [];
   for (const item of llm.open_questions) {
     const evidence = mapEvidence(item.evidence);
     if (evidence.length === 0) {
@@ -137,17 +146,24 @@ export function verify({ llm, transcript, userAnchorDate }: VerifyInput): Verify
     const raisedBy = knownNames.find(
       (name) => normalize(name) === normalize(item.raised_by ?? ""),
     );
-    openQuestions.push({ question: item.question.trim(), raised_by: raisedBy ?? null, evidence });
+    openQuestions.push({
+      deciding_ms: evidence[0].start_ms,
+      item: {
+        question: item.question.trim(),
+        raised_by: raisedBy ?? null,
+        evidence: byTime(evidence),
+      },
+    });
   }
 
   const survivingExcluded =
-    openQuestions.length > 0 ? excluded : excluded.filter((e) => e.reason !== "ambiguous");
+    openQuestions.length > 0 ? excluded : excluded.filter((e) => e.item.reason !== "ambiguous");
 
   return {
     speakers,
-    commitments: byStart(commitments).map((item, i) => ({ ...item, id: `c${i + 1}` })),
-    excluded: byStart(survivingExcluded).map((item, i) => ({ ...item, id: `x${i + 1}` })),
-    open_questions: byStart(openQuestions).map((item, i) => ({ ...item, id: `q${i + 1}` })),
+    commitments: identify(commitments, "c"),
+    excluded: identify(survivingExcluded, "x"),
+    open_questions: identify(openQuestions, "q"),
     anchor,
     warnings: [...warnings].sort(),
   };
@@ -161,8 +177,15 @@ function resolveLabel(claimed: string, quotedBy: string, transcript: Transcript)
   return quotedBy;
 }
 
-function byStart<T extends { evidence: Evidence[] }>(items: T[]): T[] {
-  return [...items].sort((a, b) => a.evidence[0].start_ms - b.evidence[0].start_ms);
+interface Entry<T> {
+  deciding_ms: number;
+  item: T;
+}
+
+function identify<T>(entries: Entry<T>[], prefix: string): (T & { id: string })[] {
+  return [...entries]
+    .sort((a, b) => a.deciding_ms - b.deciding_ms)
+    .map((entry, index) => ({ ...entry.item, id: `${prefix}${index + 1}` }));
 }
 
 function resolveAnchor(

@@ -20,6 +20,15 @@ const STAGE_TEXT: Record<"transcribing" | "extracting" | "verifying", string> = 
   verifying: "Checking every quote",
 };
 
+const EVIDENCE_ROLE: Record<Evidence["kind"], string> = {
+  acceptance: "acceptance",
+  owner: "owner",
+  deadline: "deadline",
+  correction: "correction",
+  cancellation: "cancellation",
+  mention: "context",
+};
+
 const WARNING_TEXT: Record<string, string> = {
   missing_date_context:
     "No calendar date was spoken, so relative deadlines are kept as they were said.",
@@ -498,6 +507,13 @@ function EvidenceChip({
     >
       <span className="mr-2 rounded bg-panel px-2 py-0.5 font-mono text-xs">
         ▶ {msToClock(evidence.start_ms)}
+      </span>
+      <span
+        data-testid="evidence-role"
+        data-kind={evidence.kind}
+        className="mr-2 text-xs uppercase tracking-wide text-muted"
+      >
+        {EVIDENCE_ROLE[evidence.kind]}
       </span>
       {evidence.speaker ? `${evidence.speaker}: ` : ""}
       &ldquo;{evidence.quote}&rdquo;

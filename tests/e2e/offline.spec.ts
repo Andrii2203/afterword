@@ -111,6 +111,25 @@ test("follows the spoken date over the recording date field and explains the dis
   await expect(conflict).toContainText("2026-09-16");
 });
 
+test("shows the quotes under an item in time order, each with its role", async ({ page }) => {
+  await analyse(page, "meeting-c");
+
+  const item = page.getByTestId("commitment").filter({ hasText: /backup/i });
+  const chips = item.getByTestId("evidence-play");
+  const starts = await chips.evaluateAll((nodes) =>
+    nodes.map((node) => Number(node.getAttribute("data-start-ms"))),
+  );
+  expect(starts.length).toBeGreaterThan(1);
+  expect(starts).toEqual([...starts].sort((a, b) => a - b));
+
+  await expect(item.getByTestId("evidence-role")).toHaveCount(starts.length);
+  const roles = await item.getByTestId("evidence-role").allTextContents();
+  expect(roles.every((role) => role.trim().length > 0)).toBe(true);
+  await expect(item.getByTestId("evidence-role").filter({ hasText: "acceptance" })).not.toHaveCount(
+    0,
+  );
+});
+
 test("processes the second upload instead of repeating the first answer", async ({ page }) => {
   await analyse(page, "meeting-a");
   const first = await page.getByTestId("commitment").allTextContents();

@@ -57,6 +57,7 @@ O9. `metrics` is `{ audio_seconds, asr_ms, llm_ms, total_ms, asr_cost_usd, llm_c
 O10. `warnings[]` contains one machine-readable code per detected data-quality issue.
 O11. Every `evidence` entry satisfies `start_ms < end_ms <= audio_ms` and is playable in the UI.
 O12. `meta` carries `anchor_date`, `anchor_date_source: "recording" | "user" | "none"` and `anchor_date_ignored`, which holds the supplied recording date when it was overruled and is `null` otherwise.
+O13. The `evidence[]` of one item is ordered by `start_ms`, while items are ordered by the quote that decides them, which is the first quote the model returned for that item.
 
 ## 7. Decision rules
 
@@ -102,7 +103,7 @@ P2. ASR produces diarized utterances with millisecond timestamps and the detecte
 P3. Speaker naming maps each diarization label to a name taken from a self-introduction utterance, or leaves it `null`.
 P4. Extraction sends the numbered transcript to the LLM and receives the output document through a strict tool schema.
 P5. Verification enforces R5 to R11 in code and mutates or drops items that violate them.
-P6. Rendering shows commitments, excluded items and open questions, each with a play control for its evidence segment.
+P6. Rendering shows commitments, excluded items and open questions, each quote carrying its role and a play control for its evidence segment.
 P7. Metrics are collected per stage and returned with the document.
 
 ## 9. Acceptance criteria
@@ -119,6 +120,7 @@ A9. Given an ambiguous task with no acceptance, when it is processed, then the i
 A10. Given any processed recording, when the response is returned, then `metrics.cost_per_audio_minute_usd` is a number derived from measured usage. (test: `metrics.cost`)
 A11. Given a recording that states its own date and a different supplied recording date, when it is processed, then deadlines are resolved from the spoken date, `meta.anchor_date_source` is `recording` and `warnings` contains `anchor_date_conflict`. (test: `eval.anchor_conflict`)
 A12. Given a recording detected as a language other than English, when it is processed, then the run fails with HTTP 422, the message names the detected language and the extraction model is never called. (test: `pipeline.language`)
+A13. Given an item whose quotes were returned out of time order, when it is processed, then its quotes are returned in time order and each is shown with its role, while the item keeps its place in the list. (test: `ui.evidence_order`)
 
 ## 10. Test layers
 
