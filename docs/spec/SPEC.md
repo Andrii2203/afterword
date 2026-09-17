@@ -87,7 +87,8 @@ R12. Extraction always runs on the uploaded audio and never returns a stored ans
 R13. A task whose acceptance is hedged is emitted in `excluded` with reason `ambiguous` and additionally produces an `open_questions` entry naming the undecided point.
 R14. An `excluded` item with reason `ambiguous` is removed when no `open_questions` entry survives verification.
 R15. The anchor date is the date spoken in the recording when there is one, and the supplied recording date only otherwise; when both exist and differ, the spoken date is used and `warnings` contains `anchor_date_conflict`.
-R16. A quote is marked `uncertain` when one of its words was recognised below 0.90 confidence, or, failing that, when one of its words carries a speaker confidence below 0.30; a word without a confidence is treated as confident.
+R16. A quote is marked `uncertain` when one of its spoken words falls below the confidence limit of its own recording, which is the fifth percentile of that recording capped at 0.90 for recognition and at 0.30 for the speaker, or the cap itself for a recording of fewer than twenty scored words; filler words and words without a confidence are ignored.
+R17. A name is bound to the speaker of the utterance it was found in when that quote introduces the name in the first person, and to the other speaker when the quote addresses the name and the recording has exactly two speakers; in every other case the name is dropped and `warnings` contains `speaker_name_unverified`.
 
 ### Warning codes
 
@@ -97,6 +98,7 @@ W3. `owner_not_a_known_name` — an owner name was cleared because it matches no
 W4. `speaker_unnamed` — a diarization label received no name because no self-introduction was found.
 W5. `llm_retry` — the extraction call was retried after an invalid response.
 W6. `anchor_date_conflict` — the supplied recording date differs from the date spoken in the recording, which was used instead.
+W7. `speaker_name_unverified` — a name the model returned was dropped because its quote is not a self-introduction.
 
 ## 8. Pipeline
 
@@ -126,6 +128,7 @@ A12. Given a recording detected as a language other than English, when it is pro
 A13. Given an item whose quotes were returned out of time order, when it is processed, then its quotes are returned in time order and each is shown with its role, while the item keeps its place in the list. (test: `ui.evidence_order`)
 A14. Given an unresolved deadline, when it is shown, then the reason reads "no date context" only if no anchor date exists and otherwise reads "not converted to a date". (test: `ui.deadline_reason`)
 A15. Given a quote containing a word recognised below the threshold, when it is processed, then the quote is marked `uncertain` and the interface labels both the quote and the item it supports. (test: `ui.uncertain_quote`)
+A16. Given a name claim whose quote belongs to another speaker, when it is processed, then the name binds to the speaker who said the quote; given a name spoken as an address in a two-speaker recording, it binds to the other speaker; given the same address with a third speaker present, it binds to nobody. (test: `verify.speaker_name`)
 
 ## 10. Test layers
 

@@ -52,3 +52,6 @@ next-env.d.ts
 
 # assignment brief, kept local only
 /rec.md
+
+# local helpers for ad-hoc checks
+/scratch/

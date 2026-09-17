@@ -33,17 +33,57 @@ export function renderTranscript(
     .join("\n");
 }
 
-export const MIN_WORD_CONFIDENCE = 0.9;
-export const MIN_SPEAKER_CONFIDENCE = 0.3;
+export const WORD_CONFIDENCE_CEILING = 0.9;
+export const SPEAKER_CONFIDENCE_CEILING = 0.3;
+export const CONFIDENCE_PERCENTILE = 0.05;
+export const CONFIDENCE_SAMPLE = 20;
+
+const FILLER = /^(uh|um|mm|mhmm|hmm|huh|yeah|yep|okay|ok|oh|ah|so|well|like|right|mm-hmm|uh-huh)[.,!?]*$/i;
 
 export type Uncertainty = "recognition" | "speaker" | null;
 
-export function uncertaintyOf(utterance: Utterance, startMs: number, endMs: number): Uncertainty {
-  const words = utterance.words.filter((w) => w.start_ms >= startMs && w.end_ms <= endMs);
+export interface ConfidenceLimits {
+  word: number;
+  speaker: number;
+}
+
+export function confidenceLimits(transcript: Transcript): ConfidenceLimits {
+  const words = transcript.utterances.flatMap((u) => u.words);
+  return {
+    word: limitOf(
+      words.map((w) => w.confidence).filter(isNumber),
+      WORD_CONFIDENCE_CEILING,
+    ),
+    speaker: limitOf(
+      words.map((w) => w.speaker_confidence).filter(isNumber),
+      SPEAKER_CONFIDENCE_CEILING,
+    ),
+  };
+}
+
+export function uncertaintyOf(
+  utterance: Utterance,
+  startMs: number,
+  endMs: number,
+  limits: ConfidenceLimits,
+): Uncertainty {
+  const words = utterance.words.filter(
+    (w) => w.start_ms >= startMs && w.end_ms <= endMs && !FILLER.test(w.text.trim()),
+  );
   const below = (value: number | undefined, limit: number) => value !== undefined && value < limit;
-  if (words.some((w) => below(w.confidence, MIN_WORD_CONFIDENCE))) return "recognition";
-  if (words.some((w) => below(w.speaker_confidence, MIN_SPEAKER_CONFIDENCE))) return "speaker";
+  if (words.some((w) => below(w.confidence, limits.word))) return "recognition";
+  if (words.some((w) => below(w.speaker_confidence, limits.speaker))) return "speaker";
   return null;
+}
+
+function limitOf(values: number[], ceiling: number): number {
+  if (values.length < CONFIDENCE_SAMPLE) return ceiling;
+  const sorted = [...values].sort((a, b) => a - b);
+  return Math.min(ceiling, sorted[Math.floor(CONFIDENCE_PERCENTILE * (sorted.length - 1))]);
+}
+
+function isNumber(value: number | undefined): value is number {
+  return value !== undefined;
 }
 
 export interface QuoteHit {

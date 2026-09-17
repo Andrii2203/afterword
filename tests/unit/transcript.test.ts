@@ -1,9 +1,13 @@
 import { describe, expect, it } from "vitest";
 import {
+  SPEAKER_CONFIDENCE_CEILING,
+  WORD_CONFIDENCE_CEILING,
+  confidenceLimits,
   locateQuote,
   msToClock,
   normalize,
   renderTranscript,
+  uncertaintyOf,
 } from "@/lib/transcript";
 import type { Transcript } from "@/lib/types";
 
@@ -106,5 +110,59 @@ describe("locateQuote", () => {
 
   it("returns null for an empty quote", () => {
     expect(locateQuote(transcript, "   ", 1)).toBeNull();
+  });
+});
+describe("confidence limits", () => {
+  function scored(confidences: number[]): Transcript {
+    return {
+      audio_ms: 60_000,
+      utterances: [
+        {
+          index: 0,
+          speaker_label: "0",
+          start_ms: 0,
+          end_ms: confidences.length * 300,
+          text: confidences.map(() => "word").join(" "),
+          words: confidences.map((confidence, i) => ({
+            text: i % 7 === 0 ? "uh" : "word",
+            start_ms: i * 300,
+            end_ms: (i + 1) * 300,
+            confidence,
+            speaker_confidence: confidence,
+          })),
+        },
+      ],
+    };
+  }
+
+  it("uses the ceiling when the recording is too short to have a tail", () => {
+    const limits = confidenceLimits(scored(Array.from({ length: 10 }, () => 0.5)));
+    expect(limits).toEqual({ word: WORD_CONFIDENCE_CEILING, speaker: SPEAKER_CONFIDENCE_CEILING });
+  });
+
+  it("follows the recording's own tail when it is noisier than the ceiling", () => {
+    const values = Array.from({ length: 100 }, (_, i) => (i < 10 ? 0.4 + i / 100 : 0.99));
+    const limits = confidenceLimits(scored(values));
+    expect(limits.word).toBeCloseTo(0.44, 2);
+    expect(limits.speaker).toBeCloseTo(0.3, 2);
+  });
+
+  it("never rises above the ceiling on a clean recording", () => {
+    const limits = confidenceLimits(scored(Array.from({ length: 100 }, () => 1)));
+    expect(limits.word).toBe(WORD_CONFIDENCE_CEILING);
+    expect(limits.speaker).toBe(SPEAKER_CONFIDENCE_CEILING);
+  });
+
+  it("ignores a filler word that was recognised with low confidence", () => {
+    const transcript = scored(Array.from({ length: 10 }, (_, i) => (i === 0 ? 0.2 : 1)));
+    const utterance = transcript.utterances[0];
+    const limits = { word: 0.9, speaker: 0.3 };
+    expect(uncertaintyOf(utterance, 0, 3_000, limits)).toBeNull();
+  });
+
+  it("marks a spoken word below the limit", () => {
+    const transcript = scored(Array.from({ length: 10 }, (_, i) => (i === 1 ? 0.2 : 1)));
+    const utterance = transcript.utterances[0];
+    expect(uncertaintyOf(utterance, 0, 3_000, { word: 0.9, speaker: 0.3 })).toBe("recognition");
   });
 });

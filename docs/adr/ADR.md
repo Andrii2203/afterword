@@ -272,3 +272,23 @@ Context: Verification compares a quote with the transcript, never with the audio
 Decision: A quote is marked uncertain when one of its words falls below 0.90 recognition confidence, or, failing that, below 0.30 speaker confidence, and the interface labels the quote and the item it supports with "check this". Both thresholds were read off the three recorded fixtures: at 0.90 exactly three of the thirty-four quotes are marked, and they are the three known misreadings, while 0.95 marks seven and buries them. Speaker confidence sits far lower across the whole corpus, with a median near 0.6, so 0.30 marks the three quotes whose speaker the provider was least sure of instead of marking everything.
 Consequence: The output says which lines deserve a listen before they are trusted, using numbers the transcription already paid for. A transcript whose words carry no confidence, such as a stubbed or recorded one, is treated as confident and nothing is marked.
 Rejected: Re-transcribing with a second model and comparing was rejected because it doubles the cost of every run for a rare disagreement, and hiding an uncertain quote was rejected because a quote the product refuses to show cannot be judged by the person who was in the room.
+
+---
+
+## ADR-0028 — Confidence limits belong to the recording, not to the product
+
+Status: accepted (2026-09-17)
+Context: The first run against real recordings showed that the thresholds of ADR-0027, chosen from three synthetic fixtures, do not survive contact with real speech. Words below 0.90 are 2-4 % of the fixtures and 16-34 % of the real clips, so "check this" appeared on 88-100 % of real quotes and stopped meaning anything.
+Decision: The limit for a recording is the fifth percentile of its own word confidences, capped at 0.90 for recognition and 0.30 for the speaker, and the cap alone for a recording of fewer than twenty scored words. Filler words are ignored, because "uh" and "mm" carry the lowest confidences and no meaning.
+Consequence: The fixtures keep exactly the three known misreadings they had, while the real clips fall from seven of eight, six of six and two of three to four of eight, two of six and two of three. A recording is measured against itself, so a noisy room no longer floods the output and a clean one keeps its old sensitivity.
+Rejected: A lower fixed threshold was rejected because 0.70 loses the fixtures' known misreadings at 0.81 and 0.89, requiring two weak words per quote was rejected because it marks nothing at all on the fixtures, and a purely relative rule with no cap was rejected because it always marks the bottom of a clean recording.
+
+---
+
+## ADR-0029 — A name is bound by its introduction, not by the model's claim
+
+Status: accepted (2026-09-17)
+Context: On AMI IS1000a the single misrecognised word "Mile.", spoken by diarization label 0, became the display name of label 1, because `resolveLabel` trusted the label the model claimed whenever that label existed in the transcript. Nothing required the quote behind a name to be an introduction at all.
+Decision: A name binds to the speaker of the utterance its quote was found in when the quote introduces that name in the first person. A name spoken as an address, which is how real colleagues name each other, binds to the other speaker, but only in a recording with exactly two speakers, where "the other" is unambiguous. Every other claim is rejected and raises `speaker_name_unverified`.
+Consequence: A stray word can no longer name anyone, and a name can no longer land on the wrong speaker. Measured against the recordings that exposed the defect, "Mile" disappears from IS1000a while the podcast keeps Karen and Bradley, whom nobody ever introduces. A meeting of four speakers where nobody introduces themselves stays unnamed, which is the honest answer and is reported as a warning.
+Rejected: Refusing a name whose words carry low recognition confidence was implemented, measured and removed: proper nouns are systematically the least certain words, with "Maya" at 0.85 and "Okafor" at 0.90 in the fixtures themselves, so the guard dropped correct names. The uncertainty is surfaced on the quote instead.

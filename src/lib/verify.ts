@@ -1,5 +1,6 @@
 import { findAnchorDate, resolveRelative } from "./dates";
-import { locateQuote, normalize, uncertaintyOf } from "./transcript";
+import { confidenceLimits, locateQuote, normalize, uncertaintyOf } from "./transcript";
+import type { ConfidenceLimits } from "./transcript";
 import type {
   Commitment,
   Deadline,
@@ -34,28 +35,35 @@ export function verify({ llm, transcript, userAnchorDate }: VerifyInput): Verify
   const warnings = new Set<string>();
   const transcriptText = transcript.utterances.map((u) => u.text).join(" ");
   const normalizedTranscript = normalize(transcriptText);
+  const limits = confidenceLimits(transcript);
 
+  const labels = [...new Set(transcript.utterances.map((u) => u.speaker_label))];
   const names: Record<string, string> = {};
   const speakerEvidence: Record<string, Evidence> = {};
   for (const claim of llm.speakers) {
-    if (!claim.name.trim()) continue;
+    const name = claim.name.trim();
+    if (!name) continue;
     const hit = locateQuote(transcript, claim.quote, claim.utterance_index);
     if (!hit) continue;
 
-    const label = resolveLabel(claim.speaker_label, hit.speaker_label, transcript);
-    names[label] = claim.name.trim();
+    const label = bindName(claim.quote, name, hit.speaker_label, labels);
+    if (!label) {
+      warnings.add("speaker_name_unverified");
+      continue;
+    }
+
+    names[label] = name;
     speakerEvidence[label] = {
-      speaker: claim.name.trim(),
+      speaker: label === hit.speaker_label ? name : null,
       quote: claim.quote,
       kind: "mention",
       start_ms: hit.start_ms,
       end_ms: hit.end_ms,
       utterance_index: hit.utterance_index,
-      uncertain: uncertaintyAt(transcript, hit.utterance_index, hit.start_ms, hit.end_ms),
+      uncertain: uncertaintyAt(transcript, hit, limits),
     };
   }
 
-  const labels = [...new Set(transcript.utterances.map((u) => u.speaker_label))];
   const speakers: Speaker[] = labels.map((label) => {
     if (!names[label]) warnings.add("speaker_unnamed");
     return {
@@ -77,7 +85,7 @@ export function verify({ llm, transcript, userAnchorDate }: VerifyInput): Verify
       start_ms: hit.start_ms,
       end_ms: hit.end_ms,
       utterance_index: hit.utterance_index,
-      uncertain: uncertaintyAt(transcript, hit.utterance_index, hit.start_ms, hit.end_ms),
+      uncertain: uncertaintyAt(transcript, hit, limits),
     };
   };
 
@@ -173,21 +181,39 @@ export function verify({ llm, transcript, userAnchorDate }: VerifyInput): Verify
 
 function uncertaintyAt(
   transcript: Transcript,
-  utteranceIndex: number,
-  startMs: number,
-  endMs: number,
+  hit: { utterance_index: number; start_ms: number; end_ms: number },
+  limits: ConfidenceLimits,
 ): Evidence["uncertain"] {
-  const utterance = transcript.utterances.find((u) => u.index === utteranceIndex);
-  return utterance ? uncertaintyOf(utterance, startMs, endMs) : null;
+  const utterance = transcript.utterances.find((u) => u.index === hit.utterance_index);
+  return utterance ? uncertaintyOf(utterance, hit.start_ms, hit.end_ms, limits) : null;
 }
 
-function resolveLabel(claimed: string, quotedBy: string, transcript: Transcript): string {
+const INTRODUCTION = /\b(i'm|i am|my name is|this is|it's|here's)\b/;
 
-  const labels = new Set(transcript.utterances.map((u) => u.speaker_label));
-  if (labels.has(claimed)) return claimed;
-  const digits = claimed.match(/\d+/)?.[0];
-  if (digits && labels.has(digits)) return digits;
-  return quotedBy;
+function bindName(
+  quote: string,
+  name: string,
+  quotedBy: string,
+  labels: string[],
+): string | null {
+  if (introduces(quote, name)) return quotedBy;
+  if (labels.length === 2 && addresses(quote, name)) {
+    return labels.find((label) => label !== quotedBy) ?? null;
+  }
+  return null;
+}
+
+function introduces(quote: string, name: string): boolean {
+  const said = normalize(quote);
+  const spoken = normalize(name);
+  if (!spoken || !said.includes(spoken)) return false;
+  return INTRODUCTION.test(said.slice(0, said.indexOf(spoken)));
+}
+
+function addresses(quote: string, name: string): boolean {
+  const spoken = name.trim().replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  if (!spoken) return false;
+  return new RegExp(`(^|[\\s,])${spoken}\\s*[,?!.]`, "i").test(quote.trim());
 }
 
 interface Entry<T> {

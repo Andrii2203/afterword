@@ -40,6 +40,8 @@ const WARNING_TEXT: Record<string, string> = {
   evidence_unverified: "At least one item was dropped because its quote is not in the transcript.",
   owner_not_a_known_name: "An owner was cleared because that name is never spoken in the recording.",
   speaker_unnamed: "A speaker never introduced themselves, so their name is unknown.",
+  speaker_name_unverified:
+    "A name was dropped because the quote behind it is not a self-introduction.",
   llm_retry: "The extraction call was retried once; both attempts are included in the cost.",
 };
 

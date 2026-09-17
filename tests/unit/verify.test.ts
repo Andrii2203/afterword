@@ -269,6 +269,90 @@ describe("verify", () => {
     expect(result.speakers.find((s) => s.label === "1")?.name).toBe("Daniel Okafor");
   });
 
+  it("names the speaker of the introduction, not the label the model claimed", () => {
+    const llm = baseLlm();
+    llm.speakers = [
+      { speaker_label: "1", name: "Maya Chen", utterance_index: 0, quote: "I'm Maya Chen" },
+    ];
+    const result = verify({ llm, transcript });
+    expect(result.speakers.find((s) => s.label === "0")?.name).toBe("Maya Chen");
+    expect(result.speakers.find((s) => s.label === "1")?.name).toBeNull();
+  });
+
+  it("refuses a name that was never spoken as an introduction", () => {
+    const llm = baseLlm();
+    llm.speakers = [{ speaker_label: "1", name: "Chen", utterance_index: 0, quote: "Chen" }];
+    const result = verify({ llm, transcript });
+    expect(result.speakers.every((s) => s.name === null)).toBe(true);
+    expect(result.warnings).toContain("speaker_name_unverified");
+    expect(result.warnings).toContain("speaker_unnamed");
+  });
+
+  it("keeps a name whose own word was recognised with low confidence", () => {
+    const words = transcript.utterances[0].text.split(" ");
+    const scored: Transcript = {
+      ...transcript,
+      utterances: [
+        {
+          ...transcript.utterances[0],
+          words: transcript.utterances[0].words.map((w, i) => ({
+            ...w,
+            confidence: words[i]?.startsWith("Maya") ? 0.85 : 1,
+          })),
+        },
+        ...transcript.utterances.slice(1),
+      ],
+    };
+    const result = verify({ llm: baseLlm(), transcript: scored });
+    expect(result.speakers.find((s) => s.label === "0")?.name).toBe("Maya Chen");
+  });
+
+  it("binds a name spoken as an address to the other of two speakers", () => {
+    const addressed: Transcript = {
+      ...transcript,
+      utterances: [
+        ...transcript.utterances,
+        utterance(6, "0", 36_000, "Daniel Okafor, what do you think?"),
+      ],
+    };
+    const llm = baseLlm();
+    llm.speakers = [
+      {
+        speaker_label: "0",
+        name: "Daniel Okafor",
+        utterance_index: 6,
+        quote: "Daniel Okafor, what do you think?",
+      },
+    ];
+    const result = verify({ llm, transcript: addressed });
+    expect(result.speakers.find((s) => s.label === "1")?.name).toBe("Daniel Okafor");
+    expect(result.speakers.find((s) => s.label === "0")?.name).toBeNull();
+    expect(result.speakers.find((s) => s.label === "1")?.evidence?.speaker).toBeNull();
+  });
+
+  it("refuses an address when a third speaker makes the other one ambiguous", () => {
+    const crowded: Transcript = {
+      ...transcript,
+      utterances: [
+        ...transcript.utterances,
+        utterance(6, "0", 36_000, "Daniel Okafor, what do you think?"),
+        utterance(7, "2", 42_000, "I have nothing to add."),
+      ],
+    };
+    const llm = baseLlm();
+    llm.speakers = [
+      {
+        speaker_label: "1",
+        name: "Daniel Okafor",
+        utterance_index: 6,
+        quote: "Daniel Okafor, what do you think?",
+      },
+    ];
+    const result = verify({ llm, transcript: crowded });
+    expect(result.speakers.every((s) => s.name === null)).toBe(true);
+    expect(result.warnings).toContain("speaker_name_unverified");
+  });
+
   it("warns when a diarized speaker never gets a name", () => {
     const llm = baseLlm();
     llm.speakers = [llm.speakers[0]];

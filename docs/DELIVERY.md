@@ -100,6 +100,18 @@ when the commitments list is complete. Both are measured in the browser from the
 | `meeting-b` | 108.0 s | 2.0 s | 12.7 s | 12.2 s |
 | `meeting-c` | 42.5 s | 1.5 s | 10.6 s | 9.9 s |
 
+The numbers above are the three bundled fixtures, which are synthetic speech. Real recordings are
+messier, the model writes several times more, and the wait roughly doubles
+(`docs/testing/2026-09-17-real-recordings.md`):
+
+| Real clip | Audio | Transcription | Model | Total | Output tokens |
+| --- | --- | --- | --- | --- | --- |
+| AMI ES2002d, 400–575 s | 175 s | 3.1 s | 27.9 s | 31.0 s | 2316 |
+| AMI IS1000a, 1040–1215 s | 175 s | 5.0 s | 37.7 s | 42.7 s | 1599 |
+| Free as in Freedom 0x6C, closing | 175 s | 4.3 s | 13.4 s | 17.7 s | 1054 |
+
+Read the fixture numbers as a floor and these as a typical meeting.
+
 Stage split across the recorded runs: transcription 1.4–4.3 s, extraction 9.8–15.6 s. Transcription
 of the same MP3 files ranged that widely from run to run, so it tracks network conditions rather than
 file size. The model is
@@ -126,6 +138,10 @@ Measured cost per operation:
 
 Across nine `claude-opus-5` samples the cost per run was $0.0417 minimum, $0.0514 median, $0.0677
 maximum.
+
+On real recordings the same three clips cost $0.0594, $0.0730 and $0.0911, because the model
+returns four to twelve times more output tokens on spontaneous speech than on the fixtures. Five live
+runs against real audio cost $0.2972 in total.
 
 Pricing assumptions:
 
