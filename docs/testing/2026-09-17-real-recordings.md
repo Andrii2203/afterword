@@ -62,8 +62,9 @@ The decisions behind the fixes are ADR-0028 (confidence limits belong to the rec
 (a name is bound by its introduction or by an address in a two-speaker recording).
 
 #9 is partly addressed: a name spoken as an address now binds to the other speaker when there are
-exactly two, which is the product's stated scope. A meeting of four where nobody introduces themselves
-still has no owners, and that is reported rather than guessed. #10 remains open as a scope question:
+exactly two. The gap does not depend on head count: ES2002d has two voices and no name is ever said,
+so its owners stay empty. The proposed fix is to keep the voice that accepted a task as its owner,
+shown as an unnamed speaker, and it is recorded on the issue. #10 remains open as a scope question:
 the product lists accepted tasks, and an agreed constraint is neither a task nor a denial.
 
 ## Lesson

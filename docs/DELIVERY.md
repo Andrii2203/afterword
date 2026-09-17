@@ -79,6 +79,21 @@ the transcript, not against the audio, so a misheard word used to pass unnoticed
 ([#5](https://github.com/Andrii2203/afterword/issues/5)). Every quote is now checked against the word
 confidences Deepgram returns and the uncertain ones are labelled "check this" (ADR-0027).
 
+A second session on 2026-09-17 ran the product on real recordings for the first time: two meetings
+from the AMI Meeting Corpus and an open-licensed podcast (`docs/testing/2026-09-17-real-recordings.md`).
+It invented nothing on segments that agree nothing, and it found five problems no fixture could show:
+
+| ID | State | Finding |
+| --- | --- | --- |
+| [#7](https://github.com/Andrii2203/afterword/issues/7) | Fixed | A misheard word became a speaker's name and landed on the wrong speaker (ADR-0029) |
+| [#8](https://github.com/Andrii2203/afterword/issues/8) | Fixed | Uncertainty thresholds read off synthetic speech marked almost every real quote (ADR-0028) |
+| [#11](https://github.com/Andrii2203/afterword/issues/11) | Fixed | Speed and cost were reported from fixtures only; section 4 and 5 now carry real numbers |
+| [#9](https://github.com/Andrii2203/afterword/issues/9) | Open | When nobody's name is ever said, every owner is empty, whatever the number of people |
+| [#10](https://github.com/Andrii2203/afterword/issues/10) | Open | An agreed constraint, such as a price ceiling, is filed as a task that was never accepted |
+
+Both open issues are questions of what the product promises rather than defects in what it does, and
+each carries its context and the options on the issue.
+
 Known limits, not fixed:
 
 - Diarization is trusted as given; two speakers on one channel who talk over each other are out of
