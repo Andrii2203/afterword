@@ -69,7 +69,6 @@ Open issues from the manual review on 2026-09-16, none of which the automated su
 | ID | Severity | Summary |
 | --- | --- | --- |
 | [#5](https://github.com/Andrii2203/afterword/issues/5) | Medium | A quote containing a word recognised with low confidence is not flagged |
-| [#3](https://github.com/Andrii2203/afterword/issues/3) | Low | An unresolved deadline says "no date context" when a date is known |
 
 Known limits, not fixed:
 

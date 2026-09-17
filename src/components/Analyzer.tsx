@@ -332,7 +332,7 @@ export default function Analyzer() {
                     )}
                   </Field>
                   <Field label="Deadline">
-                    <Deadline value={item.deadline} />
+                    <Deadline value={item.deadline} anchor={document.meta.anchor_date} />
                   </Field>
                 </dl>
                 {item.superseded.map((old, index) => (
@@ -461,7 +461,13 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
   );
 }
 
-function Deadline({ value }: { value: CommitmentsDocument["commitments"][number]["deadline"] }) {
+function Deadline({
+  value,
+  anchor,
+}: {
+  value: CommitmentsDocument["commitments"][number]["deadline"];
+  anchor: string | null;
+}) {
   if (value.status === "none") return <span className="text-muted">none stated</span>;
   if (value.status === "resolved") {
     return (
@@ -472,7 +478,10 @@ function Deadline({ value }: { value: CommitmentsDocument["commitments"][number]
   }
   return (
     <span data-testid="deadline-unresolved">
-      &ldquo;{value.raw}&rdquo; <span className="text-muted">— no date context</span>
+      &ldquo;{value.raw}&rdquo;{" "}
+      <span className="text-muted">
+        — {anchor ? "not converted to a date" : "no date context"}
+      </span>
     </span>
   );
 }

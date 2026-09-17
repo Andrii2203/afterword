@@ -105,6 +105,7 @@ P4. Extraction sends the numbered transcript to the LLM and receives the output 
 P5. Verification enforces R5 to R11 in code and mutates or drops items that violate them.
 P6. Rendering shows commitments, excluded items and open questions, each quote carrying its role and a play control for its evidence segment.
 P7. Metrics are collected per stage and returned with the document.
+P8. An unresolved deadline is rendered with the reason it stayed unresolved, distinguishing a missing anchor date from an expression that is not convertible.
 
 ## 9. Acceptance criteria
 
@@ -121,6 +122,7 @@ A10. Given any processed recording, when the response is returned, then `metrics
 A11. Given a recording that states its own date and a different supplied recording date, when it is processed, then deadlines are resolved from the spoken date, `meta.anchor_date_source` is `recording` and `warnings` contains `anchor_date_conflict`. (test: `eval.anchor_conflict`)
 A12. Given a recording detected as a language other than English, when it is processed, then the run fails with HTTP 422, the message names the detected language and the extraction model is never called. (test: `pipeline.language`)
 A13. Given an item whose quotes were returned out of time order, when it is processed, then its quotes are returned in time order and each is shown with its role, while the item keeps its place in the list. (test: `ui.evidence_order`)
+A14. Given an unresolved deadline, when it is shown, then the reason reads "no date context" only if no anchor date exists and otherwise reads "not converted to a date". (test: `ui.deadline_reason`)
 
 ## 10. Test layers
 

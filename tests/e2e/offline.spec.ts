@@ -130,6 +130,23 @@ test("shows the quotes under an item in time order, each with its role", async (
   );
 });
 
+test("says why a deadline stayed unresolved, and only says the date is missing when it is", async ({
+  page,
+}) => {
+  await analyse(page, "meeting-a");
+  await expect(page.getByTestId("deadline-unresolved").first()).toContainText("no date context");
+
+  await page.goto("/");
+  await page.getByTestId("upload-input").setInputFiles(AUDIO("meeting-a"));
+  await page.getByTestId("anchor-date").fill("2026-03-02");
+  await page.getByTestId("process-button").click();
+  await waitForResult(page, 30_000);
+
+  const unresolved = page.getByTestId("deadline-unresolved").first();
+  await expect(unresolved).toContainText("not converted to a date");
+  await expect(unresolved).not.toContainText("no date context");
+});
+
 test("processes the second upload instead of repeating the first answer", async ({ page }) => {
   await analyse(page, "meeting-a");
   const first = await page.getByTestId("commitment").allTextContents();
