@@ -48,7 +48,7 @@ one covers spans that human annotators marked as decisions.
 
 ## Fixed in this session
 
-#7, #8 and #11 are fixed; the same recordings were re-verified offline against the new rules.
+#7, #8, #9 and #11 are fixed; the same recordings were re-verified offline against the new rules.
 
 | Measure | Before | After |
 | --- | --- | --- |
@@ -61,10 +61,11 @@ one covers spans that human annotators marked as decisions.
 The decisions behind the fixes are ADR-0028 (confidence limits belong to the recording) and ADR-0029
 (a name is bound by its introduction or by an address in a two-speaker recording).
 
-#9 is partly addressed: a name spoken as an address now binds to the other speaker when there are
-exactly two. The gap does not depend on head count: ES2002d has two voices and no name is ever said,
-so its owners stay empty. The proposed fix is to keep the voice that accepted a task as its owner,
-shown as an unnamed speaker, and it is recorded on the issue. #10 remains open as a scope question:
+#9 is fixed in two steps. A name spoken as an address binds to the other speaker when there are
+exactly two, and, independent of head count, the voice that takes a task on in the first person is its
+owner even without a name (ADR-0030). Re-verified: quotes without a speaker fall from 8 of 8 to 0 of 8
+on ES2002d and from 6 of 6 to 0 of 6 on IS1000a. The two ES2002d commitments stay unassigned, because the
+team accepted both in the plural. #10 remains open as a scope question:
 the product lists accepted tasks, and an agreed constraint is neither a task nor a denial.
 
 ## Lesson

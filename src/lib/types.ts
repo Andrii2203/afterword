@@ -113,11 +113,13 @@ export const EvidenceSchema = z.object({
   end_ms: z.number().int().nonnegative(),
   utterance_index: z.number().int().nonnegative(),
   uncertain: z.enum(["recognition", "speaker"]).nullable().default(null),
+  speaker_label: z.string().nullable().default(null),
 });
 
 export const OwnerSchema = z.object({
   name: z.string().nullable(),
-  status: z.enum(["named", "unassigned"]),
+  status: z.enum(["named", "unnamed_speaker", "unassigned"]),
+  speaker_label: z.string().nullable().default(null),
 });
 
 export const DeadlineSchema = z.object({

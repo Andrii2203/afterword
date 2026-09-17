@@ -48,7 +48,7 @@ I7. The recording must be in English. Its language is detected during transcript
 O1. The API returns one JSON document with the keys `meta`, `speakers`, `commitments`, `excluded`, `open_questions`, `metrics` and `warnings`.
 O2. `speakers[]` is `{ label, name | null, evidence }` where `name` comes from a self-introduction utterance.
 O3. `commitments[]` is `{ id, title, owner, deadline, evidence[], superseded[] }`.
-O4. `owner` is `{ name: string, status: "named" }` or `{ name: null, status: "unassigned" }`.
+O4. `owner` is `{ name, status, speaker_label }` with `status` one of `named` (a name is known), `unnamed_speaker` (a speaker took the task on but their name is never said, so `name` is `null` and `speaker_label` identifies the voice) or `unassigned` (nobody took it on); `speaker_label` is set whenever the owner was found by voice.
 O5. `deadline` is `{ raw: string | null, date: "YYYY-MM-DD" | null, status: "resolved" | "unresolved_relative" | "none" }`.
 O6. `excluded[]` is `{ id, title, reason: "never_accepted" | "cancelled" | "ambiguous", evidence[] }`.
 O7. `open_questions[]` is `{ id, question, raised_by, evidence[] }`.
@@ -59,6 +59,7 @@ O11. Every `evidence` entry satisfies `start_ms < end_ms <= audio_ms` and is pla
 O12. `meta` carries `anchor_date`, `anchor_date_source: "recording" | "user" | "none"` and `anchor_date_ignored`, which holds the supplied recording date when it was overruled and is `null` otherwise.
 O13. The `evidence[]` of one item is ordered by `start_ms`, while items are ordered by the quote that decides them, which is the first quote the model returned for that item.
 O14. Every `evidence` entry carries `uncertain: "recognition" | "speaker" | null`, which names the check a reader should make on that quote before trusting it.
+O15. Every `evidence` entry carries `speaker_label`, the diarization label of the utterance it was found in, so a quote can be attributed to a voice even when that voice has no name.
 
 ## 7. Decision rules
 
@@ -66,7 +67,7 @@ R1. A task is emitted as a commitment only if the transcript contains an explici
 R2. A task with hypothetical modality and no acceptance utterance is emitted in `excluded` with reason `never_accepted`.
 R3. A task with a later cancellation utterance is emitted in `excluded` with reason `cancelled` even if it was accepted earlier.
 R4. When a field is stated more than once for the same task, the last explicitly stated value is used and every earlier value is recorded in `superseded`.
-R5. `owner.status` is `unassigned` whenever no speaker is named as responsible in an evidence utterance.
+R5. The owner is the name the model reports when that name is spoken in the recording; otherwise it is the speaker of an acceptance quote in which they take the task on in the first person ("I'll", "I will", "I'm going to", "let me", "leave it with me", not negated), named if that speaker has a name and `unnamed_speaker` if not; otherwise `owner.status` is `unassigned`. A plural acceptance such as "let's" or "we're going to" assigns nobody.
 R6. A relative date is converted to a calendar date only if an anchor date exists and the expression is in the resolvable set below, and otherwise `status` is `unresolved_relative` with `raw` kept verbatim.
 
 ### Resolvable relative expressions
@@ -95,7 +96,7 @@ R17. A name is bound to the speaker of the utterance it was found in when that q
 W1. `missing_date_context` — the transcript contains a relative deadline and no anchor date.
 W2. `evidence_unverified` — an item was dropped because no quote matched the transcript.
 W3. `owner_not_a_known_name` — an owner name was cleared because it matches no name spoken in the recording.
-W4. `speaker_unnamed` — a diarization label received no name because no self-introduction was found.
+W4. `speaker_unnamed` — a diarization label received no name because its name is never said in a usable form, so the interface shows that speaker by number.
 W5. `llm_retry` — the extraction call was retried after an invalid response.
 W6. `anchor_date_conflict` — the supplied recording date differs from the date spoken in the recording, which was used instead.
 W7. `speaker_name_unverified` — a name the model returned was dropped because its quote is not a self-introduction.
@@ -129,6 +130,7 @@ A13. Given an item whose quotes were returned out of time order, when it is proc
 A14. Given an unresolved deadline, when it is shown, then the reason reads "no date context" only if no anchor date exists and otherwise reads "not converted to a date". (test: `ui.deadline_reason`)
 A15. Given a quote containing a word recognised below the threshold, when it is processed, then the quote is marked `uncertain` and the interface labels both the quote and the item it supports. (test: `ui.uncertain_quote`)
 A16. Given a name claim whose quote belongs to another speaker, when it is processed, then the name binds to the speaker who said the quote; given a name spoken as an address in a two-speaker recording, it binds to the other speaker; given the same address with a third speaker present, it binds to nobody. (test: `verify.speaker_name`)
+A17. Given a commitment taken on in the first person by a speaker whose name is never said, when it is processed, then `owner.status` is `unnamed_speaker` with that speaker's label, and every quote shows its speaker by number; given a plural or impersonal acceptance, the owner stays `unassigned`. (test: `verify.owner_by_voice`)
 
 ## 10. Test layers
 

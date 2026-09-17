@@ -39,7 +39,8 @@ const WARNING_TEXT: Record<string, string> = {
     "No calendar date was spoken, so relative deadlines are kept as they were said.",
   evidence_unverified: "At least one item was dropped because its quote is not in the transcript.",
   owner_not_a_known_name: "An owner was cleared because that name is never spoken in the recording.",
-  speaker_unnamed: "A speaker never introduced themselves, so their name is unknown.",
+  speaker_unnamed:
+    "A speaker's name is never said in the recording, so they are shown by number.",
   speaker_name_unverified:
     "A name was dropped because the quote behind it is not a self-introduction.",
   llm_retry: "The extraction call was retried once; both attempts are included in the cost.",
@@ -334,6 +335,11 @@ export default function Analyzer() {
                   <Field label="Owner">
                     {item.owner.status === "named" ? (
                       item.owner.name
+                    ) : item.owner.status === "unnamed_speaker" ? (
+                      <span data-testid="unnamed-owner">
+                        speaker {item.owner.speaker_label}{" "}
+                        <span className="text-muted">— took it on, name not said</span>
+                      </span>
                     ) : (
                       <span data-testid="unassigned" className="text-muted">
                         not assigned in the recording
@@ -536,7 +542,11 @@ function EvidenceChip({
       >
         {EVIDENCE_ROLE[evidence.kind]}
       </span>
-      {evidence.speaker ? `${evidence.speaker}: ` : ""}
+      {evidence.speaker
+        ? `${evidence.speaker}: `
+        : evidence.speaker_label !== null
+          ? `speaker ${evidence.speaker_label}: `
+          : ""}
       &ldquo;{evidence.quote}&rdquo;
       {evidence.uncertain && (
         <span

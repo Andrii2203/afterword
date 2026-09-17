@@ -88,11 +88,11 @@ It invented nothing on segments that agree nothing, and it found five problems n
 | [#7](https://github.com/Andrii2203/afterword/issues/7) | Fixed | A misheard word became a speaker's name and landed on the wrong speaker (ADR-0029) |
 | [#8](https://github.com/Andrii2203/afterword/issues/8) | Fixed | Uncertainty thresholds read off synthetic speech marked almost every real quote (ADR-0028) |
 | [#11](https://github.com/Andrii2203/afterword/issues/11) | Fixed | Speed and cost were reported from fixtures only; section 4 and 5 now carry real numbers |
-| [#9](https://github.com/Andrii2203/afterword/issues/9) | Open | When nobody's name is ever said, every owner is empty, whatever the number of people |
+| [#9](https://github.com/Andrii2203/afterword/issues/9) | Fixed | When nobody's name was ever said, every owner was empty and every quote had no speaker; the voice that took a task is now its owner (ADR-0030) |
 | [#10](https://github.com/Andrii2203/afterword/issues/10) | Open | An agreed constraint, such as a price ceiling, is filed as a task that was never accepted |
 
-Both open issues are questions of what the product promises rather than defects in what it does, and
-each carries its context and the options on the issue.
+The open issue is a question of what the product promises rather than a defect in what it does, and
+it carries its context and both options on the issue.
 
 Known limits, not fixed:
 

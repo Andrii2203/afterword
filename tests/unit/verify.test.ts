@@ -168,15 +168,38 @@ describe("verify", () => {
       ],
     };
     const result = verify({ llm, transcript });
-    expect(result.commitments[0].owner).toEqual({ name: null, status: "unassigned" });
+    expect(result.commitments[0].owner).toEqual({ name: null, status: "unassigned", speaker_label: null });
     expect(result.commitments[0].deadline.status).toBe("unresolved_relative");
   });
 
-  it("clears an owner who was never named in the recording and warns", () => {
+  it("replaces an owner never named in the recording with the voice that took the task", () => {
     const llm = baseLlm();
     llm.commitments[0].owner_name = "Priya Raman";
     const result = verify({ llm, transcript });
-    expect(result.commitments[0].owner).toEqual({ name: null, status: "unassigned" });
+    expect(result.commitments[0].owner).toEqual({
+      name: "Daniel Okafor",
+      status: "named",
+      speaker_label: "1",
+    });
+    expect(result.warnings).toContain("owner_not_a_known_name");
+  });
+
+  it("clears an owner never named in the recording when nobody took the task", () => {
+    const llm = baseLlm();
+    llm.commitments[0].owner_name = "Priya Raman";
+    llm.commitments[0].evidence = [
+      {
+        utterance_index: 3,
+        quote: "Someone needs to update the runbook before the release",
+        kind: "acceptance",
+      },
+    ];
+    const result = verify({ llm, transcript });
+    expect(result.commitments[0].owner).toEqual({
+      name: null,
+      status: "unassigned",
+      speaker_label: null,
+    });
     expect(result.warnings).toContain("owner_not_a_known_name");
   });
 
@@ -184,7 +207,79 @@ describe("verify", () => {
     const llm = baseLlm();
     llm.commitments[0].owner_name = "Daniel";
     const result = verify({ llm, transcript });
-    expect(result.commitments[0].owner).toEqual({ name: "Daniel Okafor", status: "named" });
+    expect(result.commitments[0].owner).toEqual({
+      name: "Daniel Okafor",
+      status: "named",
+      speaker_label: null,
+    });
+  });
+
+  it("keeps the voice that took a task as its owner when no name is ever said", () => {
+    const anonymous: Transcript = {
+      ...transcript,
+      utterances: [
+        utterance(0, "0", 0, "Okay, let's go through the list."),
+        utterance(1, "1", 6_000, "Sure."),
+        ...transcript.utterances.slice(2),
+      ],
+    };
+    const llm = baseLlm();
+    llm.speakers = [];
+    llm.commitments[0].owner_name = "";
+    const result = verify({ llm, transcript: anonymous });
+    expect(result.commitments[0].owner).toEqual({
+      name: null,
+      status: "unnamed_speaker",
+      speaker_label: "1",
+    });
+    expect(result.commitments[0].evidence[0].speaker_label).toBe("1");
+  });
+
+  it("names the voice that took a task when that speaker introduced themselves", () => {
+    const llm = baseLlm();
+    llm.commitments[0].owner_name = "";
+    const result = verify({ llm, transcript });
+    expect(result.commitments[0].owner).toEqual({
+      name: "Daniel Okafor",
+      status: "named",
+      speaker_label: "1",
+    });
+  });
+
+  it("leaves a task unassigned when nobody takes it on in the first person", () => {
+    const llm = baseLlm();
+    llm.commitments[0].owner_name = "";
+    llm.commitments[0].evidence = [
+      {
+        utterance_index: 3,
+        quote: "Someone needs to update the runbook before the release",
+        kind: "acceptance",
+      },
+    ];
+    const result = verify({ llm, transcript });
+    expect(result.commitments[0].owner.status).toBe("unassigned");
+  });
+
+  it("does not read a refusal as taking a task on", () => {
+    const refusing: Transcript = {
+      ...transcript,
+      utterances: [
+        ...transcript.utterances.slice(0, 2),
+        utterance(2, "1", 12_000, "I will not fix the duplicate welcome email by this Friday."),
+        ...transcript.utterances.slice(3),
+      ],
+    };
+    const llm = baseLlm();
+    llm.commitments[0].owner_name = "";
+    llm.commitments[0].evidence = [
+      {
+        utterance_index: 2,
+        quote: "I will not fix the duplicate welcome email by this Friday",
+        kind: "acceptance",
+      },
+    ];
+    const result = verify({ llm, transcript: refusing });
+    expect(result.commitments[0].owner.status).toBe("unassigned");
   });
 
   it("keeps the corrected value and records the superseded one", () => {

@@ -55,6 +55,7 @@ export function verify({ llm, transcript, userAnchorDate }: VerifyInput): Verify
     names[label] = name;
     speakerEvidence[label] = {
       speaker: label === hit.speaker_label ? name : null,
+      speaker_label: hit.speaker_label,
       quote: claim.quote,
       kind: "mention",
       start_ms: hit.start_ms,
@@ -86,6 +87,7 @@ export function verify({ llm, transcript, userAnchorDate }: VerifyInput): Verify
       end_ms: hit.end_ms,
       utterance_index: hit.utterance_index,
       uncertain: uncertaintyAt(transcript, hit, limits),
+      speaker_label: hit.speaker_label,
     };
   };
 
@@ -106,7 +108,9 @@ export function verify({ llm, transcript, userAnchorDate }: VerifyInput): Verify
       warnings.add("evidence_unverified");
       continue;
     }
-    const owner = resolveOwner(item.owner_name, knownNames, normalizedTranscript, warnings);
+    const claimed = resolveOwner(item.owner_name, knownNames, normalizedTranscript, warnings);
+    const owner =
+      claimed.status === "unassigned" ? (ownerByVoice(evidence, names) ?? claimed) : claimed;
     const deadline = resolveDeadline(
       item.deadline_kind,
       item.deadline_raw,
@@ -253,19 +257,35 @@ function resolveOwner(
   warnings: Set<string>,
 ): Owner {
   const name = claimed.trim();
-  if (!name) return { name: null, status: "unassigned" };
+  if (!name) return { name: null, status: "unassigned", speaker_label: null };
 
   const normalized = normalize(name);
   const exact = knownNames.find((known) => normalize(known) === normalized);
-  if (exact) return { name: exact, status: "named" };
+  if (exact) return { name: exact, status: "named", speaker_label: null };
 
   const byFirstName = knownNames.find((known) => normalize(known).split(" ")[0] === normalized);
-  if (byFirstName) return { name: byFirstName, status: "named" };
+  if (byFirstName) return { name: byFirstName, status: "named", speaker_label: null };
 
-  if (normalizedTranscript.includes(normalized)) return { name, status: "named" };
+  if (normalizedTranscript.includes(normalized)) {
+    return { name, status: "named", speaker_label: null };
+  }
 
   warnings.add("owner_not_a_known_name");
-  return { name: null, status: "unassigned" };
+  return { name: null, status: "unassigned", speaker_label: null };
+}
+
+const TAKES_ON = /\b(i'll(?! not| never)|i will(?! not| never)|i'm going to|i am going to|let me|leave it with me)\b/;
+
+function ownerByVoice(evidence: Evidence[], names: Record<string, string>): Owner | null {
+  for (const item of evidence) {
+    if (item.kind !== "acceptance" && item.kind !== "owner") continue;
+    if (item.speaker_label === null || !TAKES_ON.test(normalize(item.quote))) continue;
+    const name = names[item.speaker_label];
+    return name
+      ? { name, status: "named", speaker_label: item.speaker_label }
+      : { name: null, status: "unnamed_speaker", speaker_label: item.speaker_label };
+  }
+  return null;
 }
 
 function resolveDeadline(

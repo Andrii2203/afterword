@@ -63,7 +63,7 @@ describe("pipeline state rules", () => {
   it("promotes the same proposal in variant B, where it was accepted", async () => {
     const document = await run("meeting-b");
     const promoted = document.commitments.find((c) => /progress bar/i.test(c.title));
-    expect(promoted?.owner).toEqual({ name: "Daniel Okafor", status: "named" });
+    expect(promoted?.owner).toEqual({ name: "Daniel Okafor", status: "named", speaker_label: null });
     expect(document.excluded.some((x) => /progress bar/i.test(x.title))).toBe(false);
   });
 
