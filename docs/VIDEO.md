@@ -1,98 +1,105 @@
 # Video walkthrough script — 3 minutes
 
-Record the browser at 1280x800 with audio. Have the demo open, network working, and nothing
-uploaded yet. Times are cumulative; the whole take is 180 seconds.
+Record the deployed demo in the browser at 1280x800 with your voice. Times are cumulative and the
+whole take is 180 seconds. Say the lines in your own words; the facts in them are what matters.
+
+## Before you press record
+
+- Open the deployed URL and run **Sample A** once as a warm-up. The first run after a deploy starts a
+  cold function and is slower than a real one.
+- Reload the page so nothing is on screen.
+- The demo allows 12 runs per address per hour. The take uses 3, so two rehearsals and a take fit;
+  more than that, raise `RUNS_PER_CLIENT_PER_HOUR` in the Vercel project settings first.
+- Every run is live and costs about five cents. Do not cut the waiting: the timer is the evidence.
 
 ---
 
-**0:00 – 0:20 — What it is**
+**0:00 – 0:15 — What it is**
 
-> "This turns a recorded project discussion into the tasks as they stood when the recording ended.
-> Not a meeting summary: a commitments list. The scope is deliberate — English, two speakers who
-> introduce themselves, up to three minutes."
+> "This turns a recorded project discussion into the tasks as they stood when the recording ended. Not
+> a summary: a commitments list, where every line carries the quote that proves it."
 
-Show the page header and the scope line under it.
-
----
-
-**0:20 – 0:50 — One run, start to finish**
-
-Click **Sample A — base call**, then **Extract commitments**. Let the timer run; do not cut.
-
-> "This is a 109 second call. Everything you are about to see was produced from the audio just now,
-> not prepared in advance."
-
-When the transcript appears, about four seconds in, point at it:
-
-> "The transcript arrives first, while the model is still reading. You are not staring at a spinner."
-
-When the list appears:
-
-> "Fourteen seconds in total. Three commitments, two items that are not commitments, one open
-> question."
+Show the header and the scope line.
 
 ---
 
-**0:50 – 1:35 — The part that is hard**
+**0:15 – 0:40 — One run, live**
 
-Point at each, in this order:
+Click **Sample A — base call**, then **Extract commitments**.
 
-1. **Cancelled task.** Scroll to "Write a migration script", labelled `cancelled`.
-   > "This was agreed earlier in the call and then dropped. A summariser keeps it as a task. Here it
-   > is out of the list, with the reason, and the quote that cancels it."
-   Click its quote — the audio plays "Cancel it. Operations migrated those accounts manually".
+> "This is a call of a hundred and six seconds, processed right now."
 
+When the transcript appears after a few seconds:
+
+> "The transcript comes first, while the model is still reading."
+
+When the result appears, read the timer and the counts from the screen:
+
+> "About fifteen seconds. Three commitments, two things that are not commitments, one open question."
+
+---
+
+**0:40 – 1:20 — The hard part**
+
+1. **Cancelled.** "Write a migration script", labelled `cancelled`. Click its quote; it plays.
+   > "This was agreed and then dropped later in the call. It is out of the list, with the quote that
+   > cancels it."
 2. **Never accepted.** "Add a progress bar", labelled `never_accepted`.
-   > "'We could' never became 'we will'. It stays out."
-
-3. **Corrected deadline.** The checklist item.
-   > "Tuesday was corrected to Thursday. The commitment holds Thursday, and the superseded value is
-   > kept underneath with its own quote."
-
-4. **No owner.** The runbook item.
-   > "Both speakers agreed this has to happen and neither took it. The owner stays empty. The product
-   > does not guess that the person who spoke last owns it."
-
-5. **Warning bar.**
-   > "No calendar date was spoken in this call, so 'by the end of the week' stays as words, and the
-   > product says why instead of inventing a date."
+   > "'We could' never became 'we will', so it stays out."
+3. **Corrected.** "Rewrite the onboarding checklist copy".
+   > "Tuesday was corrected to Thursday. The task holds Thursday, and the old value is kept with its
+   > own quote."
+4. **No owner.** "Update the release runbook".
+   > "Everyone agreed it must happen and nobody took it. The owner stays empty instead of guessed."
+5. **Evidence.** Point at the quotes under any item.
+   > "Quotes are in time order and each says its role: acceptance, correction, context. Timestamps
+   > come from the audio, not from the model."
 
 ---
 
-**1:35 – 2:05 — Change one agreement**
+**1:20 – 1:40 — Change one agreement**
 
 Click **Sample B — one agreement changed**, then **Extract commitments**.
 
-> "Same call, one line different: this time the progress bar is accepted. One item moves from 'not
-> commitments' into the list with an owner. Nothing else changes — same four items, same owners,
-> same deadlines. That is the test that the product reads state, not keywords."
+> "Same call, one line different: the progress bar is accepted this time. It moves into the list with
+> an owner, and nothing else changes."
 
 ---
 
-**2:05 – 2:30 — When it should refuse**
+**1:40 – 2:10 — When it should not conclude**
 
-Click **Sample C — hedged answer**, then **Extract commitments**.
+Before running, type a wrong date such as today into **Recording date**. Then click
+**Sample C — hedged answer** and **Extract commitments**.
 
-> "Here one speaker says 'let's call it a maybe'. That is not a commitment and it is not a rejection,
-> so it is reported as ambiguous with an open question naming what is undecided. And because this
-> call does state its date, 'by this Friday' resolves to the sixth of March."
+> "Here the answer is 'let's call it a maybe'. That is neither yes nor no, so it is reported as
+> ambiguous, with open questions naming what is undecided."
 
-Point at the resolved date and at the `ambiguous` label.
+Point at the deadline `2026-03-06` and at the amber warning:
 
----
+> "I typed a wrong date on purpose. The recording says its own date, so 'by this Friday' resolves from
+> the recording, and the product tells me the two dates disagree instead of quietly picking one."
 
-**2:30 – 2:55 — Evidence, speed and cost**
+Point at a **check this** label:
 
-> "Every line has a quote you can play, and the timestamps come from the audio, not from the model —
-> the model only says which utterance it read. Fourteen to nineteen seconds to a result, about five
-> cents per recording at list price, of which the model is eighty-five percent. Those numbers are
-> measured, and the runs are in the repository."
-
-Optionally show `reports/e2e-latency.json` or the metrics strip.
+> "And this quote holds a word the recogniser was unsure of, so it asks me to listen before trusting it."
 
 ---
 
-**2:55 – 3:00 — Limits**
+**2:10 – 2:40 — Tested on real speech, not just my test files**
 
-> "Known limits: synthetic test audio, no crosstalk handling, and no way yet for a human to correct
-> an item in place. That is what I would do next."
+> "The three samples are synthetic. So I also ran real recorded meetings from the AMI corpus and an
+> open-licensed podcast. That found five problems no test file could: for example a misheard word
+> became a speaker's name, and my confidence thresholds flagged almost every real quote. Four are
+> fixed and re-checked on the same recordings. One is open on purpose: an agreed rule like 'the price
+> is twenty-five euros' is not a task, and deciding how to show decisions is a product question."
+
+Optionally show the issue list on GitHub for two seconds.
+
+---
+
+**2:40 – 3:00 — Speed, cost, next**
+
+> "Measured, not promised: on the samples about ten to fifteen seconds and four to seven cents a run;
+> on real meetings eighteen to forty-three seconds and six to nine cents, because the model writes
+> more. The model is most of the cost. Next I would add a decisions section and let a person correct
+> an item in place."
