@@ -40,15 +40,15 @@ one covers spans that human annotators marked as decisions.
 
 | ID | Severity | Finding |
 | --- | --- | --- |
-| A | High | A misheard word became a speaker's name and was attached to the wrong speaker: `Mile.`, spoken by label `0` in IS1000a, became the name of label `1` |
-| B | High | The uncertainty thresholds, read off synthetic audio, marked 7 of 8, 6 of 6 and 2 of 3 quotes on real clips |
-| C | Medium | Nobody introduces themselves in a real meeting, so every owner came out empty |
-| D | Medium | Three spans the corpus annotators recorded as decisions were reported as `never_accepted`, because they set constraints rather than accept tasks |
-| E | Medium | Speed and cost in the delivery notes were measured on fixtures only and roughly double on real audio |
+| [#7](https://github.com/Andrii2203/afterword/issues/7) | High | A misheard word became a speaker's name and was attached to the wrong speaker: `Mile.`, spoken by label `0` in IS1000a, became the name of label `1` |
+| [#8](https://github.com/Andrii2203/afterword/issues/8) | High | The uncertainty thresholds, read off synthetic audio, marked 7 of 8, 6 of 6 and 2 of 3 quotes on real clips |
+| [#9](https://github.com/Andrii2203/afterword/issues/9) | Medium | Nobody introduces themselves in a real meeting, so every owner came out empty |
+| [#10](https://github.com/Andrii2203/afterword/issues/10) | Medium | Three spans the corpus annotators recorded as decisions were reported as `never_accepted`, because they set constraints rather than accept tasks |
+| [#11](https://github.com/Andrii2203/afterword/issues/11) | Medium | Speed and cost in the delivery notes were measured on fixtures only and roughly double on real audio |
 
 ## Fixed in this session
 
-A, B and E are fixed; the same recordings were re-verified offline against the new rules.
+#7, #8 and #11 are fixed; the same recordings were re-verified offline against the new rules.
 
 | Measure | Before | After |
 | --- | --- | --- |
@@ -61,9 +61,9 @@ A, B and E are fixed; the same recordings were re-verified offline against the n
 The decisions behind the fixes are ADR-0028 (confidence limits belong to the recording) and ADR-0029
 (a name is bound by its introduction or by an address in a two-speaker recording).
 
-C is partly addressed: a name spoken as an address now binds to the other speaker when there are
+#9 is partly addressed: a name spoken as an address now binds to the other speaker when there are
 exactly two, which is the product's stated scope. A meeting of four where nobody introduces themselves
-still has no owners, and that is reported rather than guessed. D remains open as a scope question:
+still has no owners, and that is reported rather than guessed. #10 remains open as a scope question:
 the product lists accepted tasks, and an agreed constraint is neither a task nor a denial.
 
 ## Lesson
