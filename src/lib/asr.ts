@@ -4,6 +4,7 @@ export interface AsrResult {
   transcript: Transcript;
   ms: number;
   raw: unknown;
+  language: string | null;
 }
 
 export interface AsrProvider {
@@ -14,6 +15,7 @@ export interface AsrProvider {
 export interface DeepgramResponse {
   metadata?: { duration?: number };
   results?: {
+    channels?: { detected_language?: string; language_confidence?: number }[];
     utterances?: {
       start: number;
       end: number;
@@ -41,11 +43,33 @@ const ENDPOINT = "https://api.deepgram.com/v1/listen";
 export const DEEPGRAM_QUERY = {
   model: "nova-3",
   language: "en",
+  detect_language: "true",
   diarize: "true",
   utterances: "true",
   punctuate: "true",
   smart_format: "true",
 } as const;
+
+export function detectedLanguage(response: DeepgramResponse): string | null {
+  return response.results?.channels?.[0]?.detected_language ?? null;
+}
+
+export function isEnglish(language: string): boolean {
+  return language.trim().toLowerCase().split(/[-_]/)[0] === "en";
+}
+
+export function languageName(language: string): string {
+  const code = language.trim();
+  try {
+    return new Intl.DisplayNames(["en"], { type: "language" }).of(code) ?? code;
+  } catch {
+    return code;
+  }
+}
+
+export function nonEnglishMessage(language: string): string {
+  return `This recording was recognised as ${languageName(language)}. Afterword reads English recordings only, so nothing was analysed.`;
+}
 
 export function mapDeepgramResponse(response: DeepgramResponse): Transcript {
   const turns = (response.results?.utterances ?? []).flatMap(splitBySpeaker);
@@ -121,7 +145,12 @@ export function createDeepgramAsr(apiKey = process.env.DEEPGRAM_API_KEY): AsrPro
         );
       }
       const raw = (await response.json()) as DeepgramResponse;
-      return { transcript: mapDeepgramResponse(raw), ms: Date.now() - started, raw };
+      return {
+        transcript: mapDeepgramResponse(raw),
+        ms: Date.now() - started,
+        raw,
+        language: detectedLanguage(raw),
+      };
     },
   };
 }

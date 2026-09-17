@@ -1,5 +1,11 @@
 import { describe, expect, it } from "vitest";
-import { mapDeepgramResponse, type DeepgramResponse } from "@/lib/asr";
+import {
+  detectedLanguage,
+  isEnglish,
+  mapDeepgramResponse,
+  nonEnglishMessage,
+  type DeepgramResponse,
+} from "@/lib/asr";
 
 function word(text: string, start: number, speaker?: number) {
   return { word: text.toLowerCase(), punctuated_word: text, start, end: start + 0.4, speaker };
@@ -156,5 +162,36 @@ describe("mapDeepgramResponse", () => {
     expect(transcript.utterances).toEqual([
       { index: 0, speaker_label: "0", start_ms: 5_000, end_ms: 6_000, text: "Hmm.", words: [] },
     ]);
+  });
+});
+
+describe("language detection", () => {
+  const detected = (language?: string): DeepgramResponse => ({
+    metadata: { duration: 20 },
+    results: { channels: language ? [{ detected_language: language }] : [{}], utterances: [] },
+  });
+
+  it("reads the language Deepgram detected, or nothing when it reported none", () => {
+    expect(detectedLanguage(detected("es"))).toBe("es");
+    expect(detectedLanguage(detected())).toBeNull();
+    expect(detectedLanguage({})).toBeNull();
+  });
+
+  it("accepts every English variant and refuses another language", () => {
+    expect(isEnglish("en")).toBe(true);
+    expect(isEnglish("en-US")).toBe(true);
+    expect(isEnglish("EN_GB")).toBe(true);
+    expect(isEnglish("es")).toBe(false);
+    expect(isEnglish("uk")).toBe(false);
+  });
+
+  it("names the detected language in the refusal", () => {
+    expect(nonEnglishMessage("es")).toContain("Spanish");
+    expect(nonEnglishMessage("uk")).toContain("Ukrainian");
+    expect(nonEnglishMessage("es")).toMatch(/English recordings only/);
+  });
+
+  it("falls back to the code when it names no known language", () => {
+    expect(nonEnglishMessage("zzz")).toContain("zzz");
   });
 });

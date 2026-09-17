@@ -1,4 +1,4 @@
-import type { AsrProvider } from "./asr";
+import { isEnglish, nonEnglishMessage, type AsrProvider } from "./asr";
 import type { Extractor } from "./extract";
 import type { PipelineEvent } from "./events";
 import { computeMetrics } from "./metrics";
@@ -62,6 +62,9 @@ export async function runPipeline(
 
   onEvent({ type: "stage", stage: "transcribing", at_ms: since() });
   const asr = await deps.asr.transcribe(input.audio, input.contentType);
+  if (asr.language && !isEnglish(asr.language)) {
+    throw new PipelineError(nonEnglishMessage(asr.language), 422);
+  }
   if (asr.transcript.utterances.length === 0) {
     throw new PipelineError("No speech was recognised in this file.", 422);
   }

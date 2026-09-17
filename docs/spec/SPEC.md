@@ -41,6 +41,7 @@ I3. Maximum accepted duration is 180 seconds and longer input is rejected with a
 I4. The audio file is the only required input.
 I5. The user may optionally supply the recording date, which is used only as an anchor date and only when the recording states no date of its own.
 I6. A date spoken in the recording takes precedence over the supplied recording date, and a disagreement between the two is reported rather than resolved silently.
+I7. The recording must be in English. Its language is detected during transcription, and a recording detected as another language is refused with HTTP 422 and an error naming that language, before any extraction is paid for.
 
 ## 6. Output contract
 
@@ -97,7 +98,7 @@ W6. `anchor_date_conflict` — the supplied recording date differs from the date
 ## 8. Pipeline
 
 P1. Upload and validation produce a stored audio blob and its duration.
-P2. ASR produces diarized utterances with millisecond timestamps.
+P2. ASR produces diarized utterances with millisecond timestamps and the detected language of the recording, which ends the run when it is not English.
 P3. Speaker naming maps each diarization label to a name taken from a self-introduction utterance, or leaves it `null`.
 P4. Extraction sends the numbered transcript to the LLM and receives the output document through a strict tool schema.
 P5. Verification enforces R5 to R11 in code and mutates or drops items that violate them.
@@ -117,6 +118,7 @@ A8. Given an evidence quote, when the user activates it, then the audio plays fr
 A9. Given an ambiguous task with no acceptance, when it is processed, then the item is reported as unresolved instead of being concluded. (test: `eval.ambiguous`)
 A10. Given any processed recording, when the response is returned, then `metrics.cost_per_audio_minute_usd` is a number derived from measured usage. (test: `metrics.cost`)
 A11. Given a recording that states its own date and a different supplied recording date, when it is processed, then deadlines are resolved from the spoken date, `meta.anchor_date_source` is `recording` and `warnings` contains `anchor_date_conflict`. (test: `eval.anchor_conflict`)
+A12. Given a recording detected as a language other than English, when it is processed, then the run fails with HTTP 422, the message names the detected language and the extraction model is never called. (test: `pipeline.language`)
 
 ## 10. Test layers
 

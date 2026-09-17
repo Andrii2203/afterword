@@ -36,7 +36,7 @@ function fixtureProviders(filename: string): PipelineDeps {
   const asr: AsrProvider = {
     name: "stub-asr",
     async transcribe() {
-      return { transcript, ms: 1, raw: {} };
+      return { transcript, ms: 1, raw: {}, language: "en" };
     },
   };
   const extractor: Extractor = {

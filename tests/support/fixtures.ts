@@ -30,11 +30,11 @@ export function loadExpected(id: FixtureId): ExpectedSet {
   return read<ExpectedSet>(`${id}.expected.json`);
 }
 
-export function stubAsr(transcript: Transcript, ms = 1_200): AsrProvider {
+export function stubAsr(transcript: Transcript, ms = 1_200, language = "en"): AsrProvider {
   return {
     name: "stub-asr",
     async transcribe() {
-      return { transcript, ms, raw: {} };
+      return { transcript, ms, raw: {}, language };
     },
   };
 }

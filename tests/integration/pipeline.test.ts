@@ -154,3 +154,42 @@ describe("speaker attribution on the recorded runs", () => {
     }
   });
 });
+
+describe("language of the recording", () => {
+  function extractorSpy() {
+    const calls: number[] = [];
+    const inner = stubExtractor(loadLlmOutput("meeting-a"));
+    return {
+      calls,
+      extractor: {
+        model: inner.model,
+        async extract(input: Parameters<typeof inner.extract>[0]) {
+          calls.push(1);
+          return inner.extract(input);
+        },
+      },
+    };
+  }
+
+  async function runWithLanguage(language: string) {
+    const spy = extractorSpy();
+    const result = runPipeline(
+      { runId: "run-language", audio, contentType: "audio/wav", filename: "meeting.wav" },
+      { asr: stubAsr(loadTranscript("meeting-a"), 1_200, language), extractor: spy.extractor },
+    );
+    return { result, spy };
+  }
+
+  it("refuses a recording detected as another language without calling the model", async () => {
+    const { result, spy } = await runWithLanguage("uk");
+    await expect(result).rejects.toThrow(/Ukrainian/);
+    await expect(result).rejects.toMatchObject({ status: 422 });
+    expect(spy.calls).toHaveLength(0);
+  });
+
+  it("processes a recording detected as an English variant", async () => {
+    const { result, spy } = await runWithLanguage("en-US");
+    await expect(result).resolves.toMatchObject({ meta: { filename: "meeting.wav" } });
+    expect(spy.calls).toHaveLength(1);
+  });
+});

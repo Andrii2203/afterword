@@ -252,3 +252,13 @@ Context: The manual review found that a recording date typed into the form overr
 Decision: A date spoken in the recording is evidence and wins; the form field is a fallback used only when the recording states no date. When both exist and differ, the spoken date resolves the deadlines, the discarded field value is kept in `meta.anchor_date_ignored`, and `warnings` carries `anchor_date_conflict`.
 Consequence: A wrong or stale value in the field can no longer invent a deadline, and the user is told in plain language which of the two dates was used.
 Rejected: Letting the field win was rejected because it contradicts the recording the product is asked to summarise, and refusing to produce a result on a disagreement was rejected because the recording alone is enough to answer.
+
+---
+
+## ADR-0026 — The language limit is enforced, not assumed
+
+Status: accepted (2026-09-17)
+Context: ADR-0011 limits the product to English and the UI says so, but nothing checked the recording. Deepgram was asked for English and returned English-shaped words for any audio, so a recording in another language produced a confident list of commitments built on nonsense rather than a refusal.
+Decision: Transcription asks Deepgram to detect the language, `language=en` stays as the expected value it overrides, and the pipeline stops with HTTP 422 before the extraction call when the detected language is not an English variant. The message names the detected language through `Intl.DisplayNames` and falls back to the raw code.
+Consequence: A reviewer who tries a recording in their own language gets one clear sentence instead of plausible-looking wrong output, and the run costs the transcription only. A response without a detected language is still processed, so the check never blocks a run on a missing field.
+Rejected: Guessing the language from the transcript text was rejected because English-shaped output is exactly what the wrong input produces, and a second detection call on the same audio was rejected because it doubles the transcription cost for every correct run.
