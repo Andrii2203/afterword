@@ -58,6 +58,7 @@ O10. `warnings[]` contains one machine-readable code per detected data-quality i
 O11. Every `evidence` entry satisfies `start_ms < end_ms <= audio_ms` and is playable in the UI.
 O12. `meta` carries `anchor_date`, `anchor_date_source: "recording" | "user" | "none"` and `anchor_date_ignored`, which holds the supplied recording date when it was overruled and is `null` otherwise.
 O13. The `evidence[]` of one item is ordered by `start_ms`, while items are ordered by the quote that decides them, which is the first quote the model returned for that item.
+O14. Every `evidence` entry carries `uncertain: "recognition" | "speaker" | null`, which names the check a reader should make on that quote before trusting it.
 
 ## 7. Decision rules
 
@@ -86,6 +87,7 @@ R12. Extraction always runs on the uploaded audio and never returns a stored ans
 R13. A task whose acceptance is hedged is emitted in `excluded` with reason `ambiguous` and additionally produces an `open_questions` entry naming the undecided point.
 R14. An `excluded` item with reason `ambiguous` is removed when no `open_questions` entry survives verification.
 R15. The anchor date is the date spoken in the recording when there is one, and the supplied recording date only otherwise; when both exist and differ, the spoken date is used and `warnings` contains `anchor_date_conflict`.
+R16. A quote is marked `uncertain` when one of its words was recognised below 0.90 confidence, or, failing that, when one of its words carries a speaker confidence below 0.30; a word without a confidence is treated as confident.
 
 ### Warning codes
 
@@ -123,6 +125,7 @@ A11. Given a recording that states its own date and a different supplied recordi
 A12. Given a recording detected as a language other than English, when it is processed, then the run fails with HTTP 422, the message names the detected language and the extraction model is never called. (test: `pipeline.language`)
 A13. Given an item whose quotes were returned out of time order, when it is processed, then its quotes are returned in time order and each is shown with its role, while the item keeps its place in the list. (test: `ui.evidence_order`)
 A14. Given an unresolved deadline, when it is shown, then the reason reads "no date context" only if no anchor date exists and otherwise reads "not converted to a date". (test: `ui.deadline_reason`)
+A15. Given a quote containing a word recognised below the threshold, when it is processed, then the quote is marked `uncertain` and the interface labels both the quote and the item it supports. (test: `ui.uncertain_quote`)
 
 ## 10. Test layers
 

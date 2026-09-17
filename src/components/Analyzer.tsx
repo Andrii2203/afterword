@@ -29,6 +29,11 @@ const EVIDENCE_ROLE: Record<Evidence["kind"], string> = {
   mention: "context",
 };
 
+const UNCERTAIN_TEXT: Record<"recognition" | "speaker", string> = {
+  recognition: "A word in this quote was recognised with low confidence; listen before relying on it.",
+  speaker: "Who said this quote is uncertain; listen before relying on it.",
+};
+
 const WARNING_TEXT: Record<string, string> = {
   missing_date_context:
     "No calendar date was spoken, so relative deadlines are kept as they were said.",
@@ -320,7 +325,9 @@ export default function Analyzer() {
                 data-testid="commitment"
                 className="rounded-lg border border-line p-4"
               >
-                <h3 className="font-medium">{item.title}</h3>
+                <h3 className="font-medium">
+                  {item.title} <CheckThis items={item.evidence} />
+                </h3>
                 <dl className="mt-2 flex flex-wrap gap-x-6 gap-y-1 text-sm">
                   <Field label="Owner">
                     {item.owner.status === "named" ? (
@@ -361,7 +368,8 @@ export default function Analyzer() {
                   {item.title}{" "}
                   <span className="ml-1 rounded bg-panel px-2 py-0.5 text-xs uppercase tracking-wide text-muted">
                     {item.reason.replace("_", " ")}
-                  </span>
+                  </span>{" "}
+                  <CheckThis items={item.evidence} />
                 </h3>
                 <Evidences items={item.evidence} onPlay={play} />
               </article>
@@ -378,7 +386,9 @@ export default function Analyzer() {
                 data-testid="open-question"
                 className="rounded-lg border border-line p-4"
               >
-                <h3 className="font-medium">{item.question}</h3>
+                <h3 className="font-medium">
+                  {item.question} <CheckThis items={item.evidence} />
+                </h3>
                 {item.raised_by && <p className="mt-1 text-sm text-muted">Raised by {item.raised_by}</p>}
                 <Evidences items={item.evidence} onPlay={play} />
               </article>
@@ -526,7 +536,34 @@ function EvidenceChip({
       </span>
       {evidence.speaker ? `${evidence.speaker}: ` : ""}
       &ldquo;{evidence.quote}&rdquo;
+      {evidence.uncertain && (
+        <span
+          data-testid="evidence-uncertain"
+          data-reason={evidence.uncertain}
+          title={UNCERTAIN_TEXT[evidence.uncertain]}
+          className="ml-2 rounded bg-amber-500/10 px-2 py-0.5 text-xs text-amber-600"
+        >
+          check this
+        </span>
+      )}
     </button>
+  );
+}
+
+function CheckThis({ items }: { items: Evidence[] }) {
+  const reason = items
+    .map((item) => item.uncertain)
+    .find((value): value is "recognition" | "speaker" => value !== null);
+  if (!reason) return null;
+  return (
+    <span
+      data-testid="item-uncertain"
+      data-reason={reason}
+      title={UNCERTAIN_TEXT[reason]}
+      className="rounded bg-amber-500/10 px-2 py-0.5 text-xs font-normal text-amber-600"
+    >
+      check this
+    </span>
   );
 }
 

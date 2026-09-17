@@ -350,3 +350,62 @@ describe("verify", () => {
     );
   });
 });
+describe("uncertain quotes", () => {
+  function scored(confidences: number[], speakerConfidences: number[]): Transcript {
+    const text = "I'll fix the duplicate welcome email by this Friday";
+    const tokens = text.split(" ");
+    return {
+      audio_ms: 60_000,
+      utterances: [
+        utterance(0, "0", 0, "I'm Maya Chen and today is Monday, March 2nd, 2026."),
+        utterance(1, "1", 6_000, "I'm Daniel Okafor, backend engineer."),
+        {
+          index: 2,
+          speaker_label: "1",
+          start_ms: 12_000,
+          end_ms: 12_000 + tokens.length * 300,
+          text,
+          words: tokens.map((w, i) => ({
+            text: w,
+            start_ms: 12_000 + i * 300,
+            end_ms: 12_000 + (i + 1) * 300,
+            confidence: confidences[i] ?? 1,
+            speaker_confidence: speakerConfidences[i] ?? 0.9,
+          })),
+        },
+      ],
+    };
+  }
+
+  function llmForQuote(): LlmOutput {
+    const llm = baseLlm();
+    llm.commitments[0].evidence = [
+      {
+        utterance_index: 2,
+        quote: "I'll fix the duplicate welcome email by this Friday",
+        kind: "acceptance",
+      },
+    ];
+    return llm;
+  }
+
+  it("marks a quote holding a word recognised below the threshold", () => {
+    const result = verify({ llm: llmForQuote(), transcript: scored([1, 1, 0.81], []) });
+    expect(result.commitments[0].evidence[0].uncertain).toBe("recognition");
+  });
+
+  it("marks a quote whose speaker is in doubt", () => {
+    const result = verify({ llm: llmForQuote(), transcript: scored([], [0.9, 0.24]) });
+    expect(result.commitments[0].evidence[0].uncertain).toBe("speaker");
+  });
+
+  it("leaves a confident quote unmarked", () => {
+    const result = verify({ llm: llmForQuote(), transcript: scored([0.95, 0.91], [0.4, 0.31]) });
+    expect(result.commitments[0].evidence[0].uncertain).toBeNull();
+  });
+
+  it("treats a transcript without confidence as confident", () => {
+    const result = verify({ llm: baseLlm(), transcript });
+    expect(result.commitments[0].evidence.every((e) => e.uncertain === null)).toBe(true);
+  });
+});

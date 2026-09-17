@@ -72,3 +72,7 @@ the same class of error is caught automatically next time.
 | --- | --- |
 | [#1](https://github.com/Andrii2203/afterword/issues/1) | Fixed on 2026-09-16. All eight misattributed phrases found in this session are now asserted by integration tests. |
 | [#2](https://github.com/Andrii2203/afterword/issues/2) | Fixed on 2026-09-17. The date spoken in the recording now wins (ADR-0025), a disagreement raises `anchor_date_conflict`, and unit, route and browser tests cover both dates at once. |
+| [#4](https://github.com/Andrii2203/afterword/issues/4) | Fixed on 2026-09-17. Quotes under an item are ordered by time and each carries its role, while items still follow their deciding quote. |
+| [#3](https://github.com/Andrii2203/afterword/issues/3) | Fixed on 2026-09-17. An unresolved deadline says whether the date is missing or the expression was not converted. |
+| [#6](https://github.com/Andrii2203/afterword/issues/6) | Fixed on 2026-09-17. The language is detected during transcription and a non-English recording is refused before the model is called (ADR-0026). |
+| [#5](https://github.com/Andrii2203/afterword/issues/5) | Done on 2026-09-17. The observation about misheard words became a check: quotes holding a low-confidence word are labelled "check this" (ADR-0027). |

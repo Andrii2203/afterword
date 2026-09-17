@@ -63,12 +63,21 @@ Two test-side corrections, disclosed because they changed the ground truth or th
 2. An integration test compared commitment titles verbatim between two independent model runs. Title
    wording is free text, so the test now compares topic, owner status and deadline status.
 
-Open issues from the manual review on 2026-09-16, none of which the automated suites caught
-(`docs/testing/2026-09-16-manual-review.md`):
+The manual review of the running product on 2026-09-16 found four defects that no automated suite
+caught (`docs/testing/2026-09-16-manual-review.md`). All four are fixed, each with the test that was
+missing:
 
-| ID | Severity | Summary |
-| --- | --- | --- |
-| [#5](https://github.com/Andrii2203/afterword/issues/5) | Medium | A quote containing a word recognised with low confidence is not flagged |
+| ID | Severity | Symptom | Fix |
+| --- | --- | --- | --- |
+| [#2](https://github.com/Andrii2203/afterword/issues/2) | High | The recording date field overruled the date spoken in the recording, showing a deadline that was never agreed | The spoken date wins, the discarded field value is reported as `anchor_date_conflict` (ADR-0025) |
+| [#4](https://github.com/Andrii2203/afterword/issues/4) | Medium | Quotes under an item followed the model's order of importance and never said which quote decided the item | Quotes are ordered by time and carry their role; items still follow their deciding quote |
+| [#3](https://github.com/Andrii2203/afterword/issues/3) | Low | Every unresolved deadline read "no date context", even with a date known | The label names the actual reason |
+| [#6](https://github.com/Andrii2203/afterword/issues/6) | High | A recording in another language was read as English and produced confident nonsense | The language is detected and a non-English recording is refused before the model is called (ADR-0026) |
+
+One improvement came out of the same session and is also done: verification compares a quote against
+the transcript, not against the audio, so a misheard word used to pass unnoticed
+([#5](https://github.com/Andrii2203/afterword/issues/5)). Every quote is now checked against the word
+confidences Deepgram returns and the uncertain ones are labelled "check this" (ADR-0027).
 
 Known limits, not fixed:
 

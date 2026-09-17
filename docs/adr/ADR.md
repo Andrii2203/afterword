@@ -262,3 +262,13 @@ Context: ADR-0011 limits the product to English and the UI says so, but nothing 
 Decision: Transcription asks Deepgram to detect the language, `language=en` stays as the expected value it overrides, and the pipeline stops with HTTP 422 before the extraction call when the detected language is not an English variant. The message names the detected language through `Intl.DisplayNames` and falls back to the raw code.
 Consequence: A reviewer who tries a recording in their own language gets one clear sentence instead of plausible-looking wrong output, and the run costs the transcription only. A response without a detected language is still processed, so the check never blocks a run on a missing field.
 Rejected: Guessing the language from the transcript text was rejected because English-shaped output is exactly what the wrong input produces, and a second detection call on the same audio was rejected because it doubles the transcription cost for every correct run.
+
+---
+
+## ADR-0027 — Quotes are checked against the confidence of their words
+
+Status: accepted (2026-09-17)
+Context: Verification compares a quote with the transcript, never with the audio, so a misheard word passes every check. The manual review caught recognition turning "We could also add" into "We can also add" and "And should we" into "But should we", and the brief's hardest rule depends on exactly those words. Since ADR-0024 every word carries a recognition confidence and a speaker confidence that nothing read.
+Decision: A quote is marked uncertain when one of its words falls below 0.90 recognition confidence, or, failing that, below 0.30 speaker confidence, and the interface labels the quote and the item it supports with "check this". Both thresholds were read off the three recorded fixtures: at 0.90 exactly three of the thirty-four quotes are marked, and they are the three known misreadings, while 0.95 marks seven and buries them. Speaker confidence sits far lower across the whole corpus, with a median near 0.6, so 0.30 marks the three quotes whose speaker the provider was least sure of instead of marking everything.
+Consequence: The output says which lines deserve a listen before they are trusted, using numbers the transcription already paid for. A transcript whose words carry no confidence, such as a stubbed or recorded one, is treated as confident and nothing is marked.
+Rejected: Re-transcribing with a second model and comparing was rejected because it doubles the cost of every run for a rare disagreement, and hiding an uncertain quote was rejected because a quote the product refuses to show cannot be judged by the person who was in the room.

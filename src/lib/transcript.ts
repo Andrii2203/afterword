@@ -33,6 +33,19 @@ export function renderTranscript(
     .join("\n");
 }
 
+export const MIN_WORD_CONFIDENCE = 0.9;
+export const MIN_SPEAKER_CONFIDENCE = 0.3;
+
+export type Uncertainty = "recognition" | "speaker" | null;
+
+export function uncertaintyOf(utterance: Utterance, startMs: number, endMs: number): Uncertainty {
+  const words = utterance.words.filter((w) => w.start_ms >= startMs && w.end_ms <= endMs);
+  const below = (value: number | undefined, limit: number) => value !== undefined && value < limit;
+  if (words.some((w) => below(w.confidence, MIN_WORD_CONFIDENCE))) return "recognition";
+  if (words.some((w) => below(w.speaker_confidence, MIN_SPEAKER_CONFIDENCE))) return "speaker";
+  return null;
+}
+
 export interface QuoteHit {
   utterance_index: number;
   speaker_label: string;

@@ -1,5 +1,5 @@
 import { findAnchorDate, resolveRelative } from "./dates";
-import { locateQuote, normalize } from "./transcript";
+import { locateQuote, normalize, uncertaintyOf } from "./transcript";
 import type {
   Commitment,
   Deadline,
@@ -51,6 +51,7 @@ export function verify({ llm, transcript, userAnchorDate }: VerifyInput): Verify
       start_ms: hit.start_ms,
       end_ms: hit.end_ms,
       utterance_index: hit.utterance_index,
+      uncertain: uncertaintyAt(transcript, hit.utterance_index, hit.start_ms, hit.end_ms),
     };
   }
 
@@ -76,6 +77,7 @@ export function verify({ llm, transcript, userAnchorDate }: VerifyInput): Verify
       start_ms: hit.start_ms,
       end_ms: hit.end_ms,
       utterance_index: hit.utterance_index,
+      uncertain: uncertaintyAt(transcript, hit.utterance_index, hit.start_ms, hit.end_ms),
     };
   };
 
@@ -169,7 +171,18 @@ export function verify({ llm, transcript, userAnchorDate }: VerifyInput): Verify
   };
 }
 
+function uncertaintyAt(
+  transcript: Transcript,
+  utteranceIndex: number,
+  startMs: number,
+  endMs: number,
+): Evidence["uncertain"] {
+  const utterance = transcript.utterances.find((u) => u.index === utteranceIndex);
+  return utterance ? uncertaintyOf(utterance, startMs, endMs) : null;
+}
+
 function resolveLabel(claimed: string, quotedBy: string, transcript: Transcript): string {
+
   const labels = new Set(transcript.utterances.map((u) => u.speaker_label));
   if (labels.has(claimed)) return claimed;
   const digits = claimed.match(/\d+/)?.[0];

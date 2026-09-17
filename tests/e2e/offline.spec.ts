@@ -147,6 +147,26 @@ test("says why a deadline stayed unresolved, and only says the date is missing w
   await expect(unresolved).not.toContainText("no date context");
 });
 
+test("marks the quote recognised with low confidence and the item it supports", async ({ page }) => {
+  await analyse(page, "meeting-c");
+
+  const flagged = page.getByTestId("evidence-uncertain");
+  await expect(flagged.first()).toBeVisible();
+  await expect(flagged.first()).toHaveText(/check this/i);
+
+  const item = page
+    .getByTestId("open-question")
+    .filter({ has: page.getByTestId("evidence-uncertain") });
+  await expect(item.getByTestId("item-uncertain").first()).toBeVisible();
+
+  await analyse(page, "meeting-a");
+  const confident = page
+    .getByTestId("commitment")
+    .filter({ hasText: /duplicate/i })
+    .getByTestId("item-uncertain");
+  await expect(confident).toHaveCount(0);
+});
+
 test("processes the second upload instead of repeating the first answer", async ({ page }) => {
   await analyse(page, "meeting-a");
   const first = await page.getByTestId("commitment").allTextContents();

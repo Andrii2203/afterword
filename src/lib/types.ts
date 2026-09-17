@@ -112,6 +112,7 @@ export const EvidenceSchema = z.object({
   start_ms: z.number().int().nonnegative(),
   end_ms: z.number().int().nonnegative(),
   utterance_index: z.number().int().nonnegative(),
+  uncertain: z.enum(["recognition", "speaker"]).nullable().default(null),
 });
 
 export const OwnerSchema = z.object({
