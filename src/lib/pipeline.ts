@@ -89,6 +89,7 @@ export async function runPipeline(
       filename: input.filename,
       anchor_date: verified.anchor.date,
       anchor_date_source: verified.anchor.source,
+      anchor_date_ignored: verified.anchor.ignored,
     },
     speakers: verified.speakers,
     commitments: verified.commitments,

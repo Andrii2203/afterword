@@ -39,7 +39,8 @@ I1. Accepted container formats are `mp3`, `m4a`, `ogg`, `webm` and `wav`, and a 
 I2. Maximum upload size is 4.5 MB, which is the request body limit of the deployment target, and the browser rejects a larger file before sending it.
 I3. Maximum accepted duration is 180 seconds and longer input is rejected with an explicit error.
 I4. The audio file is the only required input.
-I5. The user may optionally supply the recording date, which is used only as an anchor date and is labelled as user-supplied in the output.
+I5. The user may optionally supply the recording date, which is used only as an anchor date and only when the recording states no date of its own.
+I6. A date spoken in the recording takes precedence over the supplied recording date, and a disagreement between the two is reported rather than resolved silently.
 
 ## 6. Output contract
 
@@ -54,6 +55,7 @@ O8. `superseded[]` is `{ field: "deadline" | "owner" | "title", old_value, evide
 O9. `metrics` is `{ audio_seconds, asr_ms, llm_ms, total_ms, asr_cost_usd, llm_cost_usd, cost_per_audio_minute_usd, tokens }`.
 O10. `warnings[]` contains one machine-readable code per detected data-quality issue.
 O11. Every `evidence` entry satisfies `start_ms < end_ms <= audio_ms` and is playable in the UI.
+O12. `meta` carries `anchor_date`, `anchor_date_source: "recording" | "user" | "none"` and `anchor_date_ignored`, which holds the supplied recording date when it was overruled and is `null` otherwise.
 
 ## 7. Decision rules
 
@@ -81,6 +83,7 @@ R11. If no anchor date exists, `warnings` contains `missing_date_context`.
 R12. Extraction always runs on the uploaded audio and never returns a stored answer for a known file.
 R13. A task whose acceptance is hedged is emitted in `excluded` with reason `ambiguous` and additionally produces an `open_questions` entry naming the undecided point.
 R14. An `excluded` item with reason `ambiguous` is removed when no `open_questions` entry survives verification.
+R15. The anchor date is the date spoken in the recording when there is one, and the supplied recording date only otherwise; when both exist and differ, the spoken date is used and `warnings` contains `anchor_date_conflict`.
 
 ### Warning codes
 
@@ -89,6 +92,7 @@ W2. `evidence_unverified` — an item was dropped because no quote matched the t
 W3. `owner_not_a_known_name` — an owner name was cleared because it matches no name spoken in the recording.
 W4. `speaker_unnamed` — a diarization label received no name because no self-introduction was found.
 W5. `llm_retry` — the extraction call was retried after an invalid response.
+W6. `anchor_date_conflict` — the supplied recording date differs from the date spoken in the recording, which was used instead.
 
 ## 8. Pipeline
 
@@ -112,6 +116,7 @@ A7. Given variant B of the fixture, in which one agreement is changed, when it i
 A8. Given an evidence quote, when the user activates it, then the audio plays from `start_ms` to `end_ms`. (test: `ui.evidence_playback`)
 A9. Given an ambiguous task with no acceptance, when it is processed, then the item is reported as unresolved instead of being concluded. (test: `eval.ambiguous`)
 A10. Given any processed recording, when the response is returned, then `metrics.cost_per_audio_minute_usd` is a number derived from measured usage. (test: `metrics.cost`)
+A11. Given a recording that states its own date and a different supplied recording date, when it is processed, then deadlines are resolved from the spoken date, `meta.anchor_date_source` is `recording` and `warnings` contains `anchor_date_conflict`. (test: `eval.anchor_conflict`)
 
 ## 10. Test layers
 

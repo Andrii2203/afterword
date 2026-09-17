@@ -29,6 +29,13 @@ const WARNING_TEXT: Record<string, string> = {
   llm_retry: "The extraction call was retried once; both attempts are included in the cost.",
 };
 
+function warningText(code: string, document: CommitmentsDocument): string {
+  if (code === "anchor_date_conflict") {
+    return `The recording states ${document.meta.anchor_date} as its own date, while the recording date field says ${document.meta.anchor_date_ignored}. Deadlines follow the date spoken in the recording.`;
+  }
+  return WARNING_TEXT[code] ?? code;
+}
+
 export default function Analyzer() {
   const [file, setFile] = useState<File | null>(null);
   const [audioUrl, setAudioUrl] = useState<string | null>(null);
@@ -288,7 +295,7 @@ export default function Analyzer() {
                   data-code={code}
                   className="rounded border border-amber-500/40 bg-amber-500/10 px-3 py-2 text-sm"
                 >
-                  {WARNING_TEXT[code] ?? code}
+                  {warningText(code, document)}
                 </li>
               ))}
             </ul>

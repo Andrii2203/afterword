@@ -184,6 +184,7 @@ export const DocumentSchema = z.object({
     filename: z.string(),
     anchor_date: z.string().nullable(),
     anchor_date_source: z.enum(["recording", "user", "none"]),
+    anchor_date_ignored: z.string().nullable().default(null),
   }),
   speakers: z.array(SpeakerSchema),
   commitments: z.array(CommitmentSchema),

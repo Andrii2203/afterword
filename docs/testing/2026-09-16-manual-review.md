@@ -71,3 +71,4 @@ the same class of error is caught automatically next time.
 | ID | Outcome |
 | --- | --- |
 | [#1](https://github.com/Andrii2203/afterword/issues/1) | Fixed on 2026-09-16. All eight misattributed phrases found in this session are now asserted by integration tests. |
+| [#2](https://github.com/Andrii2203/afterword/issues/2) | Fixed on 2026-09-17. The date spoken in the recording now wins (ADR-0025), a disagreement raises `anchor_date_conflict`, and unit, route and browser tests cover both dates at once. |

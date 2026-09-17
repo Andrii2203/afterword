@@ -24,7 +24,7 @@ export interface VerifyResult {
   commitments: Commitment[];
   excluded: Excluded[];
   open_questions: OpenQuestion[];
-  anchor: { date: string | null; source: "recording" | "user" | "none" };
+  anchor: { date: string | null; source: "recording" | "user" | "none"; ignored: string | null };
   warnings: string[];
 }
 
@@ -64,7 +64,7 @@ export function verify({ llm, transcript, userAnchorDate }: VerifyInput): Verify
     };
   });
 
-  const anchor = resolveAnchor(transcriptText, userAnchorDate ?? null);
+  const anchor = resolveAnchor(transcriptText, userAnchorDate ?? null, warnings);
 
   const toEvidence = (item: LlmEvidence): Evidence | null => {
     const hit = locateQuote(transcript, item.quote, item.utterance_index);
@@ -168,13 +168,20 @@ function byStart<T extends { evidence: Evidence[] }>(items: T[]): T[] {
 function resolveAnchor(
   transcriptText: string,
   userAnchorDate: string | null,
+  warnings: Set<string>,
 ): VerifyResult["anchor"] {
-  if (userAnchorDate && ISO_DATE.test(userAnchorDate)) {
-    return { date: userAnchorDate, source: "user" };
-  }
+  const user = userAnchorDate && ISO_DATE.test(userAnchorDate) ? userAnchorDate : null;
   const spoken = findAnchorDate(transcriptText);
-  if (spoken) return { date: spoken, source: "recording" };
-  return { date: null, source: "none" };
+
+  if (spoken) {
+    if (user && user !== spoken) {
+      warnings.add("anchor_date_conflict");
+      return { date: spoken, source: "recording", ignored: user };
+    }
+    return { date: spoken, source: "recording", ignored: null };
+  }
+  if (user) return { date: user, source: "user", ignored: null };
+  return { date: null, source: "none", ignored: null };
 }
 
 function resolveOwner(

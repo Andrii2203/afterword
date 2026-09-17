@@ -96,6 +96,21 @@ test("declines to conclude on a hedged acceptance", async ({ page }) => {
   await expect(page.getByTestId("deadline-resolved")).toContainText("2026-03-06");
 });
 
+test("follows the spoken date over the recording date field and explains the disagreement", async ({
+  page,
+}) => {
+  await page.goto("/");
+  await page.getByTestId("upload-input").setInputFiles(AUDIO("meeting-c"));
+  await page.getByTestId("anchor-date").fill("2026-09-16");
+  await page.getByTestId("process-button").click();
+  await waitForResult(page, 30_000);
+
+  await expect(page.getByTestId("deadline-resolved")).toContainText("2026-03-06");
+  const conflict = page.getByTestId("warning").filter({ hasText: /recording date field/ });
+  await expect(conflict).toContainText("2026-03-02");
+  await expect(conflict).toContainText("2026-09-16");
+});
+
 test("processes the second upload instead of repeating the first answer", async ({ page }) => {
   await analyse(page, "meeting-a");
   const first = await page.getByTestId("commitment").allTextContents();

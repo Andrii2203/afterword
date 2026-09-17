@@ -75,6 +75,18 @@ describe("POST /api/process", () => {
     });
   });
 
+  it("keeps the date spoken in the recording when the field disagrees, and says so", async () => {
+    useFixture("meeting-c");
+    const response = await POST(upload(audioForm("audio/wav", { anchor_date: "2026-09-16" })));
+    const document = await documentOf(response);
+    expect(document.meta.anchor_date).toBe("2026-03-02");
+    expect(document.meta.anchor_date_source).toBe("recording");
+    expect(document.meta.anchor_date_ignored).toBe("2026-09-16");
+    expect(document.warnings).toContain("anchor_date_conflict");
+    const backup = document.commitments.find((c) => /backup/i.test(c.title));
+    expect(backup?.deadline.date).toBe("2026-03-06");
+  });
+
   it("ignores a malformed recording date instead of failing", async () => {
     useFixture("meeting-a");
     const response = await POST(upload(audioForm("audio/wav", { anchor_date: "yesterday" })));

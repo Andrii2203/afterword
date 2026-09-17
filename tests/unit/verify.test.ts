@@ -62,7 +62,7 @@ function baseLlm(): LlmOutput {
 describe("verify", () => {
   it("resolves a relative deadline against the anchor date spoken in the recording", () => {
     const result = verify({ llm: baseLlm(), transcript });
-    expect(result.anchor).toEqual({ date: "2026-03-02", source: "recording" });
+    expect(result.anchor).toEqual({ date: "2026-03-02", source: "recording", ignored: null });
     expect(result.commitments[0].deadline).toEqual({
       raw: "by this Friday",
       date: "2026-03-06",
@@ -101,6 +101,27 @@ describe("verify", () => {
     expect(result.commitments[0].deadline.date).toBeNull();
   });
 
+  it("prefers the date spoken in the recording over the recording date field", () => {
+    const result = verify({ llm: baseLlm(), transcript, userAnchorDate: "2026-09-16" });
+    expect(result.anchor).toEqual({
+      date: "2026-03-02",
+      source: "recording",
+      ignored: "2026-09-16",
+    });
+    expect(result.commitments[0].deadline).toEqual({
+      raw: "by this Friday",
+      date: "2026-03-06",
+      status: "resolved",
+    });
+    expect(result.warnings).toContain("anchor_date_conflict");
+  });
+
+  it("stays silent when the recording date field repeats the spoken date", () => {
+    const result = verify({ llm: baseLlm(), transcript, userAnchorDate: "2026-03-02" });
+    expect(result.anchor).toEqual({ date: "2026-03-02", source: "recording", ignored: null });
+    expect(result.warnings).not.toContain("anchor_date_conflict");
+  });
+
   it("accepts a user-supplied anchor date and labels its source", () => {
     const stripped: Transcript = {
       ...transcript,
@@ -109,7 +130,7 @@ describe("verify", () => {
     const llm = baseLlm();
     llm.anchor_date = "";
     const result = verify({ llm, transcript: stripped, userAnchorDate: "2026-03-02" });
-    expect(result.anchor).toEqual({ date: "2026-03-02", source: "user" });
+    expect(result.anchor).toEqual({ date: "2026-03-02", source: "user", ignored: null });
     expect(result.commitments[0].deadline.status).toBe("resolved");
   });
 

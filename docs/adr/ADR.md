@@ -242,3 +242,13 @@ Context: The manual review found quotes under the wrong speaker, because Deepgra
 Decision: The transcript is built from word-level speaker labels, splitting a Deepgram utterance wherever the speaker changes, and every word keeps its recognition and speaker confidence.
 Consequence: Each utterance belongs to one speaker, the model reads correct labels, and confidence is available for flagging uncertain quotes without another paid transcription.
 Rejected: Raising Deepgram's pause threshold was rejected because real speakers also answer without a pause, and sending audio per speaker was rejected because both speakers share one channel.
+
+---
+
+## ADR-0025 — Precedence of the anchor date
+
+Status: accepted (2026-09-17)
+Context: The manual review found that a recording date typed into the form overruled the date the speakers state in the recording, so a deadline of "by this Friday" was shown as a calendar date that was never agreed. The specification called the field an anchor date without saying which source wins, and the code followed the order it was written in.
+Decision: A date spoken in the recording is evidence and wins; the form field is a fallback used only when the recording states no date. When both exist and differ, the spoken date resolves the deadlines, the discarded field value is kept in `meta.anchor_date_ignored`, and `warnings` carries `anchor_date_conflict`.
+Consequence: A wrong or stale value in the field can no longer invent a deadline, and the user is told in plain language which of the two dates was used.
+Rejected: Letting the field win was rejected because it contradicts the recording the product is asked to summarise, and refusing to produce a result on a disagreement was rejected because the recording alone is enough to answer.
